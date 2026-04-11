@@ -1,89 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pireactive</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pireactive</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="js/firebase-config.js" type="module"></script>
+<style>
+*{font-family:'Inter',sans-serif;border-radius:20px!important;}
+body{background:#f5f7fb;}
+button,.btn{border-radius:40px!important;transition:all .2s;}
+button:hover{transform:translateY(-2px);filter:brightness(.96);}
+.sidebar-item{transition:all .2s;margin:4px 0;display:flex;align-items:center;gap:12px;padding:12px 20px;text-decoration:none!important;color:#334155;font-weight:500;}
+.sidebar-item:hover{background:#f1f5f9;transform:translateX(6px);}
+.nav-active{background:#000;color:#fff!important;}
+input,textarea,select{border:1px solid #e2e8f0;background:#fff;padding:12px 16px;outline:none;font-size:14px;width:100%;}
+input:focus,textarea:focus,select:focus{border-color:#000;box-shadow:0 0 0 3px rgba(0,0,0,.05);}
+.stat-card{background:#fff;padding:24px;border:1px solid #eef2ff;transition:all .2s;}
+.stat-card:hover{transform:translateY(-4px);box-shadow:0 20px 25px -12px rgba(0,0,0,.1);}
+</style>
 </head>
-<body class="bg-black text-white font-sans">
-
-  <!-- Navbar -->
-  <header class="flex justify-between items-center px-8 py-5 border-b border-gray-800">
-    <h1 class="text-xl font-semibold tracking-wide">Pireactive</h1>
-    <nav class="space-x-6 text-sm text-gray-400">
-      <a href="#" class="hover:text-white transition">Home</a>
-      <a href="#" class="hover:text-white transition">Services</a>
-      <a href="#" class="hover:text-white transition">Work</a>
-      <a href="#" class="hover:text-white transition">Contact</a>
-    </nav>
-  </header>
-
-  <!-- Hero -->
-  <section class="text-center py-24 px-6">
-    <h2 class="text-4xl md:text-6xl font-bold leading-tight">
-      Build. Design. Innovate.
-    </h2>
-    <p class="mt-6 text-gray-400 max-w-xl mx-auto">
-      Pireactive delivers cutting-edge web development, app creation, and modern design solutions for forward-thinking brands.
-    </p>
-    <div class="mt-8">
-      <a href="#" class="bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-gray-200 transition">
-        Get Started
-      </a>
-    </div>
-  </section>
-
-  <!-- Services -->
-  <section class="px-8 py-16 border-t border-gray-800">
-    <h3 class="text-2xl font-semibold mb-10 text-center">Our Services</h3>
-    <div class="grid md:grid-cols-3 gap-8">
-
-      <div class="p-6 border border-gray-800 rounded-2xl hover:border-gray-600 transition">
-        <h4 class="text-lg font-medium mb-3">Web Development</h4>
-        <p class="text-gray-400 text-sm">
-          Fast, responsive, and scalable websites tailored to your business needs.
-        </p>
-      </div>
-
-      <div class="p-6 border border-gray-800 rounded-2xl hover:border-gray-600 transition">
-        <h4 class="text-lg font-medium mb-3">App Development</h4>
-        <p class="text-gray-400 text-sm">
-          Modern mobile and web applications built with performance and UX in mind.
-        </p>
-      </div>
-
-      <div class="p-6 border border-gray-800 rounded-2xl hover:border-gray-600 transition">
-        <h4 class="text-lg font-medium mb-3">UI/UX Design</h4>
-        <p class="text-gray-400 text-sm">
-          Clean, intuitive designs that enhance user experience and engagement.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- About -->
-  <section class="px-8 py-20 border-t border-gray-800 text-center">
-    <h3 class="text-2xl font-semibold mb-6">About Pireactive</h3>
-    <p class="text-gray-400 max-w-2xl mx-auto text-sm leading-relaxed">
-      We are a digital solutions company focused on creating sleek, modern, and high-performance products. From startups to enterprises, we help brands transform ideas into reality through design and technology.
-    </p>
-  </section>
-
-  <!-- CTA -->
-  <section class="px-8 py-20 border-t border-gray-800 text-center">
-    <h3 class="text-2xl font-semibold mb-4">Let’s build something great</h3>
-    <p class="text-gray-400 mb-6">Ready to take your project to the next level?</p>
-    <a href="#" class="border border-white px-6 py-3 rounded-full text-sm hover:bg-white hover:text-black transition">
-      Contact Us
-    </a>
-  </section>
-
-  <!-- Footer -->
-  <footer class="px-8 py-6 border-t border-gray-800 text-center text-gray-500 text-sm">
-    © 2026 Pireactive. All rights reserved.
-  </footer>
-
+<body>
+<div id="app"></div>
+<script type="module">
+(function(){
+const _p0=window.location.pathname;
+const _p1=_p0.substring(_p0.lastIndexOf('/')+1)||'home.html';
+const _p2=_p1.replace('.html','');
+const _pages={home:'home.html',domain:'domain.html',hosting:'hosting.html',clients:'clients.html',news:'news.html',about:'about.html',admin:'admin.html'};
+const _load=async(p)=>{try{const r=await fetch(p);const h=await r.text();document.getElementById('app').innerHTML=h;history.pushState(null,'',p.replace('.html','.html'));window.dispatchEvent(new Event('pagechange'));}catch(e){console.error(e);}};
+const _nav=(p)=>{if(_pages[p])_load(_pages[p]);};
+window.navigateTo=_nav;
+window.onpopstate=()=>{const _ph=window.location.pathname;const _pn=_ph.substring(_ph.lastIndexOf('/')+1)||'home.html';_load(_pn);};
+_load(_p1);
+})();
+</script>
 </body>
 </html>
