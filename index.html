@@ -2,38 +2,79 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pireactive</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="js/firebase-config.js" type="module"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Pireactive | AI-Powered Digital Studio</title>
+<script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*{font-family:'Inter',sans-serif;border-radius:20px!important;}
-body{background:#f5f7fb;}
-button,.btn{border-radius:40px!important;transition:all .2s;}
-button:hover{transform:translateY(-2px);filter:brightness(.96);}
-.sidebar-item{transition:all .2s;margin:4px 0;display:flex;align-items:center;gap:12px;padding:12px 20px;text-decoration:none!important;color:#334155;font-weight:500;}
-.sidebar-item:hover{background:#f1f5f9;transform:translateX(6px);}
-.nav-active{background:#000;color:#fff!important;}
-input,textarea,select{border:1px solid #e2e8f0;background:#fff;padding:12px 16px;outline:none;font-size:14px;width:100%;}
-input:focus,textarea:focus,select:focus{border-color:#000;box-shadow:0 0 0 3px rgba(0,0,0,.05);}
-.stat-card{background:#fff;padding:24px;border:1px solid #eef2ff;transition:all .2s;}
-.stat-card:hover{transform:translateY(-4px);box-shadow:0 20px 25px -12px rgba(0,0,0,.1);}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0a0a0a;min-height:100vh;overflow-x:hidden;}
+.grain-overlay{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;opacity:0.35;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:180px;mix-blend-mode:overlay;}
+.hero-glow{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:0;}
+.blob-1,.blob-2,.blob-3,.blob-4{position:absolute;filter:blur(90px);opacity:0.5;border-radius:50%;animation:floatBlob 22s infinite alternate ease-in-out;}
+.blob-1{width:45vw;height:45vw;background:radial-gradient(circle,#ff4d8c,#a855f7);top:-15%;left:-10%;animation-duration:25s;}
+.blob-2{width:50vw;height:50vw;background:radial-gradient(circle,#3b82f6,#06b6d4);bottom:-20%;right:-15%;animation-duration:30s;animation-delay:-3s;}
+.blob-3{width:35vw;height:35vw;background:radial-gradient(circle,#facc15,#f97316);top:40%;left:60%;animation-duration:28s;animation-delay:-5s;opacity:0.4;}
+.blob-4{width:40vw;height:40vw;background:radial-gradient(circle,#22c55e,#14b8a6);top:60%;left:-10%;animation-duration:35s;animation-delay:-8s;opacity:0.35;}
+@keyframes floatBlob{0%{transform:translate(0,0) scale(1);}100%{transform:translate(60px,50px) scale(1.25);}}
+.liquid-text{background:linear-gradient(135deg,#fff,#a5f3fc,#c084fc,#f0f);background-size:300% 300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:liquidWave 4s ease infinite;display:inline-block;}
+@keyframes liquidWave{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+.loader-circle{width:45px;height:45px;border:3px solid rgba(255,255,255,0.15);border-top-color:#fff;border-right-color:#a855f7;border-radius:50%;animation:spinLoader 1s cubic-bezier(0.68,-0.55,0.265,1.55) infinite;box-shadow:0 0 15px rgba(168,85,247,0.5);}
+@keyframes spinLoader{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+.nav-link{position:relative;transition:all 0.3s;}
+.nav-link::after{content:'';position:absolute;bottom:-4px;left:50%;width:0;height:2px;background:linear-gradient(90deg,#fff,#a855f7);transition:all 0.3s;transform:translateX(-50%);}
+.nav-link:hover::after{width:70%;}
+.router-container{opacity:0;animation:fadeInPage 0.5s ease forwards;}
+@keyframes fadeInPage{from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}}
+.greeting-card{backdrop-filter:blur(12px);background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);transition:all 0.4s;}
+.greeting-card:hover{transform:scale(1.02);background:rgba(255,255,255,0.06);box-shadow:0 20px 40px rgba(0,0,0,0.3);}
 </style>
 </head>
 <body>
-<div id="app"></div>
+<div class="grain-overlay"></div>
+<div id="app" class="relative z-10 min-h-screen"></div>
 <script type="module">
 (function(){
-const _p0=window.location.pathname;
-const _p1=_p0.substring(_p0.lastIndexOf('/')+1)||'home.html';
-const _p2=_p1.replace('.html','');
-const _pages={home:'home.html',domain:'domain.html',hosting:'hosting.html',clients:'clients.html',news:'news.html',about:'about.html',admin:'admin.html'};
-const _load=async(p)=>{try{const r=await fetch(p);const h=await r.text();document.getElementById('app').innerHTML=h;history.pushState(null,'',p.replace('.html','.html'));window.dispatchEvent(new Event('pagechange'));}catch(e){console.error(e);}};
-const _nav=(p)=>{if(_pages[p])_load(_pages[p]);};
-window.navigateTo=_nav;
-window.onpopstate=()=>{const _ph=window.location.pathname;const _pn=_ph.substring(_ph.lastIndexOf('/')+1)||'home.html';_load(_pn);};
-_load(_p1);
+const _routes=['home','domain','hosting','clients','news','about','cool'];
+const _pageMap={home:'home.html',domain:'domain.html',hosting:'hosting.html',clients:'clients.html',news:'news.html',about:'about.html',cool:'cool.html'};
+const _getPageName=()=>{let p=window.location.pathname;let last=p.substring(p.lastIndexOf('/')+1);if(!last||last===''||last==='index.html')return 'home';let name=last.replace('.html','');return _routes.includes(name)?name:'home';};
+const _fetchHTML=async(p)=>{try{let r=await fetch(p);if(!r.ok)throw new Error();return await r.text();}catch(e){return `<div class="min-h-screen flex items-center justify-center bg-black"><div class="text-center"><span class="iconify text-6xl text-white mb-4" data-icon="mdi:alert-circle-outline"></span><h2 class="text-2xl text-white">Page Not Found</h2><button onclick="navigateTo('home')" class="mt-6 bg-white text-black px-6 py-3">Go Home</button></div></div>`;}};
+const _renderLayout=async()=>{let page=_getPageName();let content=await _fetchHTML(_pageMap[page]||'home.html');let fullHTML=`
+<div class="router-container">
+<nav class="flex justify-between items-center px-8 py-5 sticky top-0 z-50 backdrop-blur-xl bg-black/40 border-b border-white/10">
+<h1 class="text-2xl font-bold bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent cursor-pointer" onclick="navigateTo('home')">Pireactive</h1>
+<div class="flex gap-8 items-center">
+<a href="#" onclick="navigateTo('home');return false;" class="nav-link text-white/80 hover:text-white transition text-sm font-medium">Home</a>
+<a href="#" onclick="navigateTo('domain');return false;" class="nav-link text-white/80 hover:text-white transition text-sm font-medium">Domain</a>
+<a href="#" onclick="navigateTo('hosting');return false;" class="nav-link text-white/80 hover:text-white transition text-sm font-medium">Hosting</a>
+<a href="#" onclick="navigateTo('clients');return false;" class="nav-link text-white/80 hover:text-white transition text-sm font-medium">Clients</a>
+<a href="#" onclick="navigateTo('news');return false;" class="nav-link text-white/80 hover:text-white transition text-sm font-medium">News</a>
+<a href="#" onclick="navigateTo('about');return false;" class="nav-link text-white/80 hover:text-white transition text-sm font-medium">About</a>
+<a href="#" onclick="navigateTo('cool');return false;" class="nav-link text-white/80 hover:text-white transition text-sm font-medium">Cool</a>
+</div>
+</nav>
+<div class="relative min-h-[calc(100vh-80px)] overflow-hidden">
+<div class="hero-glow"><div class="blob-1"></div><div class="blob-2"></div><div class="blob-3"></div><div class="blob-4"></div></div>
+<div class="relative z-20 flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-6">
+<div class="greeting-card rounded-3xl p-8 md:p-12 text-center max-w-2xl w-full backdrop-blur-md">
+<div class="flex items-center justify-center gap-2 mb-4"><span class="iconify text-purple-400 text-xl" data-icon="mdi:calendar-today"></span><span id="currentDate" class="text-white/80 font-medium text-lg"></span><span class="iconify text-cyan-400 text-xl mx-1" data-icon="mdi:clock-outline"></span><span id="currentTime" class="text-white/80 font-medium text-lg"></span></div>
+<h1 id="greetingMsg" class="text-5xl md:text-7xl font-bold mb-6 liquid-text">GOOD MORNING</h1>
+<div class="flex justify-center my-8"><div class="loader-circle"></div></div>
+<p class="text-white/60 text-sm tracking-wide">AI • Powered • Experience</p>
+</div>
+</div>
+${content}
+</div>
+</div>`;
+document.getElementById('app').innerHTML=fullHTML;
+_updateDateTime();
+setInterval(_updateDateTime,1000);
+window.dispatchEvent(new Event('contentloaded'));
+};
+const _updateDateTime=()=>{let now=new Date();let hours=now.getHours();let mins=now.getMinutes().toString().padStart(2,'0');let secs=now.getSeconds().toString().padStart(2,'0');let day=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});let timeStr=`${hours.toString().padStart(2,'0')}:${mins}:${secs}`;let dateElem=document.getElementById('currentDate');let timeElem=document.getElementById('currentTime');let greetElem=document.getElementById('greetingMsg');if(dateElem)dateElem.innerText=day;if(timeElem)timeElem.innerText=timeStr;if(greetElem){let msg='';if(hours<12)msg='🌅 GOOD MORNING';else if(hours<18)msg='☀️ GOOD AFTERNOON';else msg='🌙 GOOD EVENING';greetElem.innerText=msg;}};
+window.navigateTo=async(page)=>{if(_pageMap[page]){let newPath=`/${page}.html`;history.pushState(null,'',newPath);await _renderLayout();}};
+window.onpopstate=async()=>{await _renderLayout();};
+_renderLayout();
 })();
 </script>
 </body>
