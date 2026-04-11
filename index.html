@@ -1,143 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Pireactive | AI-Powered Digital Studio</title>
-<script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:#f8fafc;min-height:100vh;overflow-x:hidden;position:relative;}
-.grain-overlay{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;opacity:0.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:180px;mix-blend-mode:multiply;}
-.hero-glow{position:fixed;top:0;left:0;width:100%;height:100%;overflow:hidden;z-index:0;pointer-events:none;}
-.blob-1,.blob-2,.blob-3,.blob-4{position:absolute;filter:blur(100px);opacity:0.25;border-radius:50%;animation:floatBlob 22s infinite alternate ease-in-out;}
-.blob-1{width:45vw;height:45vw;background:radial-gradient(circle,#f472b6,#a855f7);top:-15%;left:-10%;animation-duration:25s;}
-.blob-2{width:50vw;height:50vw;background:radial-gradient(circle,#60a5fa,#06b6d4);bottom:-20%;right:-15%;animation-duration:30s;animation-delay:-3s;}
-.blob-3{width:35vw;height:35vw;background:radial-gradient(circle,#fbbf24,#f97316);top:40%;left:60%;animation-duration:28s;animation-delay:-5s;opacity:0.2;}
-.blob-4{width:40vw;height:40vw;background:radial-gradient(circle,#34d399,#14b8a6);top:60%;left:-10%;animation-duration:35s;animation-delay:-8s;opacity:0.2;}
-@keyframes floatBlob{0%{transform:translate(0,0) scale(1);}100%{transform:translate(60px,50px) scale(1.2);}}
-.nav-link{position:relative;transition:all 0.3s;font-weight:500;}
-.nav-link::after{content:'';position:absolute;bottom:-6px;left:50%;width:0;height:2.5px;background:linear-gradient(90deg,#a855f7,#3b82f6);transition:all 0.3s;transform:translateX(-50%);border-radius:2px;}
-.nav-link:hover::after{width:70%;}
-.nav-link.active{color:#a855f7;background:transparent;}
-.nav-link.active::after{width:70%;}
-.page-transition{animation:fadeInPage 0.4s cubic-bezier(0.2,0.9,0.4,1.1) forwards;}
-@keyframes fadeInPage{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-.greeting-card{background:rgba(255,255,255,0.85);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.5);box-shadow:0 20px 35px -12px rgba(0,0,0,0.08),0 0 0 0.5px rgba(255,255,255,0.6) inset;transition:all 0.4s;}
-.greeting-card:hover{transform:translateY(-4px);box-shadow:0 25px 40px -15px rgba(0,0,0,0.12);}
-.liquid-text{background:linear-gradient(135deg,#a855f7,#3b82f6,#06b6d4,#f472b6);background-size:300% 300%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:liquidWave 5s ease infinite;display:inline-block;}
-@keyframes liquidWave{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-.loader-circle{width:42px;height:42px;border:3px solid rgba(139,92,246,0.2);border-top-color:#a855f7;border-right-color:#3b82f6;border-radius:50%;animation:spinLoader 0.9s cubic-bezier(0.68,-0.55,0.265,1.55) infinite;box-shadow:0 0 10px rgba(168,85,247,0.3);}
-@keyframes spinLoader{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-.btn-primary{background:linear-gradient(135deg,#a855f7,#3b82f6);transition:all 0.3s;box-shadow:0 4px 14px rgba(139,92,246,0.3);}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(139,92,246,0.4);}
-.btn-outline-light{border:1.5px solid #e2e8f0;background:white;transition:all 0.3s;}
-.btn-outline-light:hover{border-color:#a855f7;background:#faf5ff;transform:translateY(-2px);}
-.card-glass{background:rgba(255,255,255,0.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.8);transition:all 0.3s;}
-.card-glass:hover{transform:translateY(-6px);background:rgba(255,255,255,0.85);box-shadow:0 20px 30px -12px rgba(0,0,0,0.1);}
-input,textarea{transition:all 0.3s;}
-input:focus,textarea:focus{border-color:#a855f7;box-shadow:0 0 0 3px rgba(168,85,247,0.1);outline:none;}
-::-webkit-scrollbar{width:8px;}
-::-webkit-scrollbar-track{background:#f1f5f9;border-radius:10px;}
-::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:10px;}
-::-webkit-scrollbar-thumb:hover{background:#a855f7;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIReactive</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Poppins Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Iconify -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000000;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        /* Time display */
+        .time-display {
+            color: white;
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+        
+        /* Liquid wave text */
+        .liquid-text {
+            font-size: clamp(40px, 12vw, 80px);
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: white;
+            filter: url(#liquidFilter);
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        /* 3D Triangle Loader */
+        .triangle-loader {
+            width: 40px;
+            height: 40px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate3d 3s infinite linear;
+        }
+        
+        .triangle-face {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 35px solid rgba(255, 255, 255, 0.9);
+            transform-origin: 50% 100%;
+        }
+        
+        .face1 {
+            transform: rotateY(0deg) translateZ(11.5px);
+        }
+        
+        .face2 {
+            transform: rotateY(120deg) translateZ(11.5px);
+        }
+        
+        .face3 {
+            transform: rotateY(240deg) translateZ(11.5px);
+        }
+        
+        @keyframes rotate3d {
+            0% {
+                transform: rotateX(0deg) rotateY(0deg);
+            }
+            100% {
+                transform: rotateX(360deg) rotateY(360deg);
+            }
+        }
+        
+        /* Footer */
+        .footer-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #4a4a4a, transparent);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .footer-text {
+            color: #888888;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .footer-link {
+            color: #aaaaaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+    </style>
 </head>
-<body>
-<div class="grain-overlay"></div>
-<div class="hero-glow"><div class="blob-1"></div><div class="blob-2"></div><div class="blob-3"></div><div class="blob-4"></div></div>
+<body class="flex flex-col min-h-screen">
+    <!-- SVG Filter for liquid wave effect -->
+    <svg width="0" height="0" style="position: absolute;">
+        <filter id="liquidFilter">
+            <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.015 0.025"
+                numOctaves="3"
+                seed="3"
+                result="noise">
+            </feTurbulence>
+            <feDisplacementMap
+                in="SourceGraphic"
+                in2="noise"
+                scale="20"
+                xChannelSelector="R"
+                yChannelSelector="G">
+            </feDisplacementMap>
+        </filter>
+    </svg>
 
-<nav class="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-gray-200/50 px-6 md:px-12 py-4">
-<div class="max-w-7xl mx-auto flex justify-between items-center flex-wrap gap-4">
-<h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent cursor-pointer" onclick="navigateTo('home')">Pireactive</h1>
-<div class="flex gap-6 md:gap-8 flex-wrap">
-<a href="#" onclick="navigateTo('home');return false;" class="nav-link text-gray-700 hover:text-purple-600 transition text-sm md:text-base" data-page="home">Home</a>
-<a href="#" onclick="navigateTo('domain');return false;" class="nav-link text-gray-700 hover:text-purple-600 transition text-sm md:text-base" data-page="domain">Domain</a>
-<a href="#" onclick="navigateTo('hosting');return false;" class="nav-link text-gray-700 hover:text-purple-600 transition text-sm md:text-base" data-page="hosting">Hosting</a>
-<a href="#" onclick="navigateTo('clients');return false;" class="nav-link text-gray-700 hover:text-purple-600 transition text-sm md:text-base" data-page="clients">Clients</a>
-<a href="#" onclick="navigateTo('news');return false;" class="nav-link text-gray-700 hover:text-purple-600 transition text-sm md:text-base" data-page="news">News</a>
-<a href="#" onclick="navigateTo('about');return false;" class="nav-link text-gray-700 hover:text-purple-600 transition text-sm md:text-base" data-page="about">About</a>
-<a href="#" onclick="navigateTo('cool');return false;" class="nav-link text-gray-700 hover:text-purple-600 transition text-sm md:text-base" data-page="cool">Cool</a>
-</div>
-</div>
-</nav>
-
-<main id="app" class="relative z-10 min-h-[calc(100vh-80px)]"></main>
-
-<script>
-const pages = {
-home: `
-<div class="max-w-7xl mx-auto px-6 py-12 md:py-20">
-<div class="greeting-card rounded-3xl p-8 md:p-12 text-center max-w-2xl mx-auto mb-16">
-<div class="flex items-center justify-center gap-3 mb-3 flex-wrap"><span class="iconify text-purple-500 text-xl" data-icon="mdi:calendar-today"></span><span id="currentDate" class="text-gray-600 font-medium text-base"></span><span class="iconify text-blue-500 text-xl" data-icon="mdi:clock-outline"></span><span id="currentTime" class="text-gray-600 font-medium text-base"></span></div>
-<h1 id="greetingMsg" class="text-4xl md:text-6xl font-bold mb-5 liquid-text">GOOD MORNING</h1>
-<div class="flex justify-center my-6"><div class="loader-circle"></div></div>
-<p class="text-gray-500 text-sm tracking-wide">AI • Powered • Experience</p>
-</div>
-<div class="text-center mb-16"><h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Build. Design. Innovate.</h2><p class="text-gray-500 max-w-xl mx-auto">Modern digital solutions for forward-thinking brands</p><div class="mt-8"><button class="btn-primary text-white px-8 py-3 rounded-full font-medium" onclick="navigateTo('domain')">Get Started</button></div></div>
-<div class="grid md:grid-cols-3 gap-6"><div class="card-glass rounded-2xl p-6"><span class="iconify text-4xl text-purple-500 mb-3" data-icon="mdi:web"></span><h3 class="text-xl font-semibold text-gray-800">Web Development</h3><p class="text-gray-500 text-sm mt-2">Fast, responsive, scalable websites</p></div><div class="card-glass rounded-2xl p-6"><span class="iconify text-4xl text-blue-500 mb-3" data-icon="mdi:cellphone"></span><h3 class="text-xl font-semibold text-gray-800">App Development</h3><p class="text-gray-500 text-sm mt-2">Modern mobile & web applications</p></div><div class="card-glass rounded-2xl p-6"><span class="iconify text-4xl text-pink-500 mb-3" data-icon="mdi:palette"></span><h3 class="text-xl font-semibold text-gray-800">UI/UX Design</h3><p class="text-gray-500 text-sm mt-2">Clean, intuitive interfaces</p></div></div>
-</div>
-`,
-domain: `
-<div class="max-w-7xl mx-auto px-6 py-12 md:py-20">
-<h2 class="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-4">Find Your Perfect Domain</h2>
-<p class="text-center text-gray-500 mb-12">Search and register available domains instantly</p>
-<div class="flex gap-3 mb-12 max-w-2xl mx-auto"><input type="text" id="domainSearch" placeholder="Search domain..." class="flex-1 bg-white border border-gray-200 rounded-full px-6 py-3 text-gray-700"><button class="btn-primary text-white px-8 py-3 rounded-full font-medium" onclick="alert('Searching for: '+document.getElementById('domainSearch').value)">Search</button></div>
-<div class="grid md:grid-cols-3 gap-6"><div class="card-glass rounded-2xl p-6 text-center"><span class="iconify text-5xl text-purple-500 mb-3" data-icon="mdi:web"></span><h3 class="text-2xl font-bold text-gray-800">.com</h3><p class="text-3xl font-bold text-gray-800 mt-2">$9.99<span class="text-sm font-normal text-gray-500">/yr</span></p><button class="mt-4 btn-outline-light text-gray-700 px-6 py-2 rounded-full w-full font-medium" onclick="alert('Register .com domain')">Register</button></div>
-<div class="card-glass rounded-2xl p-6 text-center"><span class="iconify text-5xl text-blue-500 mb-3" data-icon="mdi:map-marker"></span><h3 class="text-2xl font-bold text-gray-800">.rw</h3><p class="text-3xl font-bold text-gray-800 mt-2">$7.99<span class="text-sm font-normal text-gray-500">/yr</span></p><button class="mt-4 btn-outline-light text-gray-700 px-6 py-2 rounded-full w-full font-medium" onclick="alert('Register .rw domain')">Register</button></div>
-<div class="card-glass rounded-2xl p-6 text-center"><span class="iconify text-5xl text-pink-500 mb-3" data-icon="mdi:code-tags"></span><h3 class="text-2xl font-bold text-gray-800">.dev</h3><p class="text-3xl font-bold text-gray-800 mt-2">$12.99<span class="text-sm font-normal text-gray-500">/yr</span></p><button class="mt-4 btn-outline-light text-gray-700 px-6 py-2 rounded-full w-full font-medium" onclick="alert('Register .dev domain')">Register</button></div></div>
-</div>
-`,
-hosting: `
-<div class="max-w-7xl mx-auto px-6 py-12 md:py-20">
-<h2 class="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-4">Hosting Plans</h2>
-<p class="text-center text-gray-500 mb-12">Scalable solutions for every need</p>
-<div class="grid md:grid-cols-3 gap-6"><div class="card-glass rounded-2xl p-6"><h3 class="text-xl font-bold text-gray-800">Individual</h3><p class="text-3xl font-bold text-gray-800 mt-2">$9<span class="text-sm font-normal text-gray-500">/mo</span></p><ul class="mt-4 space-y-2 text-gray-600 text-sm"><li>✓ 10GB Storage</li><li>✓ 1 Domain</li><li>✓ Basic Support</li><li class="text-gray-400 line-through">Daily Backups</li></ul><button class="mt-6 btn-outline-light text-gray-700 px-6 py-2 rounded-full w-full font-medium" onclick="alert('Individual Plan Selected')">Get Started</button></div>
-<div class="card-glass rounded-2xl p-6 border-2 border-purple-300"><h3 class="text-xl font-bold text-gray-800">Business</h3><p class="text-3xl font-bold text-gray-800 mt-2">$29<span class="text-sm font-normal text-gray-500">/mo</span></p><ul class="mt-4 space-y-2 text-gray-700 text-sm"><li>✓ 50GB Storage</li><li>✓ 5 Domains</li><li>✓ Priority Support</li><li>✓ Daily Backups</li></ul><button class="mt-6 btn-primary text-white px-6 py-2 rounded-full w-full font-medium" onclick="alert('Business Plan Selected')">Get Started</button></div>
-<div class="card-glass rounded-2xl p-6"><h3 class="text-xl font-bold text-gray-800">Enterprise</h3><p class="text-3xl font-bold text-gray-800 mt-2">$79<span class="text-sm font-normal text-gray-500">/mo</span></p><ul class="mt-4 space-y-2 text-gray-600 text-sm"><li>✓ Unlimited Storage</li><li>✓ Unlimited Domains</li><li>✓ 24/7 Support</li><li>✓ Advanced Security</li></ul><button class="mt-6 btn-outline-light text-gray-700 px-6 py-2 rounded-full w-full font-medium" onclick="alert('Contact Enterprise Team')">Contact Us</button></div></div>
-</div>
-`,
-clients: `
-<div class="max-w-7xl mx-auto px-6 py-12 md:py-20">
-<h2 class="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-4">Trusted Partners</h2>
-<p class="text-center text-gray-500 mb-12">Join 500+ innovative companies worldwide</p>
-<div class="grid md:grid-cols-2 gap-6"><div class="card-glass rounded-2xl p-6 flex items-start gap-4"><div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg">N</div><div><h3 class="font-bold text-gray-800 text-lg">NexGen Solutions</h3><p class="text-gray-500 text-sm">Enterprise Client since 2023</p></div></div>
-<div class="card-glass rounded-2xl p-6 flex items-start gap-4"><div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-lg">C</div><div><h3 class="font-bold text-gray-800 text-lg">CreativEdge Studio</h3><p class="text-gray-500 text-sm">Digital Agency Partner</p></div></div>
-<div class="card-glass rounded-2xl p-6 flex items-start gap-4"><div class="w-12 h-12 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 flex items-center justify-center text-white font-bold text-lg">F</div><div><h3 class="font-bold text-gray-800 text-lg">FinCore Ltd</h3><p class="text-gray-500 text-sm">Financial Technology</p></div></div>
-<div class="card-glass rounded-2xl p-6 flex items-start gap-4"><div class="w-12 h-12 rounded-full bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center text-white font-bold text-lg">B</div><div><h3 class="font-bold text-gray-800 text-lg">BrightWave Media</h3><p class="text-gray-500 text-sm">Media & Entertainment</p></div></div></div>
-</div>
-`,
-news: `
-<div class="max-w-7xl mx-auto px-6 py-12 md:py-20">
-<h2 class="text-4xl md:text-5xl font-bold text-center text-gray-800 mb-4">Latest Updates</h2>
-<p class="text-center text-gray-500 mb-12">Stay informed with our news</p>
-<div class="grid md:grid-cols-2 gap-6"><div class="card-glass rounded-2xl p-6"><div class="w-full h-48 rounded-xl bg-gradient-to-r from-purple-100 to-pink-100 mb-4 flex items-center justify-center"><span class="iconify text-5xl text-purple-400" data-icon="mdi:robot"></span></div><span class="text-xs text-purple-500 font-medium">April 10, 2026</span><h3 class="font-bold text-xl text-gray-800 mt-2">New AI Tools Launch</h3><p class="text-gray-500 mt-2">Advanced AI suite for developers now available with enhanced capabilities...</p><button class="text-purple-600 font-medium mt-4 hover:text-purple-700" onclick="alert('Read more about AI Tools')">Read more →</button></div>
-<div class="card-glass rounded-2xl p-6"><div class="w-full h-48 rounded-xl bg-gradient-to-r from-blue-100 to-cyan-100 mb-4 flex items-center justify-center"><span class="iconify text-5xl text-blue-400" data-icon="mdi:shield"></span></div><span class="text-xs text-blue-500 font-medium">April 5, 2026</span><h3 class="font-bold text-xl text-gray-800 mt-2">Security Upgrade</h3><p class="text-gray-500 mt-2">Enhanced security features for all enterprise clients...</p><button class="text-blue-600 font-medium mt-4 hover:text-blue-700" onclick="alert('Read more about Security')">Read more →</button></div></div>
-</div>
-`,
-about: `
-<div class="max-w-7xl mx-auto px-6 py-12 md:py-20">
-<div class="max-w-4xl mx-auto text-center"><h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">About Pireactive</h2><p class="text-gray-500 text-lg mb-8">We craft digital experiences that matter</p><div class="card-glass rounded-2xl p-8 mb-8"><p class="text-gray-600 leading-relaxed">Founded in 2019, Pireactive has grown into a leading digital solutions provider, helping businesses transform their ideas into reality through innovative technology and design. Our mission is to deliver excellence with every project.</p></div><div class="grid md:grid-cols-3 gap-6"><div class="card-glass rounded-2xl p-6"><span class="iconify text-4xl text-purple-500 mb-3" data-icon="mdi:calendar-star"></span><h3 class="text-2xl font-bold text-gray-800">2019</h3><p class="text-gray-500">Founded</p></div><div class="card-glass rounded-2xl p-6"><span class="iconify text-4xl text-blue-500 mb-3" data-icon="mdi:account-group"></span><h3 class="text-2xl font-bold text-gray-800">500+</h3><p class="text-gray-500">Clients</p></div><div class="card-glass rounded-2xl p-6"><span class="iconify text-4xl text-pink-500 mb-3" data-icon="mdi:headset"></span><h3 class="text-2xl font-bold text-gray-800">24/7</h3><p class="text-gray-500">Support</p></div></div></div>
-</div>
-`,
-cool: `
-<div class="max-w-7xl mx-auto px-6 py-12 md:py-20">
-<h2 class="text-5xl md:text-6xl font-bold text-center mb-6 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent animate-pulse">✨ COOL STUFF ✨</h2>
-<p class="text-center text-gray-500 text-lg mb-12">Experience the next level of digital innovation</p>
-<div class="grid md:grid-cols-3 gap-6"><div class="card-glass rounded-2xl p-6 text-center"><span class="iconify text-5xl text-purple-500 mb-4" data-icon="mdi:robot-outline"></span><h3 class="text-xl font-semibold text-gray-800 mb-2">AI Integration</h3><p class="text-gray-500 text-sm">Smart algorithms powering next-gen solutions</p></div><div class="card-glass rounded-2xl p-6 text-center"><span class="iconify text-5xl text-blue-500 mb-4" data-icon="mdi:lightning-bolt"></span><h3 class="text-xl font-semibold text-gray-800 mb-2">Lightning Fast</h3><p class="text-gray-500 text-sm">Blazing performance with edge computing</p></div><div class="card-glass rounded-2xl p-6 text-center"><span class="iconify text-5xl text-pink-500 mb-4" data-icon="mdi:shield-check"></span><h3 class="text-xl font-semibold text-gray-800 mb-2">Secure by Default</h3><p class="text-gray-500 text-sm">Enterprise-grade security protocols</p></div></div>
-<div class="mt-12 text-center"><button class="btn-primary text-white px-8 py-3 rounded-full font-medium" onclick="navigateTo('home')">Back to Home</button></div>
-</div>
-`
-};
-
-let currentPage = 'home';
-
-function updateDateTime() {
-let now=new Date();let hours=now.getHours();let mins=now.getMinutes().toString().padStart(2,'0');let secs=now.getSeconds().toString().padStart(2,'0');let day=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});let timeStr=\`\${hours.toString().padStart(2,'0')}:\${mins}:\${secs}\`;let dateElem=document.getElementById('currentDate');let timeElem=document.getElementById('currentTime');let greetElem=document.getElementById('greetingMsg');if(dateElem)dateElem.innerText=day;if(timeElem)timeElem.innerText=timeStr;if(greetElem){let msg='';let icon='';if(hours<12){msg='🌅 GOOD MORNING';}else if(hours<18){msg='☀️ GOOD AFTERNOON';}else{msg='🌙 GOOD EVENING';}greetElem.innerText=msg;}}
-function startTimeUpdate(){updateDateTime();setInterval(updateDateTime,1000);}
-window.navigateTo=function(page){if(pages[page]){currentPage=page;document.getElementById('app').innerHTML=pages[page];document.getElementById('app').classList.add('page-transition');setTimeout(()=>{document.getElementById('app').classList.remove('page-transition');},400);document.querySelectorAll('.nav-link').forEach(link=>{link.classList.remove('active');if(link.getAttribute('onclick')?.includes(`'${page}'`)){link.classList.add('active');}});if(page==='home'){startTimeUpdate();}window.scrollTo({top:0,behavior:'smooth'});}};
-document.getElementById('app').innerHTML=pages.home;startTimeUpdate();document.querySelectorAll('.nav-link').forEach(link=>{if(link.getAttribute('onclick')?.includes("'home'")){link.classList.add('active');}});
-</script>
+    <!-- Main content -->
+    <div class="flex-1 flex flex-col">
+        <!-- Time display - top middle -->
+        <div class="w-full pt-6 md:pt-8 flex justify-center">
+            <div id="timeDisplay" class="time-display text-xl md:text-2xl"></div>
+        </div>
+        
+        <!-- Center content -->
+        <div class="flex-1 flex flex-col items-center justify-center px-4">
+            <!-- Liquid wave text message -->
+            <div id="greetingMessage" class="liquid-text mb-6 md:mb-8"></div>
+            
+            <!-- 3D Triangle Loader -->
+            <div class="triangle-loader mt-6 md:mt-8">
+                <div class="triangle-face face1"></div>
+                <div class="triangle-face face2"></div>
+                <div class="triangle-face face3"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="w-full py-6 px-4">
+        <div class="footer-line mb-4"></div>
+        <div class="text-center footer-text text-xs md:text-sm">
+            <span>© 2026 PIReactive</span>
+            <span class="mx-2 opacity-50">•</span>
+            <span>by</span>
+            <a href="https://mkbertrand.vercel.app" class="footer-link ml-1 hover:opacity-100 transition-opacity" target="_blank" rel="noopener noreferrer">MWIZERWA KAREKEZI Bertrand</a>
+        </div>
+    </footer>
+    
+    <script>
+        // Time display update
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            
+            document.getElementById('timeDisplay').textContent = `${hours}:${minutes}:${seconds}`;
+            
+            updateGreeting(hours);
+        }
+        
+        // Update greeting based on time
+        function updateGreeting(hours) {
+            const hour = parseInt(hours);
+            let message;
+            
+            if (hour >= 5 && hour < 12) {
+                message = "Holla! Morning";
+            } else if (hour >= 12 && hour < 17) {
+                message = "Good Afternoon";
+            } else if (hour >= 17 && hour < 21) {
+                message = "Good Evening";
+            } else {
+                message = "Good Night";
+            }
+            
+            document.getElementById('greetingMessage').textContent = message;
+        }
+        
+        // Initial update
+        updateTime();
+        
+        // Update every second
+        setInterval(updateTime, 1000);
+        
+        // Redirect after 3 seconds
+        setTimeout(() => {
+            window.location.href = 'home.html';
+        }, 3000);
+    </script>
 </body>
 </html>
