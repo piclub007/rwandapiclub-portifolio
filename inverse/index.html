@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Pireactive Admin | Complete Control Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+      background: #f5f7fb;
+    }
+    
+    /* ALL ELEMENTS HAVE ROUNDED CORNERS */
+    * {
+      border-radius: 20px !important;
+    }
+    
+    /* Flexbox utilities */
+    .flex { display: flex; }
+    .flex-col { display: flex; flex-direction: column; }
+    .flex-between { display: flex; justify-content: space-between; align-items: center; }
+    .flex-wrap { flex-wrap: wrap; }
+    .gap-2 { gap: 8px; }
+    .gap-3 { gap: 12px; }
+    .gap-4 { gap: 16px; }
+    
+    /* Sidebar - NO UNDERLINES EVER */
+    .sidebar-item { 
+      transition: all 0.2s; 
+      margin: 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      text-decoration: none !important;
+      color: #334155;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .sidebar-item:hover { 
+      background: #f1f5f9; 
+      transform: translateX(6px); 
+      text-decoration: none !important; 
+    }
+    .nav-active { 
+      background: #000000; 
+      color: white !important; 
+      text-decoration: none !important; 
+    }
+    .nav-active .iconify { color: white !important; }
+    
+    /* Buttons */
+    button, .btn, .tab-btn {
+      border-radius: 40px !important;
+      transition: all 0.2s;
+      cursor: pointer;
+      font-weight: 500;
+      border: none;
+      padding: 10px 20px;
+    }
+    button:hover { transform: translateY(-2px); filter: brightness(0.96); }
+    
+    /* Tabs */
+    .tab-active { background: #000000; color: white !important; }
+    .tab-btn { padding: 10px 24px; font-size: 13px; font-weight: 500; margin: 0 4px; background: #f1f5f9; }
+    
+    /* Cards */
+    .stat-card { background: white; padding: 24px; border: 1px solid #eef2ff; transition: all 0.2s; }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
+    
+    /* Form elements */
+    input, textarea, select {
+      border: 1px solid #e2e8f0;
+      background: white;
+      padding: 12px 16px;
+      outline: none;
+      font-size: 14px;
+      width: 100%;
+    }
+    input:focus, textarea:focus, select:focus { border-color: #000000; box-shadow: 0 0 0 3px rgba(0,0,0,0.05); }
+    
+    /* Feature tags */
+    .feature-tag { background: #f1f5f9; padding: 6px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 8px; margin: 4px; }
+    .excluded-tag { text-decoration: line-through; background: #fef2f2; color: #991b1b; }
+    
+    /* CKEditor */
+    .ck-editor__editable { min-height: 280px; }
+    
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 20px; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 20px; }
+    
+    .hidden { display: none; }
+    .scale-option { 
+      cursor: pointer; 
+      transition: all 0.2s; 
+      padding: 12px 24px; 
+      background: #f1f5f9; 
+      border: 2px solid transparent; 
+      font-weight: 500;
+    }
+    .scale-selected { 
+      background: #000000; 
+      color: white; 
+      border-color: #000000; 
+    }
+    
+    a, a:hover, a:focus, a:active {
+      text-decoration: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="flex" style="min-height: 100vh; padding: 16px; gap: 16px;">
+    <!-- SIDEBAR - NO UNDERLINES -->
+    <aside class="flex-col" style="width: 280px; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+      <div style="padding: 24px; border-bottom: 1px solid #edf2f7;">
+        <div class="flex-between" style="gap: 12px;">
+          <div style="width: 44px; height: 44px; background: black; display: flex; align-items: center; justify-content: center;">
+            <span class="iconify text-white text-2xl" data-icon="mdi:cube-outline"></span>
+          </div>
+          <div>
+            <h1 style="font-size: 20px; font-weight: 700;">Pireactive<span style="color: #94a3b8;">|ADMIN</span></h1>
+            <p style="font-size: 11px; color: #94a3b8;">Firebase • Realtime</p>
+          </div>
+        </div>
+      </div>
+      <nav class="flex-col" style="flex: 1; padding: 20px 16px; gap: 4px;">
+        <a href="#" data-nav="dashboard" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:view-dashboard"></span><span>DASHBOARD</span></a>
+        <a href="#" data-nav="clients" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:account-group"></span><span>CLIENTS</span></a>
+        <a href="#" data-nav="news" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:newspaper"></span><span>NEWS</span></a>
+        <a href="#" data-nav="hosting" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:server"></span><span>HOSTING PLANS</span></a>
+        <a href="#" data-nav="requests" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:inbox"></span><span>REQUESTS</span></a>
+        <a href="#" data-nav="manage" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:hammer-wrench"></span><span>MANAGE</span></a>
+        <a href="#" data-nav="settings" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:cog"></span><span>SETTINGS</span></a>
+      </nav>
+      <div style="padding: 20px; border-top: 1px solid #edf2f7;">
+        <div style="background: #f8fafc; padding: 16px;">
+          <div class="flex-between">
+            <div style="width: 8px; height: 8px; background: #22c55e; border-radius: 20px; animation: pulse 1.5s infinite;"></div>
+            <span style="font-size: 12px; color: #475569;">Firebase Live</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-col" style="flex: 1; overflow-y: auto;">
+      <div style="background: white; padding: 24px; margin-bottom: 24px;" class="flex-between">
+        <div>
+          <h2 id="pageTitle" style="font-size: 26px; font-weight: 700;">Dashboard</h2>
+          <p style="color: #64748b; font-size: 13px; margin-top: 6px;">Complete control panel</p>
+        </div>
+        <button id="globalRefreshBtn" style="background: #f1f5f9; padding: 10px 24px;">⟳ Sync Now</button>
+      </div>
+      <div id="dynamicPanel"></div>
+    </main>
+  </div>
+
+  <style>
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    a, a:link, a:visited, a:hover, a:active {
+      text-decoration: none !important;
+    }
+    button, .btn, .tab-btn { cursor: pointer; }
+  </style>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+    import { getFirestore, collection, doc, getDocs, addDoc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyAtHa9wAryji3EdWwhxT7tUwZquRD-LJvI",
+      authDomain: "project-k-dbaef.firebaseapp.com",
+      projectId: "project-k-dbaef",
+      storageBucket: "project-k-dbaef.firebasestorage.app",
+      messagingSenderId: "356936578912",
+      appId: "1:356936578912:web:056bdbf8625b33d79e1005",
+      measurementId: "G-PXB6QYYV3Z"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    console.log("✅ Firebase initialized");
+    
+    const IMGBB_API = "ba8023ca74166460c442e8e703d2a1b0";
+    
+    const websitesCol = collection(db, "websites");
+    const designsCol = collection(db, "designs");
+    const newsCol = collection(db, "news");
+    const hostingPlansCol = collection(db, "hostingPlans");
+    const requestsCol = collection(db, "requests");
+    const domainsCol = collection(db, "domains");
+    const announcementsCol = collection(db, "announcements");
+    
+    async function uploadImage(file) {
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("key", IMGBB_API);
+      const res = await fetch("https://api.imgbb.com/1/upload", { method: "POST", body: formData });
+      const data = await res.json();
+      return data.data.url;
+    }
+    
+    async function uploadMultiple(files) {
+      let urls = [];
+      for(let f of files) urls.push(await uploadImage(f));
+      return urls;
+    }
+    
+    let currentNav = "dashboard";
+    let currentEditor = null;
+    let editingNewsId = null;
+    let activeClientTab = "website";
+    let hostingTab = "list";
+    let selectedScale = null;
+    
+    async function renderDashboard() {
+      const [websitesSnap, designsSnap, newsSnap, plansSnap, requestsSnap, domainsSnap] = await Promise.all([
+        getDocs(websitesCol), getDocs(designsCol), getDocs(newsCol), getDocs(hostingPlansCol), getDocs(requestsCol), getDocs(domainsCol)
+      ]);
+      return `
+        <div class="flex flex-wrap gap-4" style="margin-bottom: 20px;">
+          <div class="stat-card" style="flex: 1; min-width: 200px;"><div class="flex-between"><div><span class="iconify text-3xl" data-icon="mdi:web"></span><p style="color:#64748b; margin-top:12px;">Websites</p><p style="font-size:32px; font-weight:700;">${websitesSnap.size}</p></div><div style="background:#f1f5f9; width:48px; height:48px; display:flex; align-items:center; justify-content:center;"><span class="iconify text-xl" data-icon="mdi:trending-up"></span></div></div></div>
+          <div class="stat-card" style="flex: 1; min-width: 200px;"><div><span class="iconify text-3xl" data-icon="mdi:palette"></span><p style="color:#64748b; margin-top:12px;">Designs</p><p style="font-size:32px; font-weight:700;">${designsSnap.size}</p></div></div>
+          <div class="stat-card" style="flex: 1; min-width: 200px;"><div><span class="iconify text-3xl" data-icon="mdi:newspaper"></span><p style="color:#64748b; margin-top:12px;">News</p><p style="font-size:32px; font-weight:700;">${newsSnap.size}</p></div></div>
+          <div class="stat-card" style="flex: 1; min-width: 200px;"><div><span class="iconify text-3xl" data-icon="mdi:format-list-checks"></span><p style="color:#64748b; margin-top:12px;">Requests</p><p style="font-size:32px; font-weight:700;">${requestsSnap.size}</p></div></div>
+        </div>
+        <div class="stat-card">
+          <h3 style="font-weight: 600; font-size: 18px; margin-bottom: 16px;">📊 Platform Analytics</h3>
+          <div class="flex-between" style="margin-bottom: 12px;"><span>Active Hosting Plans</span><span style="font-weight:600;">${plansSnap.size}</span></div>
+          <div class="flex-between" style="margin-bottom: 12px;"><span>Configured Domains</span><span style="font-weight:600;">${domainsSnap.size}</span></div>
+          <div style="margin-top: 16px; height: 6px; background: #e2e8f0; overflow: hidden;"><div style="width: 68%; height: 100%; background: black;"></div></div>
+          <p style="font-size: 12px; color: #64748b; margin-top: 12px;">✅ System Operational • ${new Date().toLocaleTimeString()}</p>
+        </div>
+      `;
+    }
+    
+    async function renderClients() {
+      const websites = (await getDocs(websitesCol)).docs.map(d => ({ id: d.id, ...d.data() }));
+      const designs = (await getDocs(designsCol)).docs.map(d => ({ id: d.id, ...d.data() }));
+      return `
+        <div style="background: white; overflow: hidden;">
+          <div class="flex-between" style="padding: 20px 24px; border-bottom: 1px solid #edf2f7; flex-wrap: wrap;">
+            <div class="flex gap-2">
+              <button class="tab-btn ${activeClientTab === 'website' ? 'tab-active' : ''}" data-tab="website">🌐 WEBSITE</button>
+              <button class="tab-btn ${activeClientTab === 'design' ? 'tab-active' : ''}" data-tab="design">🎨 DESIGN</button>
+            </div>
+          </div>
+          <div style="padding: 24px;" id="clientTabContent">
+            ${activeClientTab === 'website' ? `
+              <div style="background: #f8fafc; padding: 24px; margin-bottom: 32px;">
+                <h3 style="font-weight: 700; font-size: 18px; margin-bottom: 20px;">➕ Add New Website</h3>
+                <div class="flex-col gap-3"><input type="text" id="webName" placeholder="Name *"><input type="text" id="webLink" placeholder="Link (URL)"><textarea id="webDesc" placeholder="Description" rows="3"></textarea><input type="file" id="webImages" multiple accept="image/*"><button id="saveWebsiteBtn" style="background: black; color: white; padding: 12px 28px; width: fit-content;">Save Website</button></div>
+              </div>
+              <h3 style="font-weight: 700; margin-bottom: 16px;">📁 Existing Websites</h3>
+              <div class="flex-col gap-3">${websites.map(w => `<div class="flex-between" style="border:1px solid #edf2f7; padding:16px;"><div><h4 style="font-weight:600;">${w.name}</h4><p style="font-size:13px; color:#64748b;">${w.link || ''}</p><p style="font-size:11px; color:#94a3b8;">📷 ${(w.images || []).length} images</p></div><button class="deleteWebsiteBtn" style="background:#fef2f2; color:#dc2626; padding:6px 16px;" data-id="${w.id}">Delete</button></div>`).join('')}</div>
+            ` : `
+              <div style="background: #f8fafc; padding: 24px; margin-bottom: 32px;">
+                <h3 style="font-weight: 700; font-size: 18px; margin-bottom: 20px;">➕ Add New Design</h3>
+                <div class="flex-col gap-3"><input type="text" id="designName" placeholder="Name *"><input type="file" id="designImages" multiple accept="image/*"><button id="saveDesignBtn" style="background: black; color: white; padding: 12px 28px; width: fit-content;">Save Design</button></div>
+              </div>
+              <h3 style="font-weight: 700; margin-bottom: 16px;">🎨 Existing Designs</h3>
+              <div class="flex-col gap-3">${designs.map(d => `<div class="flex-between" style="border:1px solid #edf2f7; padding:16px;"><div><h4 style="font-weight:600;">${d.name}</h4><div class="flex gap-2 mt-2">${(d.images || []).slice(0,2).map(img => `<img src="${img}" style="width:50px; height:50px; object-fit:cover;">`).join('')}</div></div><button class="deleteDesignBtn" style="background:#fef2f2; color:#dc2626; padding:6px 16px;" data-id="${d.id}">Delete</button></div>`).join('')}</div>
+            `}
+          </div>
+        </div>
+      `;
+    }
+    
+    async function renderNews() {
+      const newsItems = (await getDocs(query(newsCol, orderBy("date", "desc")))).docs.map(d => ({ id: d.id, ...d.data() }));
+      return `
+        <div style="background: white; overflow: hidden;">
+          <div style="padding: 24px; border-bottom: 1px solid #edf2f7;">
+            <h3 style="font-weight: 700; font-size: 18px; margin-bottom: 20px;">📝 ${editingNewsId ? 'Edit News' : 'Create New News'}</h3>
+            <div class="flex-col gap-3"><input type="text" id="newsTitle" placeholder="Title *" value="${editingNewsId ? (newsItems.find(n => n.id === editingNewsId)?.title || '') : ''}"><input type="file" id="newsImages" multiple accept="image/*"><div id="ckeditor-container"></div><div class="flex gap-3"><button id="saveNewsBtn" style="background: black; color: white; padding: 12px 28px;">${editingNewsId ? 'Update' : 'Publish'} News</button><button id="cancelNewsEditBtn" class="${!editingNewsId ? 'hidden' : ''}" style="border:1px solid #cbd5e1; padding:12px 28px;">Cancel</button></div></div>
+          </div>
+          <div style="padding: 24px;">
+            <h3 style="font-weight: 700; margin-bottom: 20px;">📰 All Articles</h3>
+            <div class="flex-col gap-3">${newsItems.map(n => `<div class="flex-between" style="border:1px solid #edf2f7; padding:16px;"><div><h4 style="font-weight:600;">${n.title}</h4><p style="font-size:11px; color:#94a3b8;">${new Date(n.date).toLocaleDateString()}</p><p style="font-size:13px; color:#475569;">${(n.body || '').substring(0, 80)}...</p></div><div class="flex gap-2"><button class="editNewsBtn" style="color:#2563eb;" data-id="${n.id}">Edit</button><button class="deleteNewsBtn" style="color:#dc2626;" data-id="${n.id}">Delete</button></div></div>`).join('')}</div>
+          </div>
+        </div>
+      `;
+    }
+    
+    async function renderHosting() {
+      const plans = (await getDocs(hostingPlansCol)).docs.map(d => ({ id: d.id, ...d.data() }));
+      return `
+        <div style="background: white; overflow: hidden;">
+          <div class="flex-between" style="padding: 16px 24px; border-bottom: 1px solid #edf2f7; flex-wrap: wrap;">
+            <div class="flex gap-2">
+              <button class="tab-btn ${hostingTab === 'list' ? 'tab-active' : ''}" data-hosting-tab="list">📋 View Plans</button>
+              <button class="tab-btn ${hostingTab === 'add' ? 'tab-active' : ''}" data-hosting-tab="add">➕ Add New Plan</button>
+            </div>
+          </div>
+          <div style="padding: 24px;">
+            ${hostingTab === 'list' ? `
+              <div class="flex-col gap-4">${plans.map(p => `<div style="border:1px solid #edf2f7; padding:24px;"><div class="flex-between"><div><h3 style="font-size:22px; font-weight:700;">${p.name}</h3><p style="font-size:24px; font-weight:700;">${p.price}</p><p style="color:#64748b; font-size:13px;">Scale: <span style="font-weight:600; background:#f1f5f9; padding:4px 12px;">${p.scale || 'Individual'}</span></p><div style="margin-top:16px;"><strong>Features:</strong><div class="flex flex-wrap gap-2 mt-2">${(p.features || []).map(f => `<span class="feature-tag">✓ ${f}</span>`).join('')}</div><strong style="display:block; margin-top:12px;">Excluded:</strong><div class="flex flex-wrap gap-2 mt-2">${(p.excluded || []).map(e => `<span class="feature-tag excluded-tag">✗ ${e}</span>`).join('')}</div></div></div><button class="deletePlanBtn" style="background:#fef2f2; color:#dc2626; padding:8px 20px;" data-id="${p.id}">Delete</button></div></div>`).join('')}</div>
+            ` : `
+              <div style="max-width: 700px;">
+                <h3 style="font-weight:700; margin-bottom:20px;">Create New Hosting Plan</h3>
+                <div class="flex-col gap-3">
+                  <div>
+                    <label style="font-weight:500; margin-bottom:8px; display:block;">1. Choose Scale *</label>
+                    <div class="flex gap-3" id="scaleSelector">
+                      <div class="scale-option" data-scale="Individual" style="padding:12px 24px; background:#f1f5f9; border:2px solid transparent; font-weight:500;">Individual</div>
+                      <div class="scale-option" data-scale="Business" style="padding:12px 24px; background:#f1f5f9; border:2px solid transparent; font-weight:500;">Business</div>
+                      <div class="scale-option" data-scale="Enterprise" style="padding:12px 24px; background:#f1f5f9; border:2px solid transparent; font-weight:500;">Enterprise</div>
+                    </div>
+                  </div>
+                  <input type="text" id="planName" placeholder="2. Plan Name *">
+                  <input type="text" id="planPrice" placeholder="3. Price (e.g., $29/mo) *">
+                  <div>
+                    <label style="font-weight:500;">4. Features (click Add Another)</label>
+                    <div id="featuresList" class="flex flex-wrap gap-2 mb-2"></div>
+                    <div class="flex gap-2"><input id="newFeature" placeholder="Add feature" style="flex:1;"><button id="addFeatureBtn" style="background:#f1f5f9; padding:10px 20px;">+ Add Another</button></div>
+                  </div>
+                  <div>
+                    <label style="font-weight:500;">5. Excluded Items (strikethrough style)</label>
+                    <div id="excludedList" class="flex flex-wrap gap-2 mb-2"></div>
+                    <div class="flex gap-2"><input id="newExcluded" placeholder="Add excluded item" style="flex:1;"><button id="addExcludedBtn" style="background:#f1f5f9; padding:10px 20px;">+ Add Another</button></div>
+                  </div>
+                  <button id="submitPlanBtn" style="background:black; color:white; padding:14px 28px; margin-top:16px;">💾 Save Hosting Plan</button>
+                </div>
+              </div>
+            `}
+          </div>
+        </div>
+      `;
+    }
+    
+    async function renderRequests() {
+      const reqs = (await getDocs(query(requestsCol, orderBy("createdAt", "desc")))).docs.map(d => ({ id: d.id, ...d.data() }));
+      return `<div style="background:white; padding:24px;"><h3 style="font-weight:700; margin-bottom:20px;">📬 Client Requests</h3><div class="flex-col gap-3">${reqs.map(r => `<div class="flex-between" style="border:1px solid #edf2f7; padding:16px;"><div><p style="font-weight:500;">${r.name || r.email || 'Anonymous'}</p><p style="font-size:13px; color:#475569;">${r.message || r.content || 'No message'}</p><p style="font-size:10px; color:#94a3b8;">${r.createdAt || 'recent'}</p></div><button class="deleteReqBtn" style="background:#fef2f2; color:#dc2626; padding:6px 16px;" data-id="${r.id}">Delete</button></div>`).join('')}</div></div>`;
+    }
+    
+    async function renderManage() {
+      const websites = (await getDocs(websitesCol)).docs.map(d => ({ id: d.id, ...d.data() }));
+      const designs = (await getDocs(designsCol)).docs.map(d => ({ id: d.id, ...d.data() }));
+      return `<div style="background:white; padding:24px;"><h3 style="font-weight:700; margin-bottom:20px;">⚙️ Master Management</h3><div style="margin-bottom:24px;"><h4 style="font-weight:600; margin-bottom:12px;">Websites</h4>${websites.map(w => `<div class="flex-between" style="border-bottom:1px solid #edf2f7; padding:12px 0;"><span>${w.name}</span><button class="manageDelWeb" style="color:#dc2626;" data-id="${w.id}">Delete</button></div>`).join('')}</div><div><h4 style="font-weight:600; margin-bottom:12px;">Designs</h4>${designs.map(d => `<div class="flex-between" style="border-bottom:1px solid #edf2f7; padding:12px 0;"><span>${d.name}</span><button class="manageDelDesign" style="color:#dc2626;" data-id="${d.id}">Delete</button></div>`).join('')}</div></div>`;
+    }
+    
+    async function renderSettings() {
+      const domains = (await getDocs(domainsCol)).docs.map(d => ({ id: d.id, domain: d.data().domain }));
+      const annSnap = await getDocs(announcementsCol);
+      const announcement = annSnap.empty ? "" : annSnap.docs[0].data().text;
+      return `<div style="background:white; padding:24px;"><div style="margin-bottom:32px;"><h3 style="font-weight:700; margin-bottom:20px;">🌐 Domain Management (.rw, .com, .dev, etc.)</h3><div class="flex gap-3" style="flex-wrap:wrap;"><input type="text" id="newDomainInput" placeholder="e.g., pireactive.rw" style="flex:1;"><button id="addDomainBtn" style="background:black; color:white; padding:0 28px;">Add Domain</button></div><div style="margin-top:16px;">${domains.map(d => `<div class="flex-between" style="border-bottom:1px solid #edf2f7; padding:12px 0;"><span>${d.domain}</span><button class="delDomainBtn" style="color:#dc2626;" data-id="${d.id}">Remove</button></div>`).join('')}</div></div><div><h3 style="font-weight:700; margin-bottom:16px;">📢 Global Announcement</h3><textarea id="announcementInput" rows="2" style="width:100%; margin-bottom:12px;">${announcement}</textarea><button id="saveAnnouncementBtn" style="background:black; color:white; padding:12px 28px;">Save Announcement</button></div></div>`;
+    }
+    
+    async function loadSection(section) {
+      let html = "";
+      if (section === "dashboard") html = await renderDashboard();
+      else if (section === "clients") html = await renderClients();
+      else if (section === "news") html = await renderNews();
+      else if (section === "hosting") html = await renderHosting();
+      else if (section === "requests") html = await renderRequests();
+      else if (section === "manage") html = await renderManage();
+      else if (section === "settings") html = await renderSettings();
+      document.getElementById("dynamicPanel").innerHTML = html;
+      document.getElementById("pageTitle").innerText = section.toUpperCase();
+      attachEvents(section);
+    }
+    
+    function attachEvents(section) {
+      if (section === "clients") {
+        document.querySelectorAll("[data-tab]").forEach(btn => btn.addEventListener("click", () => { activeClientTab = btn.dataset.tab; loadSection("clients"); }));
+        document.getElementById("saveWebsiteBtn")?.addEventListener("click", async () => { const name=document.getElementById("webName").value, link=document.getElementById("webLink").value, desc=document.getElementById("webDesc").value, files=document.getElementById("webImages").files; const images=files.length?await uploadMultiple(Array.from(files)):[]; await addDoc(websitesCol,{name,link,description:desc,images,createdAt:new Date().toISOString()}); loadSection("clients"); });
+        document.getElementById("saveDesignBtn")?.addEventListener("click", async () => { const name=document.getElementById("designName").value, files=document.getElementById("designImages").files; const images=files.length?await uploadMultiple(Array.from(files)):[]; await addDoc(designsCol,{name,images,createdAt:new Date().toISOString()}); loadSection("clients"); });
+        document.querySelectorAll(".deleteWebsiteBtn").forEach(btn => btn.addEventListener("click", async () => { await deleteDoc(doc(db,"websites",btn.dataset.id)); loadSection("clients"); }));
+        document.querySelectorAll(".deleteDesignBtn").forEach(btn => btn.addEventListener("click", async () => { await deleteDoc(doc(db,"designs",btn.dataset.id)); loadSection("clients"); }));
+      }
+      if (section === "news") {
+        if(currentEditor) currentEditor.destroy();
+        ClassicEditor.create(document.querySelector("#ckeditor-container"), { toolbar: ['heading','bold','italic','link','bulletedList','numberedList','blockQuote','undo','redo'] }).then(editor=>{ currentEditor=editor; });
+        document.getElementById("saveNewsBtn")?.addEventListener("click", async () => { const title=document.getElementById("newsTitle").value, body=currentEditor.getData(), files=document.getElementById("newsImages").files; const images=files.length?await uploadMultiple(Array.from(files)):[]; if(editingNewsId) await updateDoc(doc(db,"news",editingNewsId),{title,body,images,date:new Date().toISOString()}); else await addDoc(newsCol,{title,body,images,date:new Date().toISOString()}); editingNewsId=null; loadSection("news"); });
+        document.getElementById("cancelNewsEditBtn")?.addEventListener("click",()=>{ editingNewsId=null; loadSection("news"); });
+        document.querySelectorAll(".editNewsBtn").forEach(btn=>btn.addEventListener("click",async()=>{ editingNewsId=btn.dataset.id; loadSection("news"); }));
+        document.querySelectorAll(".deleteNewsBtn").forEach(btn=>btn.addEventListener("click",async()=>{ await deleteDoc(doc(db,"news",btn.dataset.id)); loadSection("news"); }));
+      }
+      if (section === "hosting") {
+        document.querySelectorAll("[data-hosting-tab]").forEach(btn=>btn.addEventListener("click",()=>{ hostingTab=btn.dataset.hostingTab; loadSection("hosting"); }));
+        
+        let features = [], excluded = [];
+        const refreshFeatures = () => { 
+          const container = document.getElementById("featuresList");
+          if(container) container.innerHTML = features.map((f,i)=>`<span class="feature-tag">${f}<button class="removeFeat" style="margin-left:8px; background:transparent; color:#dc2626; padding:0 4px;" data-idx="${i}">✖</button></span>`).join('');
+        };
+        const refreshExcluded = () => { 
+          const container = document.getElementById("excludedList");
+          if(container) container.innerHTML = excluded.map((e,i)=>`<span class="feature-tag excluded-tag">${e}<button class="removeExcl" style="margin-left:8px; background:transparent; color:#dc2626; padding:0 4px;" data-idx="${i}">✖</button></span>`).join('');
+        };
+        
+        document.getElementById("addFeatureBtn")?.addEventListener("click",()=>{ const val=document.getElementById("newFeature")?.value; if(val){ features.push(val); refreshFeatures(); document.getElementById("newFeature").value=''; } });
+        document.getElementById("addExcludedBtn")?.addEventListener("click",()=>{ const val=document.getElementById("newExcluded")?.value; if(val){ excluded.push(val); refreshExcluded(); document.getElementById("newExcluded").value=''; } });
+        
+        // Scale selection - Individual, Business, Enterprise only
+        document.querySelectorAll(".scale-option").forEach(opt => {
+          opt.addEventListener("click", () => {
+            document.querySelectorAll(".scale-option").forEach(o => o.classList.remove("scale-selected"));
+            opt.classList.add("scale-selected");
+            selectedScale = opt.dataset.scale;
+          });
+        });
+        
+        document.getElementById("submitPlanBtn")?.addEventListener("click", async () => {
+          const name = document.getElementById("planName").value;
+          const price = document.getElementById("planPrice").value;
+          if(!name || !price || !selectedScale) { 
+            alert("Please fill Plan Name, Price, and select a Scale (Individual, Business, or Enterprise)"); 
+            return; 
+          }
+          await addDoc(hostingPlansCol, { name, price, scale: selectedScale, features, excluded, createdAt: new Date().toISOString() });
+          hostingTab = "list";
+          loadSection("hosting");
+        });
+        
+        document.querySelectorAll(".deletePlanBtn").forEach(btn=>btn.addEventListener("click",async()=>{ await deleteDoc(doc(db,"hostingPlans",btn.dataset.id)); loadSection("hosting"); }));
+      }
+      if (section === "requests") {
+        document.querySelectorAll(".deleteReqBtn").forEach(btn=>btn.addEventListener("click",async()=>{ await deleteDoc(doc(db,"requests",btn.dataset.id)); loadSection("requests"); }));
+      }
+      if (section === "manage") {
+        document.querySelectorAll(".manageDelWeb").forEach(btn=>btn.addEventListener("click",async()=>{ await deleteDoc(doc(db,"websites",btn.dataset.id)); loadSection("manage"); }));
+        document.querySelectorAll(".manageDelDesign").forEach(btn=>btn.addEventListener("click",async()=>{ await deleteDoc(doc(db,"designs",btn.dataset.id)); loadSection("manage"); }));
+      }
+      if (section === "settings") {
+        document.getElementById("addDomainBtn")?.addEventListener("click",async()=>{ const domain=document.getElementById("newDomainInput").value; if(domain) await addDoc(domainsCol,{domain}); loadSection("settings"); });
+        document.querySelectorAll(".delDomainBtn").forEach(btn=>btn.addEventListener("click",async()=>{ await deleteDoc(doc(db,"domains",btn.dataset.id)); loadSection("settings"); }));
+        document.getElementById("saveAnnouncementBtn")?.addEventListener("click",async()=>{ const text=document.getElementById("announcementInput").value; const snap=await getDocs(announcementsCol); if(snap.empty) await addDoc(announcementsCol,{text}); else await updateDoc(doc(db,"announcements",snap.docs[0].id),{text}); alert("✅ Announcement saved!"); });
+      }
+    }
+    
+    document.querySelectorAll(".sidebar-item").forEach(item => {
+      item.addEventListener("click", (e) => {
+        e.preventDefault();
+        const nav = item.dataset.nav;
+        if (nav) {
+          currentNav = nav;
+          document.querySelectorAll(".sidebar-item").forEach(i => i.classList.remove("nav-active"));
+          item.classList.add("nav-active");
+          loadSection(nav);
+        }
+      });
+    });
+    document.getElementById("globalRefreshBtn")?.addEventListener("click", () => loadSection(currentNav));
+    loadSection("dashboard");
+    document.querySelector(".sidebar-item")?.classList.add("nav-active");
+  </script>
+</body>
+</html>
