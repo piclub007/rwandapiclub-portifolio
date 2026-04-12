@@ -3,8 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-  <title>PIReactive | Hosting Plans</title>
-  <meta name="description" content="Premium hosting solutions by PIReactive Tech co. - Individual, Business, and Enterprise plans.">
+  <title>PIReactive Tech co. | Premium Rwandan Digital Innovation Agency</title>
+  <meta name="description" content="PIReactive is a leading Rwandan tech company founded in 2022. We craft premium websites, applications, and digital experiences for visionary businesses across East Africa.">
+  <meta name="keywords" content="Rwanda tech, digital agency Kigali, web development Rwanda, mobile apps Africa, hosting services, domain provider, business email solutions">
+  <meta name="author" content="PIReactive Tech co.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:title" content="PIReactive Tech co. | Rwandan Digital Innovation">
+  <meta property="og:description" content="Premium websites, applications, and digital products crafted in Rwanda.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/og-image.png">
+  <meta property="og:url" content="https://pireactive.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PIReactive Tech co.">
+  <meta name="twitter:description" content="Rwandan tech digital company building next-gen digital experiences.">
+  <link rel="canonical" href="https://pireactive.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,17 +26,45 @@
     * { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #000000; }
     .v-l { width: 1px; height: 100%; background: linear-gradient(to bottom, transparent 0%, transparent 12%, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.06) 90%, transparent 100%); }
+    @keyframes p-g { 0%, 100% { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.4); } 50% { background: #0a2e1a; box-shadow: 0 0 2px rgba(34, 197, 94, 0.1); } }
+    .g-d { animation: p-g 2.2s ease-in-out infinite; }
+    @keyframes s-v { 0%, 20% { transform: translateY(0); } 25%, 45% { transform: translateY(-65px); } 50%, 70% { transform: translateY(-130px); } 75%, 95% { transform: translateY(-195px); } 100% { transform: translateY(-260px); } }
+    @media (min-width: 768px) { @keyframes s-v { 0%, 20% { transform: translateY(0); } 25%, 45% { transform: translateY(-90px); } 50%, 70% { transform: translateY(-180px); } 75%, 95% { transform: translateY(-270px); } 100% { transform: translateY(-360px); } } }
+    .a-s { animation: s-v 8s cubic-bezier(0.45, 0.05, 0.2, 0.99) infinite; }
+    .s-w { position: relative; height: 400vh; width: 100%; }
+    .c-v { position: sticky; top: 80px; height: calc(100vh - 100px); width: 100%; display: flex; align-items: flex-start; justify-content: center; }
+    @media (min-width: 768px) { .c-v { top: 100px; height: calc(100vh - 120px); } }
+    .c-s { position: relative; width: 100%; height: 100%; }
+    .s-c { position: absolute; top: 0; left: 0; width: 100%; border-radius: 20px; cursor: pointer; transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease; opacity: 0; transform: translateY(60px) scale(0.95); pointer-events: none; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3); }
+    @media (min-width: 768px) { .s-c { border-radius: 24px; } }
+    .s-c.a { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; z-index: 10; }
+    .s-c.p { opacity: 0; transform: translateY(-60px) scale(0.95); pointer-events: none; }
+    .a-i { transition: transform 0.3s ease; display: inline-block; }
+    .s-c:hover .a-i { transform: translateX(8px) rotate(-10deg); }
+    @keyframes s-s { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .s-t { display: flex; gap: 2.5rem; animation: s-s 25s linear infinite; width: fit-content; }
+    @media (min-width: 768px) { .s-t { gap: 4rem; } }
+    .s-wr:hover .s-t { animation-play-state: paused; }
+    .s-i { flex-shrink: 0; filter: grayscale(100%) brightness(0.8); transition: filter 0.3s ease; }
+    .s-i:hover { filter: grayscale(0%) brightness(1); }
+    .s-i img { height: 36px; width: auto; object-fit: contain; }
+    @media (min-width: 768px) { .s-i img { height: 48px; } }
+    .c-w { position: relative; overflow: hidden; }
+    .c-t { display: flex; transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
+    .c-sl { flex: 0 0 100%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    @media (min-width: 480px) { .c-sl { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 768px) { .c-sl { flex: 0 0 100%; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; } }
+    @media (min-width: 1024px) { .c-sl { grid-template-columns: repeat(5, 1fr); } }
+    .p-i { cursor: pointer; transition: transform 0.3s ease; }
+    .p-i:hover { transform: translateY(-4px); }
+    .p-img { aspect-ratio: 16/9; background: #1a1a1a; overflow: hidden; }
+    .p-img img { width: 100%; height: 100%; object-fit: cover; }
+    .c-b { transition: all 0.3s ease; }
+    .c-b:hover { background: rgba(255,255,255,0.15); }
+    .c-b:disabled { opacity: 0.3; cursor: not-allowed; }
     #m-m { transition: opacity 0.3s ease, visibility 0.3s ease; }
     #m-m.h { opacity: 0; visibility: hidden; }
     #m-m:not(.h) { opacity: 1; visibility: visible; }
-    .tab-u { text-decoration: underline; text-underline-offset: 8px; text-decoration-thickness: 2px; }
-    .plan-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s ease; }
-    .plan-card:hover { transform: translateY(-8px); border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); }
-    .feature-included { color: #22c55e; }
-    .feature-excluded { color: #ef4444; text-decoration: line-through; opacity: 0.6; }
-    .scale-individual { border-top: 3px solid #f97316; }
-    .scale-business { border-top: 3px solid #3b82f6; }
-    .scale-enterprise { border-top: 3px solid #a855f7; }
   </style>
 </head>
 <body class="text-white">
@@ -33,8 +73,7 @@
   <div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div>
 </div>
 
-<div class="relative z-20 max-w-7xl mx-auto px-5 md:px-7 py-4 md:py-5 min-h-screen flex flex-col">
-  
+<div class="relative z-20 max-w-7xl mx-auto px-5 md:px-7 py-4 md:py-5">
   <header class="pb-4 border-b border-white">
     <div class="flex flex-row justify-between items-center gap-4">
       <div class="flex flex-col gap-0.5">
@@ -43,8 +82,7 @@
       </div>
       <button id="m-b" class="block md:hidden p-2" aria-label="Menu"><iconify-icon icon="mdi:menu" class="text-2xl"></iconify-icon></button>
       <nav class="hidden md:flex gap-7 md:gap-11 pt-1.5 flex-wrap">
-        <a href="home.html" class="text-[15px] font-normal hover:opacity-65 transition">HOME</a>
-        <a href="works.html" class="text-[15px] font-normal hover:opacity-65 transition">WORKS</a>
+        <a href="clients.html" class="text-[15px] font-normal hover:opacity-65 transition">PROJECTS</a>
         <a href="domain.html" class="text-[15px] font-normal hover:opacity-65 transition">DOMAIN</a>
         <a href="news.html" class="text-[15px] font-normal hover:opacity-65 transition">NEWS</a>
         <a href="cool.html" class="text-[15px] font-normal hover:opacity-65 transition">SNIPPETS</a>
@@ -54,8 +92,7 @@
     <div id="m-m" class="h md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg z-50 pt-20 px-6">
       <button id="c-b" class="absolute top-5 right-5 p-2" aria-label="Close"><iconify-icon icon="mdi:close" class="text-2xl"></iconify-icon></button>
       <nav class="flex flex-col gap-6 text-2xl font-light">
-        <a href="home.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">HOME</a>
-        <a href="works.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">WORKS</a>
+        <a href="clients.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">PROJECTS</a>
         <a href="domain.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">DOMAIN</a>
         <a href="news.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">NEWS</a>
         <a href="cool.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">SNIPPETS</a>
@@ -64,86 +101,90 @@
     </div>
   </header>
 
-  <div class="mt-8 md:mt-12">
-    <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-3">HOSTING PLANS</h1>
-    <p class="text-gray-400 text-base md:text-lg max-w-2xl mb-8">Choose the perfect hosting solution for your needs. From individuals to enterprises, we've got you covered.</p>
-    
-    <div class="flex justify-center gap-6 md:gap-12 border-b border-gray-800 pb-3">
-      <button id="tab-individual" class="text-lg md:text-xl font-medium pb-2 tab-u text-[#f97316] transition">INDIVIDUAL</button>
-      <button id="tab-business" class="text-lg md:text-xl font-medium pb-2 text-gray-500 hover:text-gray-300 transition">BUSINESS</button>
-      <button id="tab-enterprise" class="text-lg md:text-xl font-medium pb-2 text-gray-500 hover:text-gray-300 transition">ENTERPRISE</button>
+  <div class="flex justify-end mt-3"><div class="flex items-center gap-2.5"><span class="w-2 h-2 rounded-full g-d"></span><span class="text-xs md:text-sm text-gray-300 tracking-tight">Available for a project.</span></div></div>
+
+  <section class="mt-12 md:mt-20">
+    <div class="flex flex-col gap-3"><h1 class="text-4xl md:text-7xl font-bold tracking-tight">[WE BUILD]</h1>
+      <div class="flex items-baseline h-[50px] md:h-[90px] overflow-hidden"><div class="h-[50px] md:h-[90px] overflow-hidden inline-block"><div class="flex flex-col a-s"><span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Websites</span><span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Applications</span><span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Digital products</span><span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Experiences</span><span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Websites</span></div></div></div>
     </div>
-  </div>
+  </section>
 
-  <div id="plans-container" class="mt-8 flex-1">
-    <div class="text-center py-20"><div class="inline-block w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin"></div><p class="text-gray-400 mt-4">Loading hosting plans...</p></div>
-  </div>
+  <div class="mt-12 md:mt-28 max-w-3xl"><p class="text-base md:text-xl text-gray-300 leading-relaxed">PIReactive is a Rwandan tech digital company introduced in early 2022. We design and develop premium websites, mobile applications, and digital products for forward-thinking businesses. Trusted by industry leaders and backed by strategic technology partners across East Africa and beyond.</p></div>
 
-  <footer class="border-t border-gray-800 pt-10 md:pt-12 pb-6 md:pb-8 mt-16">
+  <div class="mt-16 md:mt-20 pb-8"><div class="text-xs uppercase tracking-widest text-gray-500 mb-6 md:mb-8">Trusted by innovative companies</div><div class="s-wr overflow-hidden"><div class="s-t"><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/airbnb.svg" alt="Airbnb" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/stripe.svg" alt="Stripe" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/spotify.svg" alt="Spotify" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/shopify.svg" alt="Shopify" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/microsoft.svg" alt="Microsoft" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/google.svg" alt="Google" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/amazon.svg" alt="Amazon" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/meta.svg" alt="Meta" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/airbnb.svg" alt="Airbnb" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/stripe.svg" alt="Stripe" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/spotify.svg" alt="Spotify" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/shopify.svg" alt="Shopify" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/microsoft.svg" alt="Microsoft" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/google.svg" alt="Google" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/amazon.svg" alt="Amazon" class="invert"></div><div class="s-i"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/meta.svg" alt="Meta" class="invert"></div></div></div></div>
+</div>
+
+<div class="s-w"><div class="c-v"><div class="c-s max-w-7xl mx-auto px-5 md:px-7">
+  <div class="s-c p-5 md:p-10 bg-[#f97316] text-black" data-index="0" data-link="hosting.html"><div class="flex justify-between items-start"><div class="flex items-center gap-3 md:gap-4"><iconify-icon icon="mdi:web" class="text-3xl md:text-4xl"></iconify-icon><div><div class="flex items-center gap-3 md:gap-4 text-xs md:text-sm tracking-wide uppercase opacity-70"><span>2024</span><span>Infrastructure</span></div><h2 class="text-3xl md:text-7xl font-bold tracking-tight mt-1 md:mt-2">Hosting</h2></div></div><span class="a-i"><iconify-icon icon="mdi:arrow-right" class="text-4xl md:text-7xl"></iconify-icon></span></div><p class="text-black/80 text-sm md:text-lg mt-3 md:mt-4 max-w-2xl">Blazing fast, secure infrastructure with 99.9% uptime SLA.</p><div class="mt-5 md:mt-8 h-[200px] md:h-[450px] w-full overflow-hidden bg-[#f97316] flex items-center justify-center"><img src="images/box1.png" alt="Hosting" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<iconify-icon icon=\'mdi:server\' class=\'text-6xl md:text-8xl opacity-30\'></iconify-icon>'"></div></div>
+  <div class="s-c p-5 md:p-10 bg-white text-[#2563eb]" data-index="1" data-link="domain.html"><div class="flex justify-between items-start"><div class="flex items-center gap-3 md:gap-4"><iconify-icon icon="mdi:link-variant" class="text-3xl md:text-4xl"></iconify-icon><div><div class="flex items-center gap-3 md:gap-4 text-xs md:text-sm tracking-wide uppercase opacity-70"><span>2023</span><span>Product Design</span></div><h2 class="text-3xl md:text-7xl font-bold tracking-tight mt-1 md:mt-2">Domain Provider</h2></div></div><span class="a-i"><iconify-icon icon="mdi:arrow-right" class="text-4xl md:text-7xl text-[#2563eb]"></iconify-icon></span></div><p class="text-[#2563eb]/70 text-sm md:text-lg mt-3 md:mt-4 max-w-2xl">Premium TLDs, DNS management, and domain privacy included.</p><div class="mt-5 md:mt-8 h-[200px] md:h-[450px] w-full overflow-hidden bg-white flex items-center justify-center"><img src="images/box2.png" alt="Domain" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<iconify-icon icon=\'mdi:web\' class=\'text-6xl md:text-8xl text-[#2563eb] opacity-30\'></iconify-icon>'"></div></div>
+  <div class="s-c p-5 md:p-10 bg-[#1e1e1e] text-[#7dd3fc] border border-white/5" data-index="2" data-link="domain.html"><div class="flex justify-between items-start"><div class="flex items-center gap-3 md:gap-4"><iconify-icon icon="mdi:email-outline" class="text-3xl md:text-4xl text-[#7dd3fc]"></iconify-icon><div><div class="flex items-center gap-3 md:gap-4 text-xs md:text-sm tracking-wide uppercase opacity-70 text-gray-400"><span>2023</span><span>Web Development</span></div><h2 class="text-3xl md:text-7xl font-bold tracking-tight mt-1 md:mt-2 text-[#7dd3fc]">Business Email</h2></div></div><span class="a-i"><iconify-icon icon="mdi:arrow-right" class="text-4xl md:text-7xl text-[#7dd3fc]"></iconify-icon></span></div><p class="text-gray-400 text-sm md:text-lg mt-3 md:mt-4 max-w-2xl"><span class="text-[#7dd3fc]">Professional</span> inbox with <span class="text-[#4ade80]">green</span>-grade encryption.</p><div class="mt-5 md:mt-8 h-[200px] md:h-[450px] w-full overflow-hidden bg-[#1e1e1e] flex items-center justify-center"><img src="images/box3.png" alt="Email" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<iconify-icon icon=\'mdi:email\' class=\'text-6xl md:text-8xl text-[#7dd3fc] opacity-30\'></iconify-icon>'"></div></div>
+  <div class="s-c p-5 md:p-10 bg-[#eab308] text-black" data-index="3" data-link="cool.html"><div class="flex justify-between items-start"><div class="flex items-center gap-3 md:gap-4"><iconify-icon icon="mdi:code-braces" class="text-3xl md:text-4xl"></iconify-icon><div><div class="flex items-center gap-3 md:gap-4 text-xs md:text-sm tracking-wide uppercase opacity-70"><span>2024</span><span>UI/UX Design</span></div><h2 class="text-3xl md:text-7xl font-bold tracking-tight mt-1 md:mt-2">Code Snippets</h2></div></div><span class="a-i"><iconify-icon icon="mdi:arrow-right" class="text-4xl md:text-7xl"></iconify-icon></span></div><p class="text-black/80 text-sm md:text-lg mt-3 md:mt-4 max-w-2xl">Production-ready components and utilities for developers.</p><div class="mt-5 md:mt-8 h-[200px] md:h-[450px] w-full overflow-hidden bg-[#eab308] flex items-center justify-center"><img src="images/box4.png" alt="Snippets" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<iconify-icon icon=\'mdi:code-tags\' class=\'text-6xl md:text-8xl opacity-30\'></iconify-icon>'"></div></div>
+</div></div></div>
+
+<div class="relative z-20 max-w-7xl mx-auto px-5 md:px-7 pt-40 pb-12 md:pb-20">
+  <section class="mb-16 md:mb-24">
+    <div class="flex justify-between items-center mb-8 md:mb-12"><h2 class="text-2xl md:text-5xl font-bold tracking-tight">FEATURED PROJECTS</h2><div class="flex gap-2"><button id="p-b" class="c-b w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition disabled:opacity-30" aria-label="Previous"><iconify-icon icon="mdi:arrow-left" class="text-xl md:text-2xl"></iconify-icon></button><button id="n-b" class="c-b w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition disabled:opacity-30" aria-label="Next"><iconify-icon icon="mdi:arrow-right" class="text-xl md:text-2xl"></iconify-icon></button></div></div>
+    <div class="c-w"><div id="c-t" class="c-t"></div></div>
+    <div class="flex justify-center mt-6 md:hidden"><span id="p-ind" class="text-sm text-gray-400"></span></div>
+  </section>
+
+  <section class="grid md:grid-cols-2 gap-8 md:gap-12 mb-16 md:mb-20">
+    <div><h2 class="text-3xl md:text-5xl font-bold leading-tight mb-3 md:mb-4">Interested in Working With Us?</h2><p class="text-lg md:text-xl text-gray-400">We Have Your Back</p><p class="text-gray-400 mt-4 md:mt-6 max-w-md text-sm md:text-base">Tell us about your project and we'll get back to you within 24 hours.</p></div>
+    <form id="c-f" class="space-y-4 md:space-y-5" autocomplete="on">
+      <input type="text" name="n" id="c-n" placeholder="Full Name" autocomplete="name" class="w-full bg-transparent border-b border-gray-700 py-3 px-0 focus:outline-none focus:border-white transition placeholder-gray-500 text-sm md:text-base" required>
+      <input type="tel" name="p" id="c-p" placeholder="Phone Number" autocomplete="tel" class="w-full bg-transparent border-b border-gray-700 py-3 px-0 focus:outline-none focus:border-white transition placeholder-gray-500 text-sm md:text-base">
+      <input type="email" name="e" id="c-e" placeholder="Email Address" autocomplete="email" class="w-full bg-transparent border-b border-gray-700 py-3 px-0 focus:outline-none focus:border-white transition placeholder-gray-500 text-sm md:text-base" required>
+      <textarea name="m" id="c-m" placeholder="Your Message" rows="3" class="w-full bg-transparent border-b border-gray-700 py-3 px-0 focus:outline-none focus:border-white transition placeholder-gray-500 resize-none text-sm md:text-base" required></textarea>
+      <button type="submit" class="bg-white text-black px-6 md:px-8 py-3 rounded-full font-medium hover:bg-gray-200 transition text-sm md:text-base">Send Message →</button>
+      <p id="f-s" class="text-xs text-gray-500"></p>
+    </form>
+  </section>
+
+  <footer class="border-t border-gray-800 pt-10 md:pt-12 pb-6 md:pb-8">
     <div class="flex flex-col md:flex-row justify-between items-center gap-5 md:gap-6"><div class="flex items-center gap-3"><img src="images/logo.png" alt="PIReactive Logo" class="h-8 md:h-10 w-auto invert" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"><span class="hidden text-xl md:text-2xl font-bold">PIReactive</span></div><div class="flex gap-5 md:gap-6"><a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:twitter"></iconify-icon></a><a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:linkedin"></iconify-icon></a><a href="#" aria-label="GitHub" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:github"></iconify-icon></a><a href="#" aria-label="Dribbble" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:dribbble"></iconify-icon></a><a href="#" aria-label="Instagram" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:instagram"></iconify-icon></a></div></div>
     <div class="flex flex-col md:flex-row justify-between items-center mt-6 md:mt-8 text-xs md:text-sm text-gray-500"><span>© 2026 PIReactive Tech co. All rights reserved.</span><div class="flex gap-5 md:gap-6 mt-3 md:mt-0"><a href="#" class="hover:text-white transition">Privacy</a><a href="#" class="hover:text-white transition">Terms</a><a href="#" class="hover:text-white transition">Accessibility</a></div></div>
   </footer>
 </div>
 
 <script>
-(function(){
-  const _0=document.getElementById('m-b'),_1=document.getElementById('m-m'),_2=document.getElementById('c-b');
-  if(_0&&_1){_0.addEventListener('click',()=>{_1.classList.remove('h');document.body.style.overflow='hidden';});}
-  if(_2&&_1){_2.addEventListener('click',()=>{_1.classList.add('h');document.body.style.overflow='';});}
-  _1?.querySelectorAll('a').forEach(_3=>_3.addEventListener('click',()=>{_1.classList.add('h');document.body.style.overflow='';}));
-
-  const _4=document.getElementById('plans-container');
-  const _5='https://firestore.googleapis.com/v1/projects/project-k-dbaef/databases/(default)/documents/hostingPlans';
-  
-  let _6=[],_7=[],_8=[],_9='Individual';
-  
-  const _a=document.getElementById('tab-individual'),_b=document.getElementById('tab-business'),_c=document.getElementById('tab-enterprise');
-  
-  function _d(_e){
-    _a.classList.remove('tab-u','text-[#f97316]');_a.classList.add('text-gray-500');
-    _b.classList.remove('tab-u','text-[#3b82f6]');_b.classList.add('text-gray-500');
-    _c.classList.remove('tab-u','text-[#a855f7]');_c.classList.add('text-gray-500');
-    if(_e==='Individual'){_a.classList.add('tab-u','text-[#f97316]');_a.classList.remove('text-gray-500');}
-    else if(_e==='Business'){_b.classList.add('tab-u','text-[#3b82f6]');_b.classList.remove('text-gray-500');}
-    else{_c.classList.add('tab-u','text-[#a855f7]');_c.classList.remove('text-gray-500');}
-    _9=_e;_f();
-  }
-  
-  _a.addEventListener('click',()=>_d('Individual'));
-  _b.addEventListener('click',()=>_d('Business'));
-  _c.addEventListener('click',()=>_d('Enterprise'));
-
-  function _g(_h,_i,_j,_k){
-    const _l=_j.join(', ');const _m=`Hello! i need your hosting plan: ${_h} costing about: ${_i}, with the features: ${_l}. Thank you!`;
-    window.open(`https://wa.me/250795065789?text=${encodeURIComponent(_m)}`,'_blank');
-  }
-
-  function _f(){
-    let _n=[];
-    if(_9==='Individual')_n=_6;else if(_9==='Business')_n=_7;else _n=_8;
-    
-    if(_n.length===0){_4.innerHTML=`<div class="text-center py-16"><p class="text-gray-400 text-lg">No ${_9.toLowerCase()} plans available at the moment.</p><p class="text-gray-500 mt-2">Check back soon or contact us directly.</p></div>`;return;}
-    
-    let _o='<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">';
-    _n.forEach(_p=>{
-      const _q=_9==='Individual'?'scale-individual':_9==='Business'?'scale-business':'scale-enterprise';
-      _o+=`<div class="plan-card rounded-2xl p-6 ${_q}"><div class="mb-4"><h3 class="text-2xl font-bold">${_p.name}</h3><span class="text-3xl font-bold block mt-2">${_p.price}</span></div><div class="space-y-2"><p class="text-xs uppercase tracking-wider text-gray-500 mb-2">Features included</p>${_p.features.map(_r=>`<div class="flex items-center gap-2 text-sm"><iconify-icon icon="mdi:check-circle" class="feature-included"></iconify-icon><span>${_r}</span></div>`).join('')}${_p.excluded.length?`<p class="text-xs uppercase tracking-wider text-gray-500 mt-4 mb-2">Not included</p>`:''}${_p.excluded.map(_r=>`<div class="flex items-center gap-2 text-sm"><iconify-icon icon="mdi:close-circle" class="feature-excluded"></iconify-icon><span class="feature-excluded">${_r}</span></div>`).join('')}</div><button class="choose-plan w-full mt-6 bg-white text-black hover:bg-gray-200 py-3 rounded-full font-semibold transition" data-name="${_p.name}" data-price="${_p.price}" data-features='${JSON.stringify(_p.features)}'>CHOOSE PLAN →</button></div>`;
-    });
-    _o+='</div>';_4.innerHTML=_o;
-    
-    document.querySelectorAll('.choose-plan').forEach(_s=>{_s.addEventListener('click',function(){const _t=this.dataset.name,_u=this.dataset.price,_v=JSON.parse(this.dataset.features);_g(_t,_u,_v);});});
-  }
-
-  async function _w(){
-    try{
-      const _x=await fetch(_5);const _y=await _x.json();
-      const _z=(_y.documents||[]).map(_A=>{const _B=_A.fields;return{name:_B.name?.stringValue||'',price:_B.price?.stringValue||'',scale:_B.scale?.stringValue||'Individual',features:_B.features?.arrayValue?.values?.map(_C=>_C.stringValue)||[],excluded:_B.excluded?.arrayValue?.values?.map(_C=>_C.stringValue)||[]};});
-      _6=_z.filter(_D=>_D.scale==='Individual');_7=_z.filter(_D=>_D.scale==='Business');_8=_z.filter(_D=>_D.scale==='Enterprise');
-      _f();
-    }catch(_){_4.innerHTML='<div class="text-center py-20 text-red-400"><p>Failed to load hosting plans. Please refresh.</p></div>';}
-  }
-  _w();
-})();
+  (function(){
+    const _0 = document.querySelectorAll('.s-c');
+    const _1 = document.querySelector('.s-w');
+    let _2 = -1;
+    _0.forEach(_3 => { _3.addEventListener('click', function(){ const _4 = this.dataset.link; if(_4) location.href = _4; }); });
+    function _5(_6){ const _7 = _0.length; const _8 = 1/_7; const _9 = Math.min(Math.floor(_6/_8), _7-1); if(_9!==_2){ _0.forEach((_a,_b)=>{ _a.classList.remove('a','p'); if(_b===_9) _a.classList.add('a'); else if(_b<_9) _a.classList.add('p'); }); _2=_9; } }
+    function _c(){ if(!_1) return; const _d = _1.getBoundingClientRect(); const _e = window.innerHeight; const _f = _e*0.3; const _g = -_d.top+_f; let _h = _g/(_d.height-_e); _h = Math.max(0,Math.min(1,_h)); _5(_h); }
+    window.addEventListener('scroll', _c, {passive: true});
+    setTimeout(()=>{ _c(); if(_0.length && !_0[0].classList.contains('a') && !_0[0].classList.contains('p')) _0[0].classList.add('a'); }, 100);
+    const _i = document.getElementById('m-b'), _j = document.getElementById('m-m'), _k = document.getElementById('c-b');
+    if(_i&&_j){ _i.addEventListener('click',()=>{ _j.classList.remove('h'); document.body.style.overflow='hidden'; }); }
+    if(_k&&_j){ _k.addEventListener('click',()=>{ _j.classList.add('h'); document.body.style.overflow=''; }); }
+    _j?.querySelectorAll('a').forEach(_l=> _l.addEventListener('click',()=>{ _j.classList.add('h'); document.body.style.overflow=''; }));
+    const _m = document.getElementById('c-t'), _n = document.getElementById('p-b'), _o = document.getElementById('n-b'), _p = document.getElementById('p-ind');
+    let _q = [], _r = 0, _s = 0;
+    const _t = 'https://firestore.googleapis.com/v1/projects/project-k-dbaef/databases/(default)/documents/websites';
+    async function _u(){
+      try {
+        const _v = await fetch(_t); const _w = await _v.json();
+        _q = (_w.documents || []).map(_x => { const _y = _x.fields; return { name: _y.name?.stringValue || '', link: _y.link?.stringValue || '', images: _y.images?.arrayValue?.values?.map(_z => _z.stringValue) || [] }; }).filter(_A => _A.images.length && _A.name);
+        _s = Math.ceil(_q.length / 6) || 1; _m.innerHTML = '';
+        if(_q.length === 0){ _m.innerHTML = `<div class="c-sl"><div class="p-i"><div class="p-img"><div class="w-full h-full bg-gray-800 flex items-center justify-center"><iconify-icon icon="mdi:image-off" class="text-3xl text-gray-600"></iconify-icon></div></div><p class="text-xs md:text-sm font-medium text-gray-300">No projects yet</p></div></div>`; _n.disabled = _o.disabled = true; return; }
+        for(let _B=0; _B<_s; _B++){ const _C = document.createElement('div'); _C.className = 'c-sl'; const _D = _q.slice(_B*6, (_B+1)*6); _D.forEach(_E => { const _F = document.createElement('div'); _F.className = 'p-i'; _F.addEventListener('click', ()=>{ if(_E.link) window.open(_E.link, '_blank'); }); _F.innerHTML = `<div class="p-img mb-2 md:mb-3"><img src="${_E.images[0]}" alt="${_E.name}" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">${_E.name}</p>`; _C.appendChild(_F); });
+          while(_C.children.length < 6){ const _G = document.createElement('div'); _G.className = 'p-i'; _G.style.opacity='0'; _G.style.pointerEvents='none'; _C.appendChild(_G); }
+          _m.appendChild(_C);
+        }
+        _r = 0; _H(); _n.disabled = false; _o.disabled = _s <= 1;
+      } catch(_){ _m.innerHTML = `<div class="c-sl"><div class="p-i"><div class="p-img"><div class="w-full h-full bg-gray-800 flex items-center justify-center"><iconify-icon icon="mdi:alert" class="text-3xl text-gray-600"></iconify-icon></div></div><p class="text-xs md:text-sm font-medium text-gray-300">Error loading</p></div></div>`; }
+    }
+    function _H(){ _m.style.transform = `translateX(-${_r*100}%)`; _n.disabled = _r===0; _o.disabled = _r===_s-1; if(_p) _p.textContent = `${_r+1}/${_s}`; }
+    _n.addEventListener('click', ()=>{ if(_r>0){ _r--; _H(); } });
+    _o.addEventListener('click', ()=>{ if(_r<_s-1){ _r++; _H(); } });
+    let _I = 0; _m.addEventListener('touchstart', e=>{ _I = e.touches[0].clientX; }, {passive:true});
+    _m.addEventListener('touchend', e=>{ const _J = _I - e.changedTouches[0].clientX; if(Math.abs(_J)>50){ if(_J>0 && _r<_s-1) _r++; else if(_J<0 && _r>0) _r--; _H(); } });
+    _u();
+    const _K = document.getElementById('c-f'), _L = document.getElementById('f-s');
+    _K.addEventListener('submit', async e=>{ e.preventDefault(); const _M = document.getElementById('c-n').value, _N = document.getElementById('c-e').value, _O = document.getElementById('c-m').value, _P = document.getElementById('c-p').value; if(!_M||!_N||!_O){ _L.textContent = 'Required fields missing.'; return; } try { await fetch('https://firestore.googleapis.com/v1/projects/project-k-dbaef/databases/(default)/documents/requests', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ fields: { name:{stringValue:_M}, email:{stringValue:_N}, phone:{stringValue:_P}, message:{stringValue:_O}, createdAt:{timestampValue:new Date().toISOString()} } }) }); _L.textContent = '✓ Message sent!'; _K.reset(); } catch(_){ _L.textContent = 'Failed. Try again.'; } });
+  })();
 </script>
 </body>
 </html>
