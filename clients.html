@@ -19,7 +19,6 @@
     #m-m:not(.h) { opacity: 1; visibility: visible; }
     .tab-u { text-decoration: underline; text-underline-offset: 8px; text-decoration-thickness: 2px; }
     .color-o { color: #f97316; } .color-y { color: #eab308; } .color-g { color: #22c55e; } .color-r { color: #ef4444; } .color-s { color: #0ea5e9; }
-    .border-color-o { border-color: #f97316; } .border-color-y { border-color: #eab308; } .border-color-g { border-color: #22c55e; } .border-color-r { border-color: #ef4444; } .border-color-s { border-color: #0ea5e9; }
     .modal-open { overflow: hidden; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .modal { animation: fadeIn 0.2s ease; }
@@ -101,7 +100,7 @@
   const _9=document.getElementById('websites-list'),_a=document.getElementById('designs-grid');
   const _b='https://firestore.googleapis.com/v1/projects/project-k-dbaef/databases/(default)/documents/websites';
   const _c='https://firestore.googleapis.com/v1/projects/project-k-dbaef/databases/(default)/documents/designs';
-  const _d=['color-o','color-y','color-g','color-r','color-s'],_e=['border-color-o','border-color-y','border-color-g','border-color-r','border-color-s'];
+  const _d=['color-o','color-y','color-g','color-r','color-s'];
   
   async function loadWebsites(){
     try{
@@ -111,26 +110,21 @@
       if(_h.length===0){_9.innerHTML='<p class="text-gray-400 text-center py-20">No websites yet.</p>';return;}
       _h.forEach((_m,_n)=>{
         const _o=document.createElement('div');_o.className='py-8 border-b border-gray-800 last:border-b-0';
-        const _p=_d[_n%_d.length],_q=_e[_n%_e.length];
-        let _r=0,_s=null;
+        const _p=_d[_n%_d.length];
         const _t=_m.images||[];
         _o.innerHTML=`
-          <div class="flex flex-col md:flex-row gap-6 md:gap-10">
-            <div class="md:w-1/2 relative overflow-hidden rounded-xl bg-gray-900 h-64 md:h-80">
-              <div class="slides-container-${_n} w-full h-full relative">${_t.map((_u,_v)=>`<img src="${_u}" alt="" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${_v===0?'opacity-100':'opacity-0'}">`).join('')}</div>
+          <div class="flex flex-col md:flex-row gap-6 md:gap-10 items-center">
+            <div class="md:w-1/2 flex justify-center items-center h-64 md:h-80 bg-transparent">
+              <img src="${_t[0]||''}" alt="" class="max-h-full max-w-full object-contain">
             </div>
             <div class="md:w-1/2 flex flex-col justify-center">
               <p class="text-sm uppercase tracking-wider mb-2 ${_p}">CLIENT: <span class="font-semibold">${_m.name}</span></p>
               <p class="text-gray-300 text-base leading-relaxed mb-6">${_m.description||'Premium digital experience crafted for modern audiences.'}</p>
-              <a href="${_m.link||'#'}" target="_blank" class="inline-flex items-center gap-2 border ${_q} text-white px-6 py-3 rounded-full hover:bg-white/5 transition w-fit">VISIT <iconify-icon icon="mdi:arrow-right"></iconify-icon></a>
+              <a href="${_m.link||'#'}" target="_blank" class="inline-flex items-center gap-2 text-white hover:text-gray-300 transition w-fit">VISIT <iconify-icon icon="mdi:arrow-right"></iconify-icon></a>
             </div>
           </div>
         `;
         _9.appendChild(_o);
-        if(_t.length>1){
-          const _w=_o.querySelector(`.slides-container-${_n}`);const _x=_w.querySelectorAll('img');
-          setInterval(()=>{_x[_r].classList.remove('opacity-100');_x[_r].classList.add('opacity-0');_r=(_r+1)%_x.length;_x[_r].classList.remove('opacity-0');_x[_r].classList.add('opacity-100');},2000);
-        }
       });
     }catch(_){_9.innerHTML='<p class="text-red-400 text-center py-20">Failed to load websites.</p>';}
   }
