@@ -1,22 +1,117 @@
-<div class="min-h-screen bg-white">
-<nav class="flex justify-between items-center px-8 py-5 border-b border-gray-200">
-<h1 class="text-2xl font-bold">Domain Services</h1>
-<div class="flex gap-6">
-<a href="#" onclick="navigateTo('home');return false;" class="text-gray-600 hover:text-black">Home</a>
-<a href="#" onclick="navigateTo('domain');return false;" class="text-gray-600 hover:text-black">Domain</a>
-<a href="#" onclick="navigateTo('hosting');return false;" class="text-gray-600 hover:text-black">Hosting</a>
-<a href="#" onclick="navigateTo('clients');return false;" class="text-gray-600 hover:text-black">Clients</a>
-<a href="#" onclick="navigateTo('news');return false;" class="text-gray-600 hover:text-black">News</a>
-<a href="#" onclick="navigateTo('about');return false;" class="text-gray-600 hover:text-black">About</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <title>PIReactive | Domain Provider</title>
+  <meta name="description" content="Premium domain registration services by PIReactive Tech co. - Find your perfect domain name.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
+  <style>
+    * { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000000; }
+    .v-l { width: 1px; height: 100%; background: linear-gradient(to bottom, transparent 0%, transparent 12%, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.06) 90%, transparent 100%); }
+    #m-m { transition: opacity 0.3s ease, visibility 0.3s ease; }
+    #m-m.h { opacity: 0; visibility: hidden; }
+    #m-m:not(.h) { opacity: 1; visibility: visible; }
+    .domain-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s ease; }
+    .domain-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); transform: translateY(-2px); }
+    .domain-available { color: #22c55e; }
+    .domain-taken { color: #ef4444; }
+  </style>
+</head>
+<body class="text-white">
+
+<div class="fixed inset-0 pointer-events-none z-10 px-5 md:px-7 flex justify-evenly">
+  <div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div>
 </div>
-</nav>
-<section class="py-16 px-6 max-w-6xl mx-auto">
-<h2 class="text-4xl font-bold mb-8">Find Your Perfect Domain</h2>
-<div class="flex gap-3 mb-12"><input type="text" placeholder="Search domain..." class="border border-gray-200 flex-1"><button class="bg-black text-white px-8">Search</button></div>
-<div class="grid md:grid-cols-3 gap-6">
-<div class="border border-gray-200 p-6"><h3 class="font-bold text-xl">.com</h3><p class="text-2xl font-bold mt-2">$9.99<span class="text-sm font-normal text-gray-500">/yr</span></p><button class="bg-black text-white px-6 py-2 mt-4 w-full">Register</button></div>
-<div class="border border-gray-200 p-6"><h3 class="font-bold text-xl">.rw</h3><p class="text-2xl font-bold mt-2">$7.99<span class="text-sm font-normal text-gray-500">/yr</span></p><button class="bg-black text-white px-6 py-2 mt-4 w-full">Register</button></div>
-<div class="border border-gray-200 p-6"><h3 class="font-bold text-xl">.dev</h3><p class="text-2xl font-bold mt-2">$12.99<span class="text-sm font-normal text-gray-500">/yr</span></p><button class="bg-black text-white px-6 py-2 mt-4 w-full">Register</button></div>
+
+<div class="relative z-20 max-w-7xl mx-auto px-5 md:px-7 py-4 md:py-5 min-h-screen flex flex-col">
+  
+  <header class="pb-4 border-b border-white">
+    <div class="flex flex-row justify-between items-center gap-4">
+      <div class="flex flex-col gap-0.5">
+        <div class="text-xl md:text-[26px] font-semibold tracking-tight">PIReactive Tech co.</div>
+        <a href="https://mkbertrand.vercel.app" target="_blank" rel="noopener noreferrer" class="text-xs md:text-sm font-normal text-gray-400 hover:text-white transition w-fit">Hey am MKB! The creator</a>
+      </div>
+      <button id="m-b" class="block md:hidden p-2" aria-label="Menu"><iconify-icon icon="mdi:menu" class="text-2xl"></iconify-icon></button>
+      <nav class="hidden md:flex gap-7 md:gap-11 pt-1.5 flex-wrap">
+        <a href="home.html" class="text-[15px] font-normal hover:opacity-65 transition">HOME</a>
+        <a href="works.html" class="text-[15px] font-normal hover:opacity-65 transition">WORKS</a>
+        <a href="hosting.html" class="text-[15px] font-normal hover:opacity-65 transition">HOSTING</a>
+        <a href="news.html" class="text-[15px] font-normal hover:opacity-65 transition">NEWS</a>
+        <a href="cool.html" class="text-[15px] font-normal hover:opacity-65 transition">SNIPPETS</a>
+        <a href="about.html" class="text-[15px] font-normal hover:opacity-65 transition">ABOUT</a>
+      </nav>
+    </div>
+    <div id="m-m" class="h md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg z-50 pt-20 px-6">
+      <button id="c-b" class="absolute top-5 right-5 p-2" aria-label="Close"><iconify-icon icon="mdi:close" class="text-2xl"></iconify-icon></button>
+      <nav class="flex flex-col gap-6 text-2xl font-light">
+        <a href="home.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">HOME</a>
+        <a href="works.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">WORKS</a>
+        <a href="hosting.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">HOSTING</a>
+        <a href="news.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">NEWS</a>
+        <a href="cool.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">SNIPPETS</a>
+        <a href="about.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">ABOUT</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="mt-8 md:mt-12">
+    <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-3">DOMAIN PROVIDER</h1>
+    <p class="text-gray-400 text-base md:text-lg max-w-2xl mb-8">Find and register your perfect domain name. Premium TLDs with privacy protection included.</p>
+    
+    <div class="relative max-w-xl mb-8">
+      <input type="text" id="domain-input" placeholder="Enter your desired name (e.g., pireactive)" class="w-full bg-transparent border border-gray-700 rounded-full py-4 px-6 text-white placeholder-gray-500 focus:outline-none focus:border-white transition text-lg">
+    </div>
+    <button id="search-btn" class="bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-200 transition">Search Domains →</button>
+  </div>
+
+  <div id="results-container" class="mt-10 flex-1">
+    <div id="domains-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+  </div>
+
+  <div id="empty-state" class="text-center py-16">
+    <iconify-icon icon="mdi:domain" class="text-5xl text-gray-500 mb-3"></iconify-icon>
+    <p class="text-gray-400 text-lg">Enter a name above to see available domains.</p>
+    <p class="text-gray-500 mt-1">We support multiple TLDs including .rw, .com, .org, and more.</p>
+  </div>
+
+  <footer class="border-t border-gray-800 pt-10 md:pt-12 pb-6 md:pb-8 mt-16">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-5 md:gap-6"><div class="flex items-center gap-3"><img src="images/logo.png" alt="PIReactive Logo" class="h-8 md:h-10 w-auto invert" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"><span class="hidden text-xl md:text-2xl font-bold">PIReactive</span></div><div class="flex gap-5 md:gap-6"><a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:twitter"></iconify-icon></a><a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:linkedin"></iconify-icon></a><a href="#" aria-label="GitHub" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:github"></iconify-icon></a><a href="#" aria-label="Dribbble" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:dribbble"></iconify-icon></a><a href="#" aria-label="Instagram" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:instagram"></iconify-icon></a></div></div>
+    <div class="flex flex-col md:flex-row justify-between items-center mt-6 md:mt-8 text-xs md:text-sm text-gray-500"><span>© 2026 PIReactive Tech co. All rights reserved.</span><div class="flex gap-5 md:gap-6 mt-3 md:mt-0"><a href="#" class="hover:text-white transition">Privacy</a><a href="#" class="hover:text-white transition">Terms</a><a href="#" class="hover:text-white transition">Accessibility</a></div></div>
+  </footer>
 </div>
-</section>
-</div>
+
+<script>
+(function(){
+  const _0=document.getElementById('m-b'),_1=document.getElementById('m-m'),_2=document.getElementById('c-b');
+  if(_0&&_1){_0.addEventListener('click',()=>{_1.classList.remove('h');document.body.style.overflow='hidden';});}
+  if(_2&&_1){_2.addEventListener('click',()=>{_1.classList.add('h');document.body.style.overflow='';});}
+  _1?.querySelectorAll('a').forEach(_3=>_3.addEventListener('click',()=>{_1.classList.add('h');document.body.style.overflow='';}));
+
+  const _4=document.getElementById('domains-grid'),_5=document.getElementById('empty-state'),_6=document.getElementById('domain-input'),_7=document.getElementById('search-btn');
+  const _8='https://firestore.googleapis.com/v1/projects/project-k-dbaef/databases/(default)/documents/domains';
+  let _9=[];
+
+  function _a(_b){const _c=`Hello! I'm interested in registering the domain: ${_b}. Is it still available? Please provide details on pricing and setup. Thank you!`;window.open(`https://wa.me/250795065789?text=${encodeURIComponent(_c)}`,'_blank');}
+
+  function _d(){const _e=_6.value.trim();if(!_e){_4.innerHTML='';_5.classList.remove('hidden');return;}_5.classList.add('hidden');let _f='';_9.forEach(_g=>{const _h=`${_e}${_g}`;_f+=`<div class="domain-card rounded-xl p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"><div class="flex items-center gap-3"><iconify-icon icon="mdi:web" class="text-2xl text-[#2563eb]"></iconify-icon><div><p class="text-xl font-semibold">${_h}</p><p class="text-xs text-gray-400 mt-0.5"><span class="domain-available">●</span> Available • Instant setup</p></div></div><button class="apply-domain bg-white/5 hover:bg-white/10 border border-white/10 text-white px-6 py-2.5 rounded-full text-sm font-medium transition w-full sm:w-auto">APPLY →</button></div>`;});_4.innerHTML=_f;document.querySelectorAll('.apply-domain').forEach(_i=>{const _j=_i.closest('.domain-card').querySelector('p.text-xl').textContent;_i.addEventListener('click',()=>_a(_j));});}
+
+  _7.addEventListener('click',_d);_6.addEventListener('keypress',(e)=>{if(e.key==='Enter')_d();});
+
+  async function _k(){
+    try{
+      const _l=await fetch(_8);const _m=await _l.json();
+      _9=(_m.documents||[]).map(_n=>{const _o=_n.fields;return _o.domain?.stringValue||'';}).filter(_p=>_p);
+      if(_9.length===0){_9=['.rw','.com','.org','.net','.dev','.co.rw','.app','.io','.tech','.design'];}_5.classList.remove('hidden');
+    }catch(_){_9=['.rw','.com','.org','.net','.dev'];console.warn('Using fallback domains');}
+  }
+  _k();
+})();
+</script>
+</body>
+</html>
