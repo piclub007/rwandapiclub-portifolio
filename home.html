@@ -135,12 +135,38 @@
       object-fit: contain;
     }
 
-    .project-grid-item {
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    
+    @media (min-width: 768px) {
+      .featured-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1.25rem;
+      }
+    }
+
+    .project-card-item {
+      cursor: pointer;
       transition: transform 0.3s ease;
     }
     
-    .project-grid-item:hover {
+    .project-card-item:hover {
       transform: translateY(-4px);
+    }
+    
+    .project-card-image {
+      aspect-ratio: 16/9;
+      background: #1a1a1a;
+      overflow: hidden;
+    }
+    
+    .project-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   </style>
 </head>
@@ -245,7 +271,7 @@
             <span class="arrow-icon"><iconify-icon icon="mdi:arrow-right" class="text-5xl md:text-7xl"></iconify-icon></span>
           </div>
           <p class="text-black/80 text-lg mt-4 max-w-2xl">Blazing fast, secure infrastructure with 99.9% uptime SLA.</p>
-          <div class="mt-8 h-[300px] md:h-[450px] w-full rounded-2xl overflow-hidden bg-[#f97316] flex items-center justify-center">
+          <div class="mt-8 h-[300px] md:h-[450px] w-full overflow-hidden bg-[#f97316] flex items-center justify-center">
             <iconify-icon icon="mdi:server" class="text-8xl opacity-30"></iconify-icon>
           </div>
         </div>
@@ -265,7 +291,7 @@
             <span class="arrow-icon"><iconify-icon icon="mdi:arrow-right" class="text-5xl md:text-7xl text-[#2563eb]"></iconify-icon></span>
           </div>
           <p class="text-[#2563eb]/70 text-lg mt-4 max-w-2xl">Premium TLDs, DNS management, and domain privacy included.</p>
-          <div class="mt-8 h-[300px] md:h-[450px] w-full rounded-2xl overflow-hidden bg-white flex items-center justify-center">
+          <div class="mt-8 h-[300px] md:h-[450px] w-full overflow-hidden bg-white flex items-center justify-center">
             <iconify-icon icon="mdi:web" class="text-8xl text-[#2563eb] opacity-30"></iconify-icon>
           </div>
         </div>
@@ -285,7 +311,7 @@
             <span class="arrow-icon"><iconify-icon icon="mdi:arrow-right" class="text-5xl md:text-7xl text-[#7dd3fc]"></iconify-icon></span>
           </div>
           <p class="text-gray-400 text-lg mt-4 max-w-2xl"><span class="text-[#7dd3fc]">Professional</span> inbox with <span class="text-[#4ade80]">green</span>-grade encryption.</p>
-          <div class="mt-8 h-[300px] md:h-[450px] w-full rounded-2xl overflow-hidden bg-[#1e1e1e] flex items-center justify-center">
+          <div class="mt-8 h-[300px] md:h-[450px] w-full overflow-hidden bg-[#1e1e1e] flex items-center justify-center">
             <iconify-icon icon="mdi:email" class="text-8xl text-[#7dd3fc] opacity-30"></iconify-icon>
           </div>
         </div>
@@ -305,7 +331,7 @@
             <span class="arrow-icon"><iconify-icon icon="mdi:arrow-right" class="text-5xl md:text-7xl"></iconify-icon></span>
           </div>
           <p class="text-black/80 text-lg mt-4 max-w-2xl">Production-ready components and utilities for developers.</p>
-          <div class="mt-8 h-[300px] md:h-[450px] w-full rounded-2xl overflow-hidden bg-[#eab308] flex items-center justify-center">
+          <div class="mt-8 h-[300px] md:h-[450px] w-full overflow-hidden bg-[#eab308] flex items-center justify-center">
             <iconify-icon icon="mdi:code-tags" class="text-8xl opacity-30"></iconify-icon>
           </div>
         </div>
@@ -314,21 +340,51 @@
     </div>
   </div>
 
-  <div class="relative z-20 max-w-7xl mx-auto px-5 md:px-7 pt-32 pb-20">
+  <div class="relative z-20 max-w-7xl mx-auto px-5 md:px-7 pt-40 pb-20">
     
     <section class="mb-24">
       <h2 class="text-3xl md:text-5xl font-bold mb-12 tracking-tight">FEATURED PROJECTS</h2>
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-5">
-        <div class="project-grid-item cursor-pointer"><div class="aspect-square rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden mb-3"><img src="images/project1.jpg" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-600\'><iconify-icon icon=\'mdi:image\' class=\'text-4xl\'></iconify-icon></div>'"></div><p class="text-sm font-medium text-gray-300">Nova Platform</p></div>
-        <div class="project-grid-item cursor-pointer"><div class="aspect-square rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden mb-3"><img src="images/project2.jpg" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-600\'><iconify-icon icon=\'mdi:image\' class=\'text-4xl\'></iconify-icon></div>'"></div><p class="text-sm font-medium text-gray-300">Aether Finance</p></div>
-        <div class="project-grid-item cursor-pointer"><div class="aspect-square rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden mb-3"><img src="images/project3.jpg" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-600\'><iconify-icon icon=\'mdi:image\' class=\'text-4xl\'></iconify-icon></div>'"></div><p class="text-sm font-medium text-gray-300">Lumina OS</p></div>
-        <div class="project-grid-item cursor-pointer"><div class="aspect-square rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden mb-3"><img src="images/project4.jpg" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-600\'><iconify-icon icon=\'mdi:image\' class=\'text-4xl\'></iconify-icon></div>'"></div><p class="text-sm font-medium text-gray-300">Cipher Wallet</p></div>
-        <div class="project-grid-item cursor-pointer"><div class="aspect-square rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden mb-3"><img src="images/project5.jpg" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-600\'><iconify-icon icon=\'mdi:image\' class=\'text-4xl\'></iconify-icon></div>'"></div><p class="text-sm font-medium text-gray-300">Neo Dashboard</p></div>
-        <div class="project-grid-item cursor-pointer"><div class="aspect-square rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden mb-3"><img src="images/project6.jpg" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-600\'><iconify-icon icon=\'mdi:image\' class=\'text-4xl\'></iconify-icon></div>'"></div><p class="text-sm font-medium text-gray-300">Quantum API</p></div>
-        <div class="project-grid-item cursor-pointer"><div class="aspect-square rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden mb-3"><img src="images/project7.jpg" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-600\'><iconify-icon icon=\'mdi:image\' class=\'text-4xl\'></iconify-icon></div>'"></div><p class="text-sm font-medium text-gray-300">Flux Mobile</p></div>
-        <div class="project-grid-item cursor-pointer"><div class="aspect-square rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden mb-3"><img src="images/project8.jpg" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-600\'><iconify-icon icon=\'mdi:image\' class=\'text-4xl\'></iconify-icon></div>'"></div><p class="text-sm font-medium text-gray-300">Aether Edge</p></div>
-        <div class="project-grid-item cursor-pointer"><div class="aspect-square rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden mb-3"><img src="images/project9.jpg" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-600\'><iconify-icon icon=\'mdi:image\' class=\'text-4xl\'></iconify-icon></div>'"></div><p class="text-sm font-medium text-gray-300">Void Studio</p></div>
-        <div class="project-grid-item cursor-pointer"><div class="aspect-square rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden mb-3"><img src="images/project10.jpg" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center text-gray-600\'><iconify-icon icon=\'mdi:image\' class=\'text-4xl\'></iconify-icon></div>'"></div><p class="text-sm font-medium text-gray-300">Zenith Core</p></div>
+      <div class="featured-grid">
+        <div class="project-card-item">
+          <div class="project-card-image mb-3"><img src="images/project1.jpg" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-3xl text-gray-600\'></iconify-icon></div>'"></div>
+          <p class="text-sm font-medium text-gray-300">Nova Platform</p>
+        </div>
+        <div class="project-card-item">
+          <div class="project-card-image mb-3"><img src="images/project2.jpg" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-3xl text-gray-600\'></iconify-icon></div>'"></div>
+          <p class="text-sm font-medium text-gray-300">Aether Finance</p>
+        </div>
+        <div class="project-card-item">
+          <div class="project-card-image mb-3"><img src="images/project3.jpg" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-3xl text-gray-600\'></iconify-icon></div>'"></div>
+          <p class="text-sm font-medium text-gray-300">Lumina OS</p>
+        </div>
+        <div class="project-card-item">
+          <div class="project-card-image mb-3"><img src="images/project4.jpg" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-3xl text-gray-600\'></iconify-icon></div>'"></div>
+          <p class="text-sm font-medium text-gray-300">Cipher Wallet</p>
+        </div>
+        <div class="project-card-item">
+          <div class="project-card-image mb-3"><img src="images/project5.jpg" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-3xl text-gray-600\'></iconify-icon></div>'"></div>
+          <p class="text-sm font-medium text-gray-300">Neo Dashboard</p>
+        </div>
+        <div class="project-card-item">
+          <div class="project-card-image mb-3"><img src="images/project6.jpg" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-3xl text-gray-600\'></iconify-icon></div>'"></div>
+          <p class="text-sm font-medium text-gray-300">Quantum API</p>
+        </div>
+        <div class="project-card-item">
+          <div class="project-card-image mb-3"><img src="images/project7.jpg" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-3xl text-gray-600\'></iconify-icon></div>'"></div>
+          <p class="text-sm font-medium text-gray-300">Flux Mobile</p>
+        </div>
+        <div class="project-card-item">
+          <div class="project-card-image mb-3"><img src="images/project8.jpg" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-3xl text-gray-600\'></iconify-icon></div>'"></div>
+          <p class="text-sm font-medium text-gray-300">Aether Edge</p>
+        </div>
+        <div class="project-card-item">
+          <div class="project-card-image mb-3"><img src="images/project9.jpg" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-3xl text-gray-600\'></iconify-icon></div>'"></div>
+          <p class="text-sm font-medium text-gray-300">Void Studio</p>
+        </div>
+        <div class="project-card-item">
+          <div class="project-card-image mb-3"><img src="images/project10.jpg" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-3xl text-gray-600\'></iconify-icon></div>'"></div>
+          <p class="text-sm font-medium text-gray-300">Zenith Core</p>
+        </div>
       </div>
     </section>
 
