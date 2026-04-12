@@ -7,24 +7,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
   <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
-    
-    body {
-      background: #f5f7fb;
-    }
-    
-    /* ALL ELEMENTS HAVE ROUNDED CORNERS */
-    * {
-      border-radius: 20px !important;
-    }
-    
-    /* Flexbox utilities */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { background: #f5f7fb; }
+    * { border-radius: 20px !important; }
     .flex { display: flex; }
     .flex-col { display: flex; flex-direction: column; }
     .flex-between { display: flex; justify-content: space-between; align-items: center; }
@@ -32,97 +27,34 @@
     .gap-2 { gap: 8px; }
     .gap-3 { gap: 12px; }
     .gap-4 { gap: 16px; }
-    
-    /* Sidebar - NO UNDERLINES EVER */
-    .sidebar-item { 
-      transition: all 0.2s; 
-      margin: 4px 0;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 20px;
-      text-decoration: none !important;
-      color: #334155;
-      font-weight: 500;
-      cursor: pointer;
-    }
-    .sidebar-item:hover { 
-      background: #f1f5f9; 
-      transform: translateX(6px); 
-      text-decoration: none !important; 
-    }
-    .nav-active { 
-      background: #000000; 
-      color: white !important; 
-      text-decoration: none !important; 
-    }
+    .sidebar-item { transition: all 0.2s; margin: 4px 0; display: flex; align-items: center; gap: 12px; padding: 12px 20px; text-decoration: none !important; color: #334155; font-weight: 500; cursor: pointer; }
+    .sidebar-item:hover { background: #f1f5f9; transform: translateX(6px); text-decoration: none !important; }
+    .nav-active { background: #000000; color: white !important; text-decoration: none !important; }
     .nav-active .iconify { color: white !important; }
-    
-    /* Buttons */
-    button, .btn, .tab-btn {
-      border-radius: 40px !important;
-      transition: all 0.2s;
-      cursor: pointer;
-      font-weight: 500;
-      border: none;
-      padding: 10px 20px;
-    }
+    button, .btn, .tab-btn { border-radius: 40px !important; transition: all 0.2s; cursor: pointer; font-weight: 500; border: none; padding: 10px 20px; }
     button:hover { transform: translateY(-2px); filter: brightness(0.96); }
-    
-    /* Tabs */
     .tab-active { background: #000000; color: white !important; }
     .tab-btn { padding: 10px 24px; font-size: 13px; font-weight: 500; margin: 0 4px; background: #f1f5f9; }
-    
-    /* Cards */
     .stat-card { background: white; padding: 24px; border: 1px solid #eef2ff; transition: all 0.2s; }
     .stat-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
-    
-    /* Form elements */
-    input, textarea, select {
-      border: 1px solid #e2e8f0;
-      background: white;
-      padding: 12px 16px;
-      outline: none;
-      font-size: 14px;
-      width: 100%;
-    }
+    input, textarea, select { border: 1px solid #e2e8f0; background: white; padding: 12px 16px; outline: none; font-size: 14px; width: 100%; }
     input:focus, textarea:focus, select:focus { border-color: #000000; box-shadow: 0 0 0 3px rgba(0,0,0,0.05); }
-    
-    /* Feature tags */
     .feature-tag { background: #f1f5f9; padding: 6px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 8px; margin: 4px; }
     .excluded-tag { text-decoration: line-through; background: #fef2f2; color: #991b1b; }
-    
-    /* CKEditor */
     .ck-editor__editable { min-height: 280px; }
-    
-    /* Scrollbar */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 20px; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 20px; }
-    
     .hidden { display: none; }
-    .scale-option { 
-      cursor: pointer; 
-      transition: all 0.2s; 
-      padding: 12px 24px; 
-      background: #f1f5f9; 
-      border: 2px solid transparent; 
-      font-weight: 500;
-    }
-    .scale-selected { 
-      background: #000000; 
-      color: white; 
-      border-color: #000000; 
-    }
-    
-    a, a:hover, a:focus, a:active {
-      text-decoration: none !important;
-    }
+    .scale-option { cursor: pointer; transition: all 0.2s; padding: 12px 24px; background: #f1f5f9; border: 2px solid transparent; font-weight: 500; }
+    .scale-selected { background: #000000; color: white; border-color: #000000; }
+    a, a:hover, a:focus, a:active { text-decoration: none !important; }
+    .CodeMirror { height: 350px; border-radius: 16px !important; border: 1px solid #e2e8f0; font-size: 14px; }
+    .snippet-preview { background: white; border: 1px solid #e2e8f0; overflow: auto; min-height: 250px; padding: 16px; }
   </style>
 </head>
 <body>
   <div class="flex" style="min-height: 100vh; padding: 16px; gap: 16px;">
-    <!-- SIDEBAR - NO UNDERLINES -->
     <aside class="flex-col" style="width: 280px; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
       <div style="padding: 24px; border-bottom: 1px solid #edf2f7;">
         <div class="flex-between" style="gap: 12px;">
@@ -139,6 +71,7 @@
         <a href="#" data-nav="dashboard" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:view-dashboard"></span><span>DASHBOARD</span></a>
         <a href="#" data-nav="clients" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:account-group"></span><span>CLIENTS</span></a>
         <a href="#" data-nav="news" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:newspaper"></span><span>NEWS</span></a>
+        <a href="#" data-nav="snippets" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:code-braces"></span><span>SNIPPETS</span></a>
         <a href="#" data-nav="hosting" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:server"></span><span>HOSTING PLANS</span></a>
         <a href="#" data-nav="requests" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:inbox"></span><span>REQUESTS</span></a>
         <a href="#" data-nav="manage" class="sidebar-item"><span class="iconify text-xl" data-icon="mdi:hammer-wrench"></span><span>MANAGE</span></a>
@@ -154,7 +87,6 @@
       </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="flex-col" style="flex: 1; overflow-y: auto;">
       <div style="background: white; padding: 24px; margin-bottom: 24px;" class="flex-between">
         <div>
@@ -169,9 +101,7 @@
 
   <style>
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-    a, a:link, a:visited, a:hover, a:active {
-      text-decoration: none !important;
-    }
+    a, a:link, a:visited, a:hover, a:active { text-decoration: none !important; }
     button, .btn, .tab-btn { cursor: pointer; }
   </style>
 
@@ -198,6 +128,7 @@
     const websitesCol = collection(db, "websites");
     const designsCol = collection(db, "designs");
     const newsCol = collection(db, "news");
+    const snippetsCol = collection(db, "snippets");
     const hostingPlansCol = collection(db, "hostingPlans");
     const requestsCol = collection(db, "requests");
     const domainsCol = collection(db, "domains");
@@ -221,25 +152,29 @@
     let currentNav = "dashboard";
     let currentEditor = null;
     let editingNewsId = null;
+    let editingSnippetId = null;
+    let editingPlanId = null;
     let activeClientTab = "website";
     let hostingTab = "list";
     let selectedScale = null;
+    let snippetCM = null;
     
     async function renderDashboard() {
-      const [websitesSnap, designsSnap, newsSnap, plansSnap, requestsSnap, domainsSnap] = await Promise.all([
-        getDocs(websitesCol), getDocs(designsCol), getDocs(newsCol), getDocs(hostingPlansCol), getDocs(requestsCol), getDocs(domainsCol)
+      const [websitesSnap, designsSnap, newsSnap, snippetsSnap, plansSnap, requestsSnap, domainsSnap] = await Promise.all([
+        getDocs(websitesCol), getDocs(designsCol), getDocs(newsCol), getDocs(snippetsCol), getDocs(hostingPlansCol), getDocs(requestsCol), getDocs(domainsCol)
       ]);
       return `
         <div class="flex flex-wrap gap-4" style="margin-bottom: 20px;">
           <div class="stat-card" style="flex: 1; min-width: 200px;"><div class="flex-between"><div><span class="iconify text-3xl" data-icon="mdi:web"></span><p style="color:#64748b; margin-top:12px;">Websites</p><p style="font-size:32px; font-weight:700;">${websitesSnap.size}</p></div><div style="background:#f1f5f9; width:48px; height:48px; display:flex; align-items:center; justify-content:center;"><span class="iconify text-xl" data-icon="mdi:trending-up"></span></div></div></div>
           <div class="stat-card" style="flex: 1; min-width: 200px;"><div><span class="iconify text-3xl" data-icon="mdi:palette"></span><p style="color:#64748b; margin-top:12px;">Designs</p><p style="font-size:32px; font-weight:700;">${designsSnap.size}</p></div></div>
           <div class="stat-card" style="flex: 1; min-width: 200px;"><div><span class="iconify text-3xl" data-icon="mdi:newspaper"></span><p style="color:#64748b; margin-top:12px;">News</p><p style="font-size:32px; font-weight:700;">${newsSnap.size}</p></div></div>
-          <div class="stat-card" style="flex: 1; min-width: 200px;"><div><span class="iconify text-3xl" data-icon="mdi:format-list-checks"></span><p style="color:#64748b; margin-top:12px;">Requests</p><p style="font-size:32px; font-weight:700;">${requestsSnap.size}</p></div></div>
+          <div class="stat-card" style="flex: 1; min-width: 200px;"><div><span class="iconify text-3xl" data-icon="mdi:code-braces"></span><p style="color:#64748b; margin-top:12px;">Snippets</p><p style="font-size:32px; font-weight:700;">${snippetsSnap.size}</p></div></div>
         </div>
         <div class="stat-card">
           <h3 style="font-weight: 600; font-size: 18px; margin-bottom: 16px;">📊 Platform Analytics</h3>
           <div class="flex-between" style="margin-bottom: 12px;"><span>Active Hosting Plans</span><span style="font-weight:600;">${plansSnap.size}</span></div>
           <div class="flex-between" style="margin-bottom: 12px;"><span>Configured Domains</span><span style="font-weight:600;">${domainsSnap.size}</span></div>
+          <div class="flex-between" style="margin-bottom: 12px;"><span>Client Requests</span><span style="font-weight:600;">${requestsSnap.size}</span></div>
           <div style="margin-top: 16px; height: 6px; background: #e2e8f0; overflow: hidden;"><div style="width: 68%; height: 100%; background: black;"></div></div>
           <p style="font-size: 12px; color: #64748b; margin-top: 12px;">✅ System Operational • ${new Date().toLocaleTimeString()}</p>
         </div>
@@ -288,7 +223,31 @@
           </div>
           <div style="padding: 24px;">
             <h3 style="font-weight: 700; margin-bottom: 20px;">📰 All Articles</h3>
-            <div class="flex-col gap-3">${newsItems.map(n => `<div class="flex-between" style="border:1px solid #edf2f7; padding:16px;"><div><h4 style="font-weight:600;">${n.title}</h4><p style="font-size:11px; color:#94a3b8;">${new Date(n.date).toLocaleDateString()}</p><p style="font-size:13px; color:#475569;">${(n.body || '').substring(0, 80)}...</p></div><div class="flex gap-2"><button class="editNewsBtn" style="color:#2563eb;" data-id="${n.id}">Edit</button><button class="deleteNewsBtn" style="color:#dc2626;" data-id="${n.id}">Delete</button></div></div>`).join('')}</div>
+            <div class="flex-col gap-3">${newsItems.map(n => `<div class="flex-between" style="border:1px solid #edf2f7; padding:16px;"><div><h4 style="font-weight:600;">${n.title}</h4><p style="font-size:11px; color:#94a3b8;">${new Date(n.date).toLocaleDateString()}</p><p style="font-size:13px; color:#475569;">${(n.body || '').substring(0, 80)}...</p></div><div class="flex gap-2"><button class="editNewsBtn" style="color:#2563eb;" data-id="${n.id}">Edit</button><button class="deleteNewsBtn" style="color:#2626;" data-id="${n.id}">Delete</button></div></div>`).join('')}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    async function renderSnippets() {
+      const snippets = (await getDocs(query(snippetsCol, orderBy("createdAt", "desc")))).docs.map(d => ({ id: d.id, ...d.data() }));
+      return `
+        <div style="background: white; overflow: hidden;">
+          <div style="padding: 24px; border-bottom: 1px solid #edf2f7;">
+            <div class="flex-between"><h3 style="font-weight: 700; font-size: 18px;">${editingSnippetId ? '✏️ Edit Snippet' : '➕ Add New Snippet'}</h3>${editingSnippetId ? '<button id="cancelSnippetEditBtn" style="border:1px solid #cbd5e1; padding:8px 20px;">Cancel</button>' : ''}</div>
+            <div class="flex-col gap-3 mt-4">
+              <input type="text" id="snippetName" placeholder="Snippet Name *" value="${editingSnippetId ? (snippets.find(s => s.id === editingSnippetId)?.name || '') : ''}">
+              <div><label style="font-weight:500; margin-bottom:8px; display:block;">Code Editor (HTML/CSS/JS)</label><textarea id="snippetCode" style="display:none">${editingSnippetId ? (snippets.find(s => s.id === editingSnippetId)?.code || '') : ''}</textarea><div id="snippetEditor"></div></div>
+              <div class="flex gap-2"><button id="refreshPreviewBtn" style="background:#f1f5f9; padding:8px 20px;">🔄 Refresh Preview</button></div>
+              <div><label style="font-weight:500; margin-bottom:8px; display:block;">Live Preview</label><div id="snippetPreview" class="snippet-preview"></div></div>
+              <button id="saveSnippetBtn" style="background: black; color: white; padding: 12px 28px; width: fit-content;">${editingSnippetId ? 'Update' : 'Save'} Snippet</button>
+            </div>
+          </div>
+          <div style="padding: 24px;">
+            <div class="flex-between mb-4"><h3 style="font-weight: 700;">📚 All Snippets</h3><input type="text" id="snippetSearch" placeholder="Search snippets..." style="width:250px;"></div>
+            <div class="flex-col gap-3" id="snippetsList">
+              ${snippets.map(s => `<div class="flex-between snippet-item" style="border:1px solid #edf2f7; padding:16px;" data-name="${s.name.toLowerCase()}"><div><h4 style="font-weight:600;">${s.name}</h4><p style="font-size:11px; color:#94a3b8;">${new Date(s.createdAt).toLocaleDateString()}</p></div><div class="flex gap-2"><button class="editSnippetBtn" style="color:#2563eb;" data-id="${s.id}">Edit</button><button class="deleteSnippetBtn" style="color:#dc2626;" data-id="${s.id}">Delete</button></div></div>`).join('')}
+            </div>
           </div>
         </div>
       `;
@@ -296,42 +255,29 @@
     
     async function renderHosting() {
       const plans = (await getDocs(hostingPlansCol)).docs.map(d => ({ id: d.id, ...d.data() }));
+      const editingPlan = editingPlanId ? plans.find(p => p.id === editingPlanId) : null;
       return `
         <div style="background: white; overflow: hidden;">
           <div class="flex-between" style="padding: 16px 24px; border-bottom: 1px solid #edf2f7; flex-wrap: wrap;">
             <div class="flex gap-2">
               <button class="tab-btn ${hostingTab === 'list' ? 'tab-active' : ''}" data-hosting-tab="list">📋 View Plans</button>
-              <button class="tab-btn ${hostingTab === 'add' ? 'tab-active' : ''}" data-hosting-tab="add">➕ Add New Plan</button>
+              <button class="tab-btn ${hostingTab === 'add' ? 'tab-active' : ''}" data-hosting-tab="add">${editingPlanId ? '✏️ Edit' : '➕ Add New'} Plan</button>
             </div>
+            ${editingPlanId ? '<button id="cancelPlanEditBtn" style="border:1px solid #cbd5e1; padding:8px 20px;">Cancel Edit</button>' : ''}
           </div>
           <div style="padding: 24px;">
             ${hostingTab === 'list' ? `
-              <div class="flex-col gap-4">${plans.map(p => `<div style="border:1px solid #edf2f7; padding:24px;"><div class="flex-between"><div><h3 style="font-size:22px; font-weight:700;">${p.name}</h3><p style="font-size:24px; font-weight:700;">${p.price}</p><p style="color:#64748b; font-size:13px;">Scale: <span style="font-weight:600; background:#f1f5f9; padding:4px 12px;">${p.scale || 'Individual'}</span></p><div style="margin-top:16px;"><strong>Features:</strong><div class="flex flex-wrap gap-2 mt-2">${(p.features || []).map(f => `<span class="feature-tag">✓ ${f}</span>`).join('')}</div><strong style="display:block; margin-top:12px;">Excluded:</strong><div class="flex flex-wrap gap-2 mt-2">${(p.excluded || []).map(e => `<span class="feature-tag excluded-tag">✗ ${e}</span>`).join('')}</div></div></div><button class="deletePlanBtn" style="background:#fef2f2; color:#dc2626; padding:8px 20px;" data-id="${p.id}">Delete</button></div></div>`).join('')}</div>
+              <div class="flex-col gap-4">${plans.map(p => `<div style="border:1px solid #edf2f7; padding:24px;"><div class="flex-between"><div><h3 style="font-size:22px; font-weight:700;">${p.name}</h3><p style="font-size:24px; font-weight:700;">${p.price}</p><p style="color:#64748b; font-size:13px;">Scale: <span style="font-weight:600; background:#f1f5f9; padding:4px 12px;">${p.scale || 'Individual'}</span></p><div style="margin-top:16px;"><strong>Features:</strong><div class="flex flex-wrap gap-2 mt-2">${(p.features || []).map(f => `<span class="feature-tag">✓ ${f}</span>`).join('')}</div><strong style="display:block; margin-top:12px;">Excluded:</strong><div class="flex flex-wrap gap-2 mt-2">${(p.excluded || []).map(e => `<span class="feature-tag excluded-tag">✗ ${e}</span>`).join('')}</div></div></div><div class="flex gap-2"><button class="editPlanBtn" style="color:#2563eb;" data-id="${p.id}">Edit</button><button class="deletePlanBtn" style="background:#fef2f2; color:#dc2626; padding:8px 20px;" data-id="${p.id}">Delete</button></div></div></div>`).join('')}</div>
             ` : `
               <div style="max-width: 700px;">
-                <h3 style="font-weight:700; margin-bottom:20px;">Create New Hosting Plan</h3>
+                <h3 style="font-weight:700; margin-bottom:20px;">${editingPlanId ? 'Edit Hosting Plan' : 'Create New Hosting Plan'}</h3>
                 <div class="flex-col gap-3">
-                  <div>
-                    <label style="font-weight:500; margin-bottom:8px; display:block;">1. Choose Scale *</label>
-                    <div class="flex gap-3" id="scaleSelector">
-                      <div class="scale-option" data-scale="Individual" style="padding:12px 24px; background:#f1f5f9; border:2px solid transparent; font-weight:500;">Individual</div>
-                      <div class="scale-option" data-scale="Business" style="padding:12px 24px; background:#f1f5f9; border:2px solid transparent; font-weight:500;">Business</div>
-                      <div class="scale-option" data-scale="Enterprise" style="padding:12px 24px; background:#f1f5f9; border:2px solid transparent; font-weight:500;">Enterprise</div>
-                    </div>
-                  </div>
-                  <input type="text" id="planName" placeholder="2. Plan Name *">
-                  <input type="text" id="planPrice" placeholder="3. Price (e.g., $29/mo) *">
-                  <div>
-                    <label style="font-weight:500;">4. Features (click Add Another)</label>
-                    <div id="featuresList" class="flex flex-wrap gap-2 mb-2"></div>
-                    <div class="flex gap-2"><input id="newFeature" placeholder="Add feature" style="flex:1;"><button id="addFeatureBtn" style="background:#f1f5f9; padding:10px 20px;">+ Add Another</button></div>
-                  </div>
-                  <div>
-                    <label style="font-weight:500;">5. Excluded Items (strikethrough style)</label>
-                    <div id="excludedList" class="flex flex-wrap gap-2 mb-2"></div>
-                    <div class="flex gap-2"><input id="newExcluded" placeholder="Add excluded item" style="flex:1;"><button id="addExcludedBtn" style="background:#f1f5f9; padding:10px 20px;">+ Add Another</button></div>
-                  </div>
-                  <button id="submitPlanBtn" style="background:black; color:white; padding:14px 28px; margin-top:16px;">💾 Save Hosting Plan</button>
+                  <div><label style="font-weight:500; margin-bottom:8px; display:block;">1. Choose Scale *</label><div class="flex gap-3" id="scaleSelector"><div class="scale-option ${editingPlan?.scale === 'Individual' ? 'scale-selected' : ''}" data-scale="Individual">Individual</div><div class="scale-option ${editingPlan?.scale === 'Business' ? 'scale-selected' : ''}" data-scale="Business">Business</div><div class="scale-option ${editingPlan?.scale === 'Enterprise' ? 'scale-selected' : ''}" data-scale="Enterprise">Enterprise</div></div></div>
+                  <input type="text" id="planName" placeholder="2. Plan Name *" value="${editingPlan?.name || ''}">
+                  <input type="text" id="planPrice" placeholder="3. Price (e.g., $29/mo) *" value="${editingPlan?.price || ''}">
+                  <div><label style="font-weight:500;">4. Features</label><div id="featuresList" class="flex flex-wrap gap-2 mb-2"></div><div class="flex gap-2"><input id="newFeature" placeholder="Add feature" style="flex:1;"><button id="addFeatureBtn" style="background:#f1f5f9; padding:10px 20px;">+ Add</button></div></div>
+                  <div><label style="font-weight:500;">5. Excluded</label><div id="excludedList" class="flex flex-wrap gap-2 mb-2"></div><div class="flex gap-2"><input id="newExcluded" placeholder="Add excluded" style="flex:1;"><button id="addExcludedBtn" style="background:#f1f5f9; padding:10px 20px;">+ Add</button></div></div>
+                  <button id="submitPlanBtn" style="background:black; color:white; padding:14px 28px; margin-top:16px;">💾 ${editingPlanId ? 'Update' : 'Save'} Hosting Plan</button>
                 </div>
               </div>
             `}
@@ -342,7 +288,7 @@
     
     async function renderRequests() {
       const reqs = (await getDocs(query(requestsCol, orderBy("createdAt", "desc")))).docs.map(d => ({ id: d.id, ...d.data() }));
-      return `<div style="background:white; padding:24px;"><h3 style="font-weight:700; margin-bottom:20px;">📬 Client Requests</h3><div class="flex-col gap-3">${reqs.map(r => `<div class="flex-between" style="border:1px solid #edf2f7; padding:16px;"><div><p style="font-weight:500;">${r.name || r.email || 'Anonymous'}</p><p style="font-size:13px; color:#475569;">${r.message || r.content || 'No message'}</p><p style="font-size:10px; color:#94a3b8;">${r.createdAt || 'recent'}</p></div><button class="deleteReqBtn" style="background:#fef2f2; color:#dc2626; padding:6px 16px;" data-id="${r.id}">Delete</button></div>`).join('')}</div></div>`;
+      return `<div style="background:white; padding:24px;"><h3 style="font-weight:700; margin-bottom:20px;">📬 Client Requests</h3><div class="flex-col gap-3">${reqs.map(r => `<div class="flex-between" style="border:1px solid #edf2f7; padding:16px;"><div><p style="font-weight:500;">${r.name || r.email || 'Anonymous'}</p><p style="font-size:13px; color:#475569;">${r.message || 'No message'}</p><p style="font-size:10px; color:#94a3b8;">${r.createdAt || 'recent'}</p></div><button class="deleteReqBtn" style="background:#fef2f2; color:#dc2626; padding:6px 16px;" data-id="${r.id}">Delete</button></div>`).join('')}</div></div>`;
     }
     
     async function renderManage() {
@@ -355,7 +301,7 @@
       const domains = (await getDocs(domainsCol)).docs.map(d => ({ id: d.id, domain: d.data().domain }));
       const annSnap = await getDocs(announcementsCol);
       const announcement = annSnap.empty ? "" : annSnap.docs[0].data().text;
-      return `<div style="background:white; padding:24px;"><div style="margin-bottom:32px;"><h3 style="font-weight:700; margin-bottom:20px;">🌐 Domain Management (.rw, .com, .dev, etc.)</h3><div class="flex gap-3" style="flex-wrap:wrap;"><input type="text" id="newDomainInput" placeholder="e.g., pireactive.rw" style="flex:1;"><button id="addDomainBtn" style="background:black; color:white; padding:0 28px;">Add Domain</button></div><div style="margin-top:16px;">${domains.map(d => `<div class="flex-between" style="border-bottom:1px solid #edf2f7; padding:12px 0;"><span>${d.domain}</span><button class="delDomainBtn" style="color:#dc2626;" data-id="${d.id}">Remove</button></div>`).join('')}</div></div><div><h3 style="font-weight:700; margin-bottom:16px;">📢 Global Announcement</h3><textarea id="announcementInput" rows="2" style="width:100%; margin-bottom:12px;">${announcement}</textarea><button id="saveAnnouncementBtn" style="background:black; color:white; padding:12px 28px;">Save Announcement</button></div></div>`;
+      return `<div style="background:white; padding:24px;"><div style="margin-bottom:32px;"><h3 style="font-weight:700; margin-bottom:20px;">🌐 Domain Management</h3><div class="flex gap-3"><input type="text" id="newDomainInput" placeholder="e.g., pireactive.rw" style="flex:1;"><button id="addDomainBtn" style="background:black; color:white; padding:0 28px;">Add Domain</button></div><div style="margin-top:16px;">${domains.map(d => `<div class="flex-between" style="border-bottom:1px solid #edf2f7; padding:12px 0;"><span>${d.domain}</span><button class="delDomainBtn" style="color:#dc2626;" data-id="${d.id}">Remove</button></div>`).join('')}</div></div><div><h3 style="font-weight:700; margin-bottom:16px;">📢 Global Announcement</h3><textarea id="announcementInput" rows="2" style="width:100%; margin-bottom:12px;">${announcement}</textarea><button id="saveAnnouncementBtn" style="background:black; color:white; padding:12px 28px;">Save Announcement</button></div></div>`;
     }
     
     async function loadSection(section) {
@@ -363,12 +309,13 @@
       if (section === "dashboard") html = await renderDashboard();
       else if (section === "clients") html = await renderClients();
       else if (section === "news") html = await renderNews();
+      else if (section === "snippets") html = await renderSnippets();
       else if (section === "hosting") html = await renderHosting();
       else if (section === "requests") html = await renderRequests();
       else if (section === "manage") html = await renderManage();
       else if (section === "settings") html = await renderSettings();
       document.getElementById("dynamicPanel").innerHTML = html;
-      document.getElementById("pageTitle").innerText = section.toUpperCase();
+      document.getElementById("pageTitle").innerText = section.toUpperCase().replace('SNIPPETS','CODE SNIPPETS');
       attachEvents(section);
     }
     
@@ -388,71 +335,59 @@
         document.querySelectorAll(".editNewsBtn").forEach(btn=>btn.addEventListener("click",async()=>{ editingNewsId=btn.dataset.id; loadSection("news"); }));
         document.querySelectorAll(".deleteNewsBtn").forEach(btn=>btn.addEventListener("click",async()=>{ await deleteDoc(doc(db,"news",btn.dataset.id)); loadSection("news"); }));
       }
+      if (section === "snippets") {
+        const codeArea = document.getElementById("snippetCode");
+        const editorEl = document.getElementById("snippetEditor");
+        const previewEl = document.getElementById("snippetPreview");
+        
+        if(editorEl && !snippetCM) {
+          snippetCM = CodeMirror(editorEl, { value: codeArea?.value || '', mode: "htmlmixed", theme: "dracula", lineNumbers: true, autoCloseBrackets: true, matchBrackets: true, indentUnit: 2, tabSize: 2 });
+          snippetCM.on("change", () => { if(codeArea) codeArea.value = snippetCM.getValue(); });
+        }
+        
+        const updatePreview = () => { if(previewEl) previewEl.innerHTML = snippetCM?.getValue() || ''; };
+        document.getElementById("refreshPreviewBtn")?.addEventListener("click", updatePreview);
+        setTimeout(updatePreview, 100);
+        
+        document.getElementById("cancelSnippetEditBtn")?.addEventListener("click",()=>{ editingSnippetId=null; snippetCM=null; loadSection("snippets"); });
+        document.getElementById("saveSnippetBtn")?.addEventListener("click", async () => { 
+          const name=document.getElementById("snippetName").value, code=snippetCM?.getValue()||''; 
+          if(!name) return alert("Name required"); 
+          if(editingSnippetId) await updateDoc(doc(db,"snippets",editingSnippetId),{name,code,updatedAt:new Date().toISOString()}); 
+          else await addDoc(snippetsCol,{name,code,createdAt:new Date().toISOString()}); 
+          editingSnippetId=null; snippetCM=null; loadSection("snippets"); 
+        });
+        document.querySelectorAll(".editSnippetBtn").forEach(btn=>btn.addEventListener("click",async()=>{ editingSnippetId=btn.dataset.id; snippetCM=null; loadSection("snippets"); }));
+        document.querySelectorAll(".deleteSnippetBtn").forEach(btn=>btn.addEventListener("click",async()=>{ await deleteDoc(doc(db,"snippets",btn.dataset.id)); loadSection("snippets"); }));
+        document.getElementById("snippetSearch")?.addEventListener("input",(e)=>{ const t=e.target.value.toLowerCase(); document.querySelectorAll(".snippet-item").forEach(el=>{ el.style.display=el.dataset.name.includes(t)?'flex':'none'; }); });
+      }
       if (section === "hosting") {
         document.querySelectorAll("[data-hosting-tab]").forEach(btn=>btn.addEventListener("click",()=>{ hostingTab=btn.dataset.hostingTab; loadSection("hosting"); }));
-        
-        let features = [], excluded = [];
-        const refreshFeatures = () => { 
-          const container = document.getElementById("featuresList");
-          if(container) container.innerHTML = features.map((f,i)=>`<span class="feature-tag">${f}<button class="removeFeat" style="margin-left:8px; background:transparent; color:#dc2626; padding:0 4px;" data-idx="${i}">✖</button></span>`).join('');
-        };
-        const refreshExcluded = () => { 
-          const container = document.getElementById("excludedList");
-          if(container) container.innerHTML = excluded.map((e,i)=>`<span class="feature-tag excluded-tag">${e}<button class="removeExcl" style="margin-left:8px; background:transparent; color:#dc2626; padding:0 4px;" data-idx="${i}">✖</button></span>`).join('');
-        };
-        
-        document.getElementById("addFeatureBtn")?.addEventListener("click",()=>{ const val=document.getElementById("newFeature")?.value; if(val){ features.push(val); refreshFeatures(); document.getElementById("newFeature").value=''; } });
-        document.getElementById("addExcludedBtn")?.addEventListener("click",()=>{ const val=document.getElementById("newExcluded")?.value; if(val){ excluded.push(val); refreshExcluded(); document.getElementById("newExcluded").value=''; } });
-        
-        // Scale selection - Individual, Business, Enterprise only
-        document.querySelectorAll(".scale-option").forEach(opt => {
-          opt.addEventListener("click", () => {
-            document.querySelectorAll(".scale-option").forEach(o => o.classList.remove("scale-selected"));
-            opt.classList.add("scale-selected");
-            selectedScale = opt.dataset.scale;
-          });
+        document.getElementById("cancelPlanEditBtn")?.addEventListener("click",()=>{ editingPlanId=null; hostingTab='list'; loadSection("hosting"); });
+        let features=[], excluded=[];
+        const refreshFeatures=()=>{ const c=document.getElementById("featuresList"); if(c) c.innerHTML=features.map((f,i)=>`<span class="feature-tag">${f}<button class="removeFeat" style="margin-left:8px; background:transparent; color:#dc2626;" data-idx="${i}">✖</button></span>`).join(''); };
+        const refreshExcluded=()=>{ const c=document.getElementById("excludedList"); if(c) c.innerHTML=excluded.map((e,i)=>`<span class="feature-tag excluded-tag">${e}<button class="removeExcl" style="margin-left:8px; background:transparent; color:#dc2626;" data-idx="${i}">✖</button></span>`).join(''); };
+        document.getElementById("addFeatureBtn")?.addEventListener("click",()=>{ const v=document.getElementById("newFeature")?.value; if(v){ features.push(v); refreshFeatures(); document.getElementById("newFeature").value=''; } });
+        document.getElementById("addExcludedBtn")?.addEventListener("click",()=>{ const v=document.getElementById("newExcluded")?.value; if(v){ excluded.push(v); refreshExcluded(); document.getElementById("newExcluded").value=''; } });
+        document.querySelectorAll(".scale-option").forEach(o=>o.addEventListener("click",()=>{ document.querySelectorAll(".scale-option").forEach(x=>x.classList.remove("scale-selected")); o.classList.add("scale-selected"); selectedScale=o.dataset.scale; }));
+        if(editingPlan?.scale) selectedScale = editingPlan.scale;
+        document.getElementById("submitPlanBtn")?.addEventListener("click",async()=>{ 
+          const n=document.getElementById("planName").value, p=document.getElementById("planPrice").value; 
+          if(!n||!p||!selectedScale) return alert("Fill all fields"); 
+          const data = {name:n,price:p,scale:selectedScale,features,excluded,updatedAt:new Date().toISOString()};
+          if(editingPlanId) { await updateDoc(doc(db,"hostingPlans",editingPlanId), data); }
+          else { await addDoc(hostingPlansCol, {...data, createdAt:new Date().toISOString()}); }
+          editingPlanId=null; hostingTab="list"; loadSection("hosting"); 
         });
-        
-        document.getElementById("submitPlanBtn")?.addEventListener("click", async () => {
-          const name = document.getElementById("planName").value;
-          const price = document.getElementById("planPrice").value;
-          if(!name || !price || !selectedScale) { 
-            alert("Please fill Plan Name, Price, and select a Scale (Individual, Business, or Enterprise)"); 
-            return; 
-          }
-          await addDoc(hostingPlansCol, { name, price, scale: selectedScale, features, excluded, createdAt: new Date().toISOString() });
-          hostingTab = "list";
-          loadSection("hosting");
-        });
-        
-        document.querySelectorAll(".deletePlanBtn").forEach(btn=>btn.addEventListener("click",async()=>{ await deleteDoc(doc(db,"hostingPlans",btn.dataset.id)); loadSection("hosting"); }));
+        document.querySelectorAll(".editPlanBtn").forEach(b=>b.addEventListener("click",async()=>{ editingPlanId=b.dataset.id; hostingTab='add'; loadSection("hosting"); }));
+        document.querySelectorAll(".deletePlanBtn").forEach(b=>b.addEventListener("click",async()=>{ await deleteDoc(doc(db,"hostingPlans",b.dataset.id)); loadSection("hosting"); }));
       }
-      if (section === "requests") {
-        document.querySelectorAll(".deleteReqBtn").forEach(btn=>btn.addEventListener("click",async()=>{ await deleteDoc(doc(db,"requests",btn.dataset.id)); loadSection("requests"); }));
-      }
-      if (section === "manage") {
-        document.querySelectorAll(".manageDelWeb").forEach(btn=>btn.addEventListener("click",async()=>{ await deleteDoc(doc(db,"websites",btn.dataset.id)); loadSection("manage"); }));
-        document.querySelectorAll(".manageDelDesign").forEach(btn=>btn.addEventListener("click",async()=>{ await deleteDoc(doc(db,"designs",btn.dataset.id)); loadSection("manage"); }));
-      }
-      if (section === "settings") {
-        document.getElementById("addDomainBtn")?.addEventListener("click",async()=>{ const domain=document.getElementById("newDomainInput").value; if(domain) await addDoc(domainsCol,{domain}); loadSection("settings"); });
-        document.querySelectorAll(".delDomainBtn").forEach(btn=>btn.addEventListener("click",async()=>{ await deleteDoc(doc(db,"domains",btn.dataset.id)); loadSection("settings"); }));
-        document.getElementById("saveAnnouncementBtn")?.addEventListener("click",async()=>{ const text=document.getElementById("announcementInput").value; const snap=await getDocs(announcementsCol); if(snap.empty) await addDoc(announcementsCol,{text}); else await updateDoc(doc(db,"announcements",snap.docs[0].id),{text}); alert("✅ Announcement saved!"); });
-      }
+      if (section === "requests") { document.querySelectorAll(".deleteReqBtn").forEach(b=>b.addEventListener("click",async()=>{ await deleteDoc(doc(db,"requests",b.dataset.id)); loadSection("requests"); })); }
+      if (section === "manage") { document.querySelectorAll(".manageDelWeb").forEach(b=>b.addEventListener("click",async()=>{ await deleteDoc(doc(db,"websites",b.dataset.id)); loadSection("manage"); })); document.querySelectorAll(".manageDelDesign").forEach(b=>b.addEventListener("click",async()=>{ await deleteDoc(doc(db,"designs",b.dataset.id)); loadSection("manage"); })); }
+      if (section === "settings") { document.getElementById("addDomainBtn")?.addEventListener("click",async()=>{ const d=document.getElementById("newDomainInput").value; if(d) await addDoc(domainsCol,{domain:d}); loadSection("settings"); }); document.querySelectorAll(".delDomainBtn").forEach(b=>b.addEventListener("click",async()=>{ await deleteDoc(doc(db,"domains",b.dataset.id)); loadSection("settings"); })); document.getElementById("saveAnnouncementBtn")?.addEventListener("click",async()=>{ const t=document.getElementById("announcementInput").value; const s=await getDocs(announcementsCol); if(s.empty) await addDoc(announcementsCol,{text:t}); else await updateDoc(doc(db,"announcements",s.docs[0].id),{text:t}); alert("✅ Saved!"); }); }
     }
     
-    document.querySelectorAll(".sidebar-item").forEach(item => {
-      item.addEventListener("click", (e) => {
-        e.preventDefault();
-        const nav = item.dataset.nav;
-        if (nav) {
-          currentNav = nav;
-          document.querySelectorAll(".sidebar-item").forEach(i => i.classList.remove("nav-active"));
-          item.classList.add("nav-active");
-          loadSection(nav);
-        }
-      });
-    });
+    document.querySelectorAll(".sidebar-item").forEach(item => { item.addEventListener("click", (e) => { e.preventDefault(); const nav = item.dataset.nav; if (nav) { currentNav = nav; document.querySelectorAll(".sidebar-item").forEach(i => i.classList.remove("nav-active")); item.classList.add("nav-active"); loadSection(nav); } }); });
     document.getElementById("globalRefreshBtn")?.addEventListener("click", () => loadSection(currentNav));
     loadSection("dashboard");
     document.querySelector(".sidebar-item")?.classList.add("nav-active");
