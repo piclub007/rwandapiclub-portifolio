@@ -1,23 +1,174 @@
-<div class="min-h-screen bg-white">
-<nav class="flex justify-between items-center px-8 py-5 border-b border-gray-200">
-<h1 class="text-2xl font-bold">Our Clients</h1>
-<div class="flex gap-6">
-<a href="#" onclick="navigateTo('home');return false;" class="text-gray-600 hover:text-black">Home</a>
-<a href="#" onclick="navigateTo('domain');return false;" class="text-gray-600 hover:text-black">Domain</a>
-<a href="#" onclick="navigateTo('hosting');return false;" class="text-gray-600 hover:text-black">Hosting</a>
-<a href="#" onclick="navigateTo('clients');return false;" class="text-gray-600 hover:text-black">Clients</a>
-<a href="#" onclick="navigateTo('news');return false;" class="text-gray-600 hover:text-black">News</a>
-<a href="#" onclick="navigateTo('about');return false;" class="text-gray-600 hover:text-black">About</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <title>PIReactive | Works</title>
+  <meta name="description" content="Explore our portfolio of premium websites and creative designs crafted by PIReactive Tech co.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
+  <style>
+    * { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000000; }
+    .v-l { width: 1px; height: 100%; background: linear-gradient(to bottom, transparent 0%, transparent 12%, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.06) 90%, transparent 100%); }
+    #m-m { transition: opacity 0.3s ease, visibility 0.3s ease; }
+    #m-m.h { opacity: 0; visibility: hidden; }
+    #m-m:not(.h) { opacity: 1; visibility: visible; }
+    .tab-u { text-decoration: underline; text-underline-offset: 8px; text-decoration-thickness: 2px; }
+    .color-o { color: #f97316; } .color-y { color: #eab308; } .color-g { color: #22c55e; } .color-r { color: #ef4444; } .color-s { color: #0ea5e9; }
+    .border-color-o { border-color: #f97316; } .border-color-y { border-color: #eab308; } .border-color-g { border-color: #22c55e; } .border-color-r { border-color: #ef4444; } .border-color-s { border-color: #0ea5e9; }
+    .modal-open { overflow: hidden; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .modal { animation: fadeIn 0.2s ease; }
+  </style>
+</head>
+<body class="text-white">
+
+<div class="fixed inset-0 pointer-events-none z-10 px-5 md:px-7 flex justify-evenly">
+  <div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div>
 </div>
-</nav>
-<section class="py-16 px-6 max-w-6xl mx-auto">
-<h2 class="text-4xl font-bold mb-4 text-center">Trusted By Industry Leaders</h2>
-<p class="text-center text-gray-500 mb-12">Join 500+ satisfied clients worldwide</p>
-<div class="grid md:grid-cols-2 gap-6">
-<div class="border border-gray-200 p-6 flex items-start gap-4"><div class="w-12 h-12 bg-black rounded-full flex items-center justify-center text-white font-bold">N</div><div><h3 class="font-bold">NexGen Solutions</h3><p class="text-gray-500 text-sm">Enterprise Client since 2023</p></div></div>
-<div class="border border-gray-200 p-6 flex items-start gap-4"><div class="w-12 h-12 bg-black rounded-full flex items-center justify-center text-white font-bold">C</div><div><h3 class="font-bold">CreativEdge Studio</h3><p class="text-gray-500 text-sm">Digital Agency Partner</p></div></div>
-<div class="border border-gray-200 p-6 flex items-start gap-4"><div class="w-12 h-12 bg-black rounded-full flex items-center justify-center text-white font-bold">F</div><div><h3 class="font-bold">FinCore Ltd</h3><p class="text-gray-500 text-sm">Financial Technology</p></div></div>
-<div class="border border-gray-200 p-6 flex items-start gap-4"><div class="w-12 h-12 bg-black rounded-full flex items-center justify-center text-white font-bold">B</div><div><h3 class="font-bold">BrightWave Media</h3><p class="text-gray-500 text-sm">Media & Entertainment</p></div></div>
+
+<div class="relative z-20 max-w-7xl mx-auto px-5 md:px-7 py-4 md:py-5 min-h-screen flex flex-col">
+  
+  <header class="pb-4 border-b border-white">
+    <div class="flex flex-row justify-between items-center gap-4">
+      <div class="flex flex-col gap-0.5">
+        <div class="text-xl md:text-[26px] font-semibold tracking-tight">PIReactive Tech co.</div>
+        <a href="https://mkbertrand.vercel.app" target="_blank" rel="noopener noreferrer" class="text-xs md:text-sm font-normal text-gray-400 hover:text-white transition w-fit">Hey am MKB! The creator</a>
+      </div>
+      <button id="m-b" class="block md:hidden p-2" aria-label="Menu"><iconify-icon icon="mdi:menu" class="text-2xl"></iconify-icon></button>
+      <nav class="hidden md:flex gap-7 md:gap-11 pt-1.5 flex-wrap">
+        <a href="home.html" class="text-[15px] font-normal hover:opacity-65 transition">HOME</a>
+        <a href="hosting.html" class="text-[15px] font-normal hover:opacity-65 transition">HOSTING</a>
+      </nav>
+    </div>
+    <div id="m-m" class="h md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg z-50 pt-20 px-6">
+      <button id="c-b" class="absolute top-5 right-5 p-2" aria-label="Close"><iconify-icon icon="mdi:close" class="text-2xl"></iconify-icon></button>
+      <nav class="flex flex-col gap-6 text-2xl font-light">
+        <a href="home.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">HOME</a>
+        <a href="hosting.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">HOSTING</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="mt-8 md:mt-12">
+    <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">WORKS</h1>
+    <div class="flex gap-8 border-b border-gray-800 pb-2">
+      <button id="tab-websites" class="text-lg md:text-xl font-medium pb-2 tab-u text-white transition">WEBSITES</button>
+      <button id="tab-designs" class="text-lg md:text-xl font-medium pb-2 text-gray-500 hover:text-gray-300 transition">DESIGNS</button>
+    </div>
+  </div>
+
+  <div id="content-websites" class="mt-8 flex-1">
+    <div id="websites-list" class="flex flex-col"></div>
+  </div>
+
+  <div id="content-designs" class="mt-8 flex-1 hidden">
+    <div id="designs-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5"></div>
+  </div>
+
+  <footer class="border-t border-gray-800 pt-10 md:pt-12 pb-6 md:pb-8 mt-16">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-5 md:gap-6"><div class="flex items-center gap-3"><img src="images/logo.png" alt="PIReactive Logo" class="h-8 md:h-10 w-auto invert" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"><span class="hidden text-xl md:text-2xl font-bold">PIReactive</span></div><div class="flex gap-5 md:gap-6"><a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:twitter"></iconify-icon></a><a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:linkedin"></iconify-icon></a><a href="#" aria-label="GitHub" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:github"></iconify-icon></a><a href="#" aria-label="Dribbble" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:dribbble"></iconify-icon></a><a href="#" aria-label="Instagram" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:instagram"></iconify-icon></a></div></div>
+    <div class="flex flex-col md:flex-row justify-between items-center mt-6 md:mt-8 text-xs md:text-sm text-gray-500"><span>© 2026 PIReactive Tech co. All rights reserved.</span><div class="flex gap-5 md:gap-6 mt-3 md:mt-0"><a href="#" class="hover:text-white transition">Privacy</a><a href="#" class="hover:text-white transition">Terms</a><a href="#" class="hover:text-white transition">Accessibility</a></div></div>
+  </footer>
 </div>
-</section>
+
+<div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden modal flex items-center justify-center p-4">
+  <button id="modal-close" class="absolute top-5 right-5 text-white text-3xl hover:text-gray-400 transition z-10">&times;</button>
+  <button id="modal-prev" class="absolute left-5 text-white text-4xl hover:text-gray-400 transition z-10 disabled:opacity-30" disabled>&#10094;</button>
+  <button id="modal-next" class="absolute right-5 text-white text-4xl hover:text-gray-400 transition z-10 disabled:opacity-30" disabled>&#10095;</button>
+  <div class="max-w-5xl max-h-full relative"><img id="modal-img" src="" alt="" class="max-h-[85vh] max-w-full object-contain"></div>
+  <div class="absolute bottom-5 right-5 flex gap-3 z-10">
+    <button id="modal-share" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full text-sm flex items-center gap-2 transition"><iconify-icon icon="mdi:share-variant"></iconify-icon>Share</button>
+    <button id="modal-download" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-full text-sm flex items-center gap-2 transition"><iconify-icon icon="mdi:download"></iconify-icon>Download</button>
+  </div>
 </div>
+
+<script>
+(function(){
+  const _0=document.getElementById('m-b'),_1=document.getElementById('m-m'),_2=document.getElementById('c-b');
+  if(_0&&_1){_0.addEventListener('click',()=>{_1.classList.remove('h');document.body.style.overflow='hidden';});}
+  if(_2&&_1){_2.addEventListener('click',()=>{_1.classList.add('h');document.body.style.overflow='';});}
+  _1?.querySelectorAll('a').forEach(_3=>_3.addEventListener('click',()=>{_1.classList.add('h');document.body.style.overflow='';}));
+
+  const _4=document.getElementById('tab-websites'),_5=document.getElementById('tab-designs'),_6=document.getElementById('content-websites'),_7=document.getElementById('content-designs');
+  _4.addEventListener('click',()=>{_4.classList.add('text-white','tab-u');_4.classList.remove('text-gray-500');_5.classList.remove('text-white','tab-u');_5.classList.add('text-gray-500');_6.classList.remove('hidden');_7.classList.add('hidden');});
+  _5.addEventListener('click',()=>{_5.classList.add('text-white','tab-u');_5.classList.remove('text-gray-500');_4.classList.remove('text-white','tab-u');_4.classList.add('text-gray-500');_7.classList.remove('hidden');_6.classList.add('hidden');if(!_8)loadDesigns();});
+
+  const _9=document.getElementById('websites-list'),_a=document.getElementById('designs-grid');
+  const _b='https://firestore.googleapis.com/v1/projects/project-k-dbaef/databases/(default)/documents/websites';
+  const _c='https://firestore.googleapis.com/v1/projects/project-k-dbaef/databases/(default)/documents/designs';
+  const _d=['color-o','color-y','color-g','color-r','color-s'],_e=['border-color-o','border-color-y','border-color-g','border-color-r','border-color-s'];
+  
+  async function loadWebsites(){
+    try{
+      const _f=await fetch(_b);const _g=await _f.json();
+      const _h=(_g.documents||[]).map(_i=>{const _j=_i.fields;return{name:_j.name?.stringValue||'',link:_j.link?.stringValue||'',description:_j.description?.stringValue||'',images:_j.images?.arrayValue?.values?.map(_k=>_k.stringValue)||[]};}).filter(_l=>_l.name);
+      _9.innerHTML='';
+      if(_h.length===0){_9.innerHTML='<p class="text-gray-400 text-center py-20">No websites yet.</p>';return;}
+      _h.forEach((_m,_n)=>{
+        const _o=document.createElement('div');_o.className='py-8 border-b border-gray-800 last:border-b-0';
+        const _p=_d[_n%_d.length],_q=_e[_n%_e.length];
+        let _r=0,_s=null;
+        const _t=_m.images||[];
+        _o.innerHTML=`
+          <div class="flex flex-col md:flex-row gap-6 md:gap-10">
+            <div class="md:w-1/2 relative overflow-hidden rounded-xl bg-gray-900 h-64 md:h-80">
+              <div class="slides-container-${_n} w-full h-full relative">${_t.map((_u,_v)=>`<img src="${_u}" alt="" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${_v===0?'opacity-100':'opacity-0'}">`).join('')}</div>
+            </div>
+            <div class="md:w-1/2 flex flex-col justify-center">
+              <p class="text-sm uppercase tracking-wider mb-2 ${_p}">CLIENT: <span class="font-semibold">${_m.name}</span></p>
+              <p class="text-gray-300 text-base leading-relaxed mb-6">${_m.description||'Premium digital experience crafted for modern audiences.'}</p>
+              <a href="${_m.link||'#'}" target="_blank" class="inline-flex items-center gap-2 border ${_q} text-white px-6 py-3 rounded-full hover:bg-white/5 transition w-fit">VISIT <iconify-icon icon="mdi:arrow-right"></iconify-icon></a>
+            </div>
+          </div>
+        `;
+        _9.appendChild(_o);
+        if(_t.length>1){
+          const _w=_o.querySelector(`.slides-container-${_n}`);const _x=_w.querySelectorAll('img');
+          setInterval(()=>{_x[_r].classList.remove('opacity-100');_x[_r].classList.add('opacity-0');_r=(_r+1)%_x.length;_x[_r].classList.remove('opacity-0');_x[_r].classList.add('opacity-100');},2000);
+        }
+      });
+    }catch(_){_9.innerHTML='<p class="text-red-400 text-center py-20">Failed to load websites.</p>';}
+  }
+  loadWebsites();
+
+  let _8=false,_y=[];
+  async function loadDesigns(){
+    if(_8)return;_8=true;
+    try{
+      const _z=await fetch(_c);const _A=await _z.json();
+      _y=(_A.documents||[]).map(_B=>{const _C=_B.fields;return{name:_C.name?.stringValue||'',images:_C.images?.arrayValue?.values?.map(_D=>_D.stringValue)||[]};}).filter(_E=>_E.images.length&&_E.name);
+      _a.innerHTML='';
+      if(_y.length===0){_a.innerHTML='<p class="text-gray-400 col-span-full text-center py-20">No designs yet.</p>';return;}
+      _y.forEach((_F,_G)=>{
+        const _H=document.createElement('div');_H.className='cursor-pointer group';
+        _H.innerHTML=`<div class="aspect-video rounded-xl overflow-hidden bg-gray-900 mb-2"><img src="${_F.images[0]}" alt="${_F.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"></div><p class="text-sm font-medium text-gray-300">${_F.name}</p>`;
+        _H.addEventListener('click',()=>openLightbox(_G));
+        _a.appendChild(_H);
+      });
+    }catch(_){_a.innerHTML='<p class="text-red-400 col-span-full text-center py-20">Failed to load designs.</p>';}
+  }
+
+  const _I=document.getElementById('lightbox-modal'),_J=document.getElementById('modal-img'),_K=document.getElementById('modal-prev'),_L=document.getElementById('modal-next'),_M=document.getElementById('modal-close'),_N=document.getElementById('modal-share'),_O=document.getElementById('modal-download');
+  let _P=-1,_Q=[];
+  function openLightbox(_R){
+    const _S=_y[_R];if(!_S)return;_Q=_S.images;_P=0;_J.src=_Q[0];_I.classList.remove('hidden');document.body.classList.add('modal-open');
+    _K.disabled=_P===0;_L.disabled=_P===_Q.length-1;
+  }
+  function closeLightbox(){_I.classList.add('hidden');document.body.classList.remove('modal-open');_P=-1;_Q=[];}
+  function navigate(_T){if(_Q.length===0)return;_P=Math.max(0,Math.min(_Q.length-1,_P+_T));_J.src=_Q[_P];_K.disabled=_P===0;_L.disabled=_P===_Q.length-1;}
+  _M.addEventListener('click',closeLightbox);
+  _I.addEventListener('click',(e)=>{if(e.target===_I)closeLightbox();});
+  _K.addEventListener('click',()=>navigate(-1));
+  _L.addEventListener('click',()=>navigate(1));
+  _N.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(_Q[_P]);alert('Link copied!');}catch(_){alert('Failed to copy');}});
+  _O.addEventListener('click',async()=>{try{const _U=await fetch(_Q[_P]);const _V=await _U.blob();const _W=URL.createObjectURL(_V);const _X=document.createElement('a');_X.href=_W;_X.download=`design-${Date.now()}.jpg`;_X.click();URL.revokeObjectURL(_W);}catch(_){window.open(_Q[_P],'_blank');}});
+  document.addEventListener('keydown',(e)=>{if(!_I.classList.contains('hidden')){if(e.key==='ArrowLeft')navigate(-1);if(e.key==='ArrowRight')navigate(1);if(e.key==='Escape')closeLightbox();}});
+})();
+</script>
+</body>
+</html>
