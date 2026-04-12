@@ -1,23 +1,138 @@
-<div class="min-h-screen bg-white">
-<nav class="flex justify-between items-center px-8 py-5 border-b border-gray-200">
-<h1 class="text-2xl font-bold">Latest News</h1>
-<div class="flex gap-6">
-<a href="#" onclick="navigateTo('home');return false;" class="text-gray-600 hover:text-black">Home</a>
-<a href="#" onclick="navigateTo('domain');return false;" class="text-gray-600 hover:text-black">Domain</a>
-<a href="#" onclick="navigateTo('hosting');return false;" class="text-gray-600 hover:text-black">Hosting</a>
-<a href="#" onclick="navigateTo('clients');return false;" class="text-gray-600 hover:text-black">Clients</a>
-<a href="#" onclick="navigateTo('news');return false;" class="text-gray-600 hover:text-black">News</a>
-<a href="#" onclick="navigateTo('about');return false;" class="text-gray-600 hover:text-black">About</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <title>PIReactive | News & Insights</title>
+  <meta name="description" content="Latest news, updates, and insights from PIReactive Tech co. - Rwandan digital innovation agency.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
+  <style>
+    * { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000000; }
+    .v-l { width: 1px; height: 100%; background: linear-gradient(to bottom, transparent 0%, transparent 12%, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.06) 90%, transparent 100%); }
+    #m-m { transition: opacity 0.3s ease, visibility 0.3s ease; }
+    #m-m.h { opacity: 0; visibility: hidden; }
+    #m-m:not(.h) { opacity: 1; visibility: visible; }
+    .news-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s ease; cursor: pointer; }
+    .news-card:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); transform: translateY(-4px); }
+    .news-content img { max-width: 100%; height: auto; border-radius: 12px; margin: 16px 0; }
+    .news-content p { margin-bottom: 16px; line-height: 1.7; }
+    .news-content h2, .news-content h3, .news-content h4 { font-weight: 600; margin: 20px 0 12px; }
+    .modal-open { overflow: hidden; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .modal { animation: fadeIn 0.2s ease; }
+  </style>
+</head>
+<body class="text-white">
+
+<div class="fixed inset-0 pointer-events-none z-10 px-5 md:px-7 flex justify-evenly">
+  <div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div>
 </div>
-</nav>
-<section class="py-16 px-6 max-w-6xl mx-auto">
-<h2 class="text-4xl font-bold mb-4 text-center">Announcements & Updates</h2>
-<p class="text-center text-gray-500 mb-12">Stay informed with our latest news</p>
-<div class="grid md:grid-cols-2 gap-6">
-<div class="border border-gray-200 p-6"><div class="w-full h-48 bg-gray-200 mb-4"></div><span class="text-xs text-gray-400">April 10, 2026</span><h3 class="font-bold text-xl mt-2">New AI-Powered Tools Launch</h3><p class="text-gray-500 mt-2">We're excited to announce our new suite of AI tools for developers...</p><button class="text-black font-medium mt-4">Read more →</button></div>
-<div class="border border-gray-200 p-6"><div class="w-full h-48 bg-gray-200 mb-4"></div><span class="text-xs text-gray-400">April 5, 2026</span><h3 class="font-bold text-xl mt-2">Enterprise Security Upgrade</h3><p class="text-gray-500 mt-2">Enhanced security features now available for all enterprise clients...</p><button class="text-black font-medium mt-4">Read more →</button></div>
-<div class="border border-gray-200 p-6"><div class="w-full h-48 bg-gray-200 mb-4"></div><span class="text-xs text-gray-400">March 28, 2026</span><h3 class="font-bold text-xl mt-2">Global CDN Expansion</h3><p class="text-gray-500 mt-2">Our content delivery network now covers 6 new regions worldwide...</p><button class="text-black font-medium mt-4">Read more →</button></div>
-<div class="border border-gray-200 p-6"><div class="w-full h-48 bg-gray-200 mb-4"></div><span class="text-xs text-gray-400">March 20, 2026</span><h3 class="font-bold text-xl mt-2">Partnership Announcement</h3><p class="text-gray-500 mt-2">Strategic partnership with leading cloud providers announced...</p><button class="text-black font-medium mt-4">Read more →</button></div>
+
+<div class="relative z-20 max-w-7xl mx-auto px-5 md:px-7 py-4 md:py-5 min-h-screen flex flex-col">
+  
+  <header class="pb-4 border-b border-white">
+    <div class="flex flex-row justify-between items-center gap-4">
+      <div class="flex flex-col gap-0.5">
+        <div class="text-xl md:text-[26px] font-semibold tracking-tight">PIReactive Tech co.</div>
+        <a href="https://mkbertrand.vercel.app" target="_blank" rel="noopener noreferrer" class="text-xs md:text-sm font-normal text-gray-400 hover:text-white transition w-fit">Hey am MKB! The creator</a>
+      </div>
+      <button id="m-b" class="block md:hidden p-2" aria-label="Menu"><iconify-icon icon="mdi:menu" class="text-2xl"></iconify-icon></button>
+      <nav class="hidden md:flex gap-7 md:gap-11 pt-1.5 flex-wrap">
+        <a href="home.html" class="text-[15px] font-normal hover:opacity-65 transition">HOME</a>
+        <a href="works.html" class="text-[15px] font-normal hover:opacity-65 transition">WORKS</a>
+        <a href="hosting.html" class="text-[15px] font-normal hover:opacity-65 transition">HOSTING</a>
+        <a href="domain.html" class="text-[15px] font-normal hover:opacity-65 transition">DOMAIN</a>
+        <a href="cool.html" class="text-[15px] font-normal hover:opacity-65 transition">SNIPPETS</a>
+        <a href="about.html" class="text-[15px] font-normal hover:opacity-65 transition">ABOUT</a>
+      </nav>
+    </div>
+    <div id="m-m" class="h md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg z-50 pt-20 px-6">
+      <button id="c-b" class="absolute top-5 right-5 p-2" aria-label="Close"><iconify-icon icon="mdi:close" class="text-2xl"></iconify-icon></button>
+      <nav class="flex flex-col gap-6 text-2xl font-light">
+        <a href="home.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">HOME</a>
+        <a href="works.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">WORKS</a>
+        <a href="hosting.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">HOSTING</a>
+        <a href="domain.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">DOMAIN</a>
+        <a href="cool.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">SNIPPETS</a>
+        <a href="about.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">ABOUT</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="mt-8 md:mt-12">
+    <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-3">NEWS & INSIGHTS</h1>
+    <p class="text-gray-400 text-base md:text-lg max-w-2xl">Stay updated with the latest news, announcements, and insights from PIReactive.</p>
+  </div>
+
+  <div id="featured-article" class="mt-10"></div>
+
+  <div id="news-grid" class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
+    <div class="col-span-full text-center py-20"><div class="inline-block w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin"></div><p class="text-gray-400 mt-4">Loading latest news...</p></div>
+  </div>
+
+  <footer class="border-t border-gray-800 pt-10 md:pt-12 pb-6 md:pb-8 mt-16">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-5 md:gap-6"><div class="flex items-center gap-3"><img src="images/logo.png" alt="PIReactive Logo" class="h-8 md:h-10 w-auto invert" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"><span class="hidden text-xl md:text-2xl font-bold">PIReactive</span></div><div class="flex gap-5 md:gap-6"><a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:twitter"></iconify-icon></a><a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:linkedin"></iconify-icon></a><a href="#" aria-label="GitHub" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:github"></iconify-icon></a><a href="#" aria-label="Dribbble" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:dribbble"></iconify-icon></a><a href="#" aria-label="Instagram" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:instagram"></iconify-icon></a></div></div>
+    <div class="flex flex-col md:flex-row justify-between items-center mt-6 md:mt-8 text-xs md:text-sm text-gray-500"><span>© 2026 PIReactive Tech co. All rights reserved.</span><div class="flex gap-5 md:gap-6 mt-3 md:mt-0"><a href="#" class="hover:text-white transition">Privacy</a><a href="#" class="hover:text-white transition">Terms</a><a href="#" class="hover:text-white transition">Accessibility</a></div></div>
+  </footer>
 </div>
-</section>
+
+<div id="news-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden modal overflow-y-auto py-8">
+  <div class="max-w-4xl mx-auto px-5 md:px-7">
+    <div class="flex justify-end mb-4"><button id="modal-close" class="text-white text-3xl hover:text-gray-400 transition">&times;</button></div>
+    <div class="bg-[#111] rounded-2xl p-6 md:p-8 border border-gray-800">
+      <div id="modal-images" class="grid grid-cols-2 gap-3 mb-6"></div>
+      <h2 id="modal-title" class="text-2xl md:text-4xl font-bold mb-3"></h2>
+      <p id="modal-date" class="text-gray-400 text-sm mb-6"></p>
+      <div id="modal-body" class="news-content text-gray-300 leading-relaxed"></div>
+    </div>
+  </div>
 </div>
+
+<script>
+(function(){
+  const _0=document.getElementById('m-b'),_1=document.getElementById('m-m'),_2=document.getElementById('c-b');
+  if(_0&&_1){_0.addEventListener('click',()=>{_1.classList.remove('h');document.body.style.overflow='hidden';});}
+  if(_2&&_1){_2.addEventListener('click',()=>{_1.classList.add('h');document.body.style.overflow='';});}
+  _1?.querySelectorAll('a').forEach(_3=>_3.addEventListener('click',()=>{_1.classList.add('h');document.body.style.overflow='';}));
+
+  const _4=document.getElementById('news-grid'),_5=document.getElementById('featured-article');
+  const _6='https://firestore.googleapis.com/v1/projects/project-k-dbaef/databases/(default)/documents/news';
+  
+  const _7=document.getElementById('news-modal'),_8=document.getElementById('modal-close'),_9=document.getElementById('modal-title'),_a=document.getElementById('modal-date'),_b=document.getElementById('modal-body'),_c=document.getElementById('modal-images');
+
+  function _d(_e){if(!_e)return'';const _f=new Date(_e);return _f.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});}
+
+  function _g(_h){_7.classList.remove('hidden');document.body.classList.add('modal-open');_9.textContent=_h.title;_a.textContent=_d(_h.date);_b.innerHTML=_h.body||'<p>No content available.</p>';
+    _c.innerHTML='';if(_h.images&&_h.images.length){_h.images.forEach(_i=>{const _j=document.createElement('img');_j.src=_i;_j.alt='';_j.className='rounded-lg w-full h-32 object-cover';_c.appendChild(_j);});}
+  }
+
+  function _k(){_7.classList.add('hidden');document.body.classList.remove('modal-open');}
+  _8.addEventListener('click',_k);_7.addEventListener('click',(e)=>{if(e.target===_7)_k();});
+  document.addEventListener('keydown',(e)=>{if(e.key==='Escape'&&!_7.classList.contains('hidden'))_k();});
+
+  function _l(_m){const _n=document.createElement('div');_n.className='news-card rounded-xl overflow-hidden';
+    const _o=_m.images&&_m.images.length?`<img src="${_m.images[0]}" alt="${_m.title}" class="w-full h-48 object-cover">`:`<div class="w-full h-48 bg-gray-800 flex items-center justify-center"><iconify-icon icon="mdi:newspaper" class="text-4xl text-gray-600"></iconify-icon></div>`;
+    _n.innerHTML=`${_o}<div class="p-5"><p class="text-xs text-gray-400 mb-2">${_d(_m.date)}</p><h3 class="text-lg font-semibold mb-2 line-clamp-2">${_m.title}</h3><p class="text-gray-400 text-sm line-clamp-2">${(_m.body||'').replace(/<[^>]*>/g,'').substring(0,100)}...</p><button class="read-more mt-4 text-sm font-medium text-white hover:text-gray-300 transition flex items-center gap-1">Read More <iconify-icon icon="mdi:arrow-right"></iconify-icon></button></div>`;
+    _n.querySelector('.read-more').addEventListener('click',(e)=>{e.stopPropagation();_g(_m);});_n.addEventListener('click',()=>_g(_m));_4.appendChild(_n);
+  }
+
+  async function _p(){
+    try{
+      const _q=await fetch(_6);const _r=await _q.json();
+      const _s=(_r.documents||[]).map(_t=>{const _u=_t.fields;return{title:_u.title?.stringValue||'',body:_u.body?.stringValue||'',date:_u.date?.stringValue||new Date().toISOString(),images:_u.images?.arrayValue?.values?.map(_v=>_v.stringValue)||[]};}).sort((_w,_x)=>new Date(_x.date)-new Date(_w.date));
+      _4.innerHTML='';
+      if(_s.length===0){_4.innerHTML='<div class="col-span-full text-center py-20"><iconify-icon icon="mdi:newspaper-off" class="text-5xl text-gray-500 mb-3"></iconify-icon><p class="text-gray-400 text-lg">No news articles yet.</p><p class="text-gray-500 mt-1">Check back soon for updates!</p></div>';_5.innerHTML='';return;}
+      if(_s.length>0){const _y=_s[0];_5.innerHTML=`<a class="block group"><div class="relative rounded-2xl overflow-hidden bg-gray-900"><div class="aspect-[21/9]">${_y.images&&_y.images.length?`<img src="${_y.images[0]}" alt="${_y.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">`:`<div class="w-full h-full bg-gray-800 flex items-center justify-center"><iconify-icon icon="mdi:newspaper" class="text-6xl text-gray-600"></iconify-icon></div>`}</div><div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div><div class="absolute bottom-0 left-0 p-6 md:p-8"><span class="bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full">FEATURED</span><h2 class="text-2xl md:text-4xl font-bold mt-3 mb-2">${_y.title}</h2><p class="text-gray-300 text-sm md:text-base">${_d(_y.date)}</p></div></div></a>`;_5.addEventListener('click',()=>_g(_y));}
+      _s.slice(1).forEach(_z=>_l(_z));
+    }catch(_){_4.innerHTML='<div class="col-span-full text-center py-20 text-red-400"><p>Failed to load news. Please refresh.</p></div>';}
+  }
+  _p();
+})();
+</script>
+</body>
+</html>
