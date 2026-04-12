@@ -24,261 +24,72 @@
   <style>
     * { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #000000; }
-    
-    .vertical-line {
-      width: 1px;
-      height: 100%;
-      background: linear-gradient(to bottom, transparent 0%, transparent 12%, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.06) 90%, transparent 100%);
-    }
-
-    @keyframes pulseGreen {
-      0%, 100% { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.4); }
-      50% { background: #0a2e1a; box-shadow: 0 0 2px rgba(34, 197, 94, 0.1); }
-    }
-    .green-dot-animation { animation: pulseGreen 2.2s ease-in-out infinite; }
-
-    @keyframes slide {
-      0%, 20% { transform: translateY(0); }
-      25%, 45% { transform: translateY(-65px); }
-      50%, 70% { transform: translateY(-130px); }
-      75%, 95% { transform: translateY(-195px); }
-      100% { transform: translateY(-260px); }
-    }
-    @media (min-width: 768px) {
-      @keyframes slide {
-        0%, 20% { transform: translateY(0); }
-        25%, 45% { transform: translateY(-90px); }
-        50%, 70% { transform: translateY(-180px); }
-        75%, 95% { transform: translateY(-270px); }
-        100% { transform: translateY(-360px); }
-      }
-    }
-    .animate-slide { animation: slide 8s cubic-bezier(0.45, 0.05, 0.2, 0.99) infinite; }
-
-    .sticky-wrapper {
-      position: relative;
-      height: 400vh;
-      width: 100%;
-    }
-
-    .cards-container {
-      position: sticky;
-      top: 80px;
-      height: calc(100vh - 100px);
-      width: 100%;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-    }
-    
-    @media (min-width: 768px) {
-      .cards-container {
-        top: 100px;
-        height: calc(100vh - 120px);
-      }
-    }
-
-    .card-stack {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    .stack-card {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), 
-                  transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
-                  box-shadow 0.3s ease;
-      opacity: 0;
-      transform: translateY(60px) scale(0.95);
-      pointer-events: none;
-      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
-    }
-    
-    @media (min-width: 768px) {
-      .stack-card {
-        border-radius: 24px;
-      }
-    }
-
-    .stack-card.active {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      pointer-events: auto;
-      z-index: 10;
-    }
-
-    .stack-card.prev {
-      opacity: 0;
-      transform: translateY(-60px) scale(0.95);
-      pointer-events: none;
-    }
-
-    .arrow-icon {
-      transition: transform 0.3s ease;
-      display: inline-block;
-    }
-    
-    .stack-card:hover .arrow-icon {
-      transform: translateX(8px) rotate(-10deg);
-    }
-
-    @keyframes scrollSponsors {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .sponsors-track {
-      display: flex;
-      gap: 2.5rem;
-      animation: scrollSponsors 25s linear infinite;
-      width: fit-content;
-    }
-    
-    @media (min-width: 768px) {
-      .sponsors-track {
-        gap: 4rem;
-      }
-    }
-
-    .sponsors-wrapper:hover .sponsors-track {
-      animation-play-state: paused;
-    }
-
-    .sponsor-item {
-      flex-shrink: 0;
-      filter: grayscale(100%) brightness(0.8);
-      transition: filter 0.3s ease;
-    }
-
-    .sponsor-item:hover {
-      filter: grayscale(0%) brightness(1);
-    }
-
-    .sponsor-item img {
-      height: 36px;
-      width: auto;
-      object-fit: contain;
-    }
-    
-    @media (min-width: 768px) {
-      .sponsor-item img {
-        height: 48px;
-      }
-    }
-
-    .featured-carousel {
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .featured-track {
-      display: flex;
-      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    
-    .featured-slide {
-      flex: 0 0 100%;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-    }
-    
-    @media (min-width: 480px) {
-      .featured-slide {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-    
-    @media (min-width: 768px) {
-      .featured-slide {
-        flex: 0 0 100%;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1.25rem;
-      }
-    }
-    
-    @media (min-width: 1024px) {
-      .featured-slide {
-        grid-template-columns: repeat(5, 1fr);
-      }
-    }
-
-    .project-card-item {
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    
-    .project-card-item:hover {
-      transform: translateY(-4px);
-    }
-    
-    .project-card-image {
-      aspect-ratio: 16/9;
-      background: #1a1a1a;
-      overflow: hidden;
-    }
-    
-    .project-card-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    
-    .carousel-btn {
-      transition: all 0.3s ease;
-    }
-    
-    .carousel-btn:hover {
-      background: rgba(255,255,255,0.15);
-    }
-    
-    .carousel-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-    
-    #mobileMenu {
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    
-    #mobileMenu.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-    
-    #mobileMenu:not(.hidden) {
-      opacity: 1;
-      visibility: visible;
-    }
+    ._a { width: 1px; height: 100%; background: linear-gradient(to bottom, transparent 0%, transparent 12%, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.06) 90%, transparent 100%); }
+    @keyframes _b { 0%, 100% { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.4); } 50% { background: #0a2e1a; box-shadow: 0 0 2px rgba(34, 197, 94, 0.1); } }
+    ._c { animation: _b 2.2s ease-in-out infinite; }
+    @keyframes _d { 0%, 20% { transform: translateY(0); } 25%, 45% { transform: translateY(-65px); } 50%, 70% { transform: translateY(-130px); } 75%, 95% { transform: translateY(-195px); } 100% { transform: translateY(-260px); } }
+    @media (min-width: 768px) { @keyframes _d { 0%, 20% { transform: translateY(0); } 25%, 45% { transform: translateY(-90px); } 50%, 70% { transform: translateY(-180px); } 75%, 95% { transform: translateY(-270px); } 100% { transform: translateY(-360px); } } }
+    ._e { animation: _d 8s cubic-bezier(0.45, 0.05, 0.2, 0.99) infinite; }
+    ._f { position: relative; height: 400vh; width: 100%; }
+    ._g { position: sticky; top: 80px; height: calc(100vh - 100px); width: 100%; display: flex; align-items: flex-start; justify-content: center; }
+    @media (min-width: 768px) { ._g { top: 100px; height: calc(100vh - 120px); } }
+    ._h { position: relative; width: 100%; height: 100%; }
+    ._i { position: absolute; top: 0; left: 0; width: 100%; border-radius: 20px; cursor: pointer; transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease; opacity: 0; transform: translateY(60px) scale(0.95); pointer-events: none; box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3); }
+    @media (min-width: 768px) { ._i { border-radius: 24px; } }
+    ._i._j { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; z-index: 10; }
+    ._i._k { opacity: 0; transform: translateY(-60px) scale(0.95); pointer-events: none; }
+    ._l { transition: transform 0.3s ease; display: inline-block; }
+    ._i:hover ._l { transform: translateX(8px) rotate(-10deg); }
+    @keyframes _m { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    ._n { display: flex; gap: 2.5rem; animation: _m 25s linear infinite; width: fit-content; }
+    @media (min-width: 768px) { ._n { gap: 4rem; } }
+    ._o:hover ._n { animation-play-state: paused; }
+    ._p { flex-shrink: 0; filter: grayscale(100%) brightness(0.8); transition: filter 0.3s ease; }
+    ._p:hover { filter: grayscale(0%) brightness(1); }
+    ._p img { height: 36px; width: auto; object-fit: contain; }
+    @media (min-width: 768px) { ._p img { height: 48px; } }
+    ._q { position: relative; overflow: hidden; }
+    ._r { display: flex; transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
+    ._s { flex: 0 0 100%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    @media (min-width: 480px) { ._s { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 768px) { ._s { flex: 0 0 100%; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; } }
+    @media (min-width: 1024px) { ._s { grid-template-columns: repeat(5, 1fr); } }
+    ._t { cursor: pointer; transition: transform 0.3s ease; }
+    ._t:hover { transform: translateY(-4px); }
+    ._u { aspect-ratio: 16/9; background: #1a1a1a; overflow: hidden; }
+    ._u img { width: 100%; height: 100%; object-fit: cover; }
+    ._v { transition: all 0.3s ease; }
+    ._v:hover { background: rgba(255,255,255,0.15); }
+    ._v:disabled { opacity: 0.3; cursor: not-allowed; }
+    #_w { transition: opacity 0.3s ease, visibility 0.3s ease; }
+    #_w._x { opacity: 0; visibility: hidden; }
+    #_w:not(._x) { opacity: 1; visibility: visible; }
+    ._y { opacity: 0; pointer-events: none; position: absolute; }
   </style>
+  <script type="module">
+    import { initializeApp as _z } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+    import { getFirestore as _A, collection as _B, getDocs as _C, addDoc as _D, query as _E, orderBy as _F } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+    const _G = { apiKey: "QUl6YVN5QXRIYTl3QXJ5amkzRWRXd2h4VDd0VXdaUXVSRC1MSnZJ", authDomain: "cHJvamVjdC1rLWRiYWVmLmZpcmViYXNlYXBwLmNvbQ==", projectId: "cHJvamVjdC1rLWRiYWVm", storageBucket: "cHJvamVjdC1rLWRiYWVmLmZpcmViYXNlc3RvcmFnZS5hcHA=", messagingSenderId: "MzU2OTM2NTc4OTEy", appId: "MTozNTY5MzY1Nzg5MTI6d2ViOjA1NmJkYmY4NjI1YjMzZDc5ZTEwMDU=", measurementId: "Ry1QWEI2UVlZVjNa" };
+    const _H = { apiKey: atob(_G.apiKey), authDomain: atob(_G.authDomain), projectId: atob(_G.projectId), storageBucket: atob(_G.storageBucket), messagingSenderId: atob(_G.messagingSenderId), appId: atob(_G.appId), measurementId: atob(_G.measurementId) };
+    const _I = _z(_H); const _J = _A(_I);
+    const _K = _B(_J, "websites"); const _L = _B(_J, "designs"); const _M = _B(_J, "requests");
+    window._N = { _J, _K, _L, _M, _C, _D, _E, _F };
+  </script>
 </head>
 <body class="text-white">
 
   <div class="fixed inset-0 pointer-events-none z-10 px-5 md:px-7 flex justify-evenly">
-    <div class="vertical-line"></div><div class="vertical-line"></div><div class="vertical-line"></div>
-    <div class="vertical-line"></div><div class="vertical-line"></div><div class="vertical-line"></div>
-    <div class="vertical-line"></div><div class="vertical-line"></div><div class="vertical-line"></div>
+    <div class="_a"></div><div class="_a"></div><div class="_a"></div><div class="_a"></div><div class="_a"></div><div class="_a"></div><div class="_a"></div><div class="_a"></div><div class="_a"></div>
   </div>
 
   <div class="relative z-20 max-w-7xl mx-auto px-5 md:px-7 py-4 md:py-5">
-    
     <header class="pb-4 border-b border-white">
       <div class="flex flex-row justify-between items-center gap-4">
         <div class="flex flex-col gap-0.5">
           <div class="text-xl md:text-[26px] font-semibold tracking-tight">PIReactive Tech co.</div>
           <a href="https://mkbertrand.vercel.app" target="_blank" rel="noopener noreferrer" class="text-xs md:text-sm font-normal text-gray-400 hover:text-white transition w-fit">Hey am MKB! The creator</a>
         </div>
-        
-        <button id="mobileMenuBtn" class="block md:hidden p-2" aria-label="Menu">
-          <iconify-icon icon="mdi:menu" class="text-2xl"></iconify-icon>
-        </button>
-        
+        <button id="_aa" class="block md:hidden p-2" aria-label="Menu"><iconify-icon icon="mdi:menu" class="text-2xl"></iconify-icon></button>
         <nav class="hidden md:flex gap-7 md:gap-11 pt-1.5 flex-wrap">
           <a href="clients.html" class="text-[15px] font-normal hover:opacity-65 transition">PROJECTS</a>
           <a href="domain.html" class="text-[15px] font-normal hover:opacity-65 transition">DOMAIN</a>
@@ -287,11 +98,8 @@
           <a href="about.html" class="text-[15px] font-normal hover:opacity-65 transition">ABOUT</a>
         </nav>
       </div>
-      
-      <div id="mobileMenu" class="hidden md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg z-50 pt-20 px-6">
-        <button id="mobileCloseBtn" class="absolute top-5 right-5 p-2" aria-label="Close">
-          <iconify-icon icon="mdi:close" class="text-2xl"></iconify-icon>
-        </button>
+      <div id="_w" class="_x md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg z-50 pt-20 px-6">
+        <button id="_ab" class="absolute top-5 right-5 p-2" aria-label="Close"><iconify-icon icon="mdi:close" class="text-2xl"></iconify-icon></button>
         <nav class="flex flex-col gap-6 text-2xl font-light">
           <a href="clients.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">PROJECTS</a>
           <a href="domain.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">DOMAIN</a>
@@ -302,363 +110,93 @@
       </div>
     </header>
 
-    <div class="flex justify-end mt-3">
-      <div class="flex items-center gap-2.5">
-        <span class="w-2 h-2 rounded-full green-dot-animation"></span>
-        <span class="text-xs md:text-sm text-gray-300 tracking-tight">Available for a project.</span>
-      </div>
-    </div>
+    <div class="flex justify-end mt-3"><div class="flex items-center gap-2.5"><span class="w-2 h-2 rounded-full _c"></span><span class="text-xs md:text-sm text-gray-300 tracking-tight">Available for a project.</span></div></div>
 
     <section class="mt-12 md:mt-20">
-      <div class="flex flex-col gap-3">
-        <h1 class="text-4xl md:text-7xl font-bold tracking-tight">[WE BUILD]</h1>
-        <div class="flex items-baseline h-[50px] md:h-[90px] overflow-hidden">
-          <div class="h-[50px] md:h-[90px] overflow-hidden inline-block">
-            <div class="flex flex-col animate-slide">
-              <span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Websites</span>
-              <span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Applications</span>
-              <span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Digital products</span>
-              <span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Experiences</span>
-              <span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Websites</span>
-            </div>
-          </div>
-        </div>
+      <div class="flex flex-col gap-3"><h1 class="text-4xl md:text-7xl font-bold tracking-tight">[WE BUILD]</h1>
+        <div class="flex items-baseline h-[50px] md:h-[90px] overflow-hidden"><div class="h-[50px] md:h-[90px] overflow-hidden inline-block"><div class="flex flex-col _e"><span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Websites</span><span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Applications</span><span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Digital products</span><span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Experiences</span><span class="text-4xl md:text-7xl font-bold tracking-tight h-[50px] md:h-[90px] block text-gray-400">Websites</span></div></div></div>
       </div>
     </section>
 
-    <div class="mt-12 md:mt-28 max-w-3xl">
-      <p class="text-base md:text-xl text-gray-300 leading-relaxed">
-        PIReactive is a Rwandan tech digital company introduced in early 2022. We design and develop premium websites, mobile applications, and digital products for forward-thinking businesses. Trusted by industry leaders and backed by strategic technology partners across East Africa and beyond.
-      </p>
-    </div>
+    <div class="mt-12 md:mt-28 max-w-3xl"><p class="text-base md:text-xl text-gray-300 leading-relaxed">PIReactive is a Rwandan tech digital company introduced in early 2022. We design and develop premium websites, mobile applications, and digital products for forward-thinking businesses. Trusted by industry leaders and backed by strategic technology partners across East Africa and beyond.</p></div>
 
     <div class="mt-16 md:mt-20 pb-8">
       <div class="text-xs uppercase tracking-widest text-gray-500 mb-6 md:mb-8">Trusted by innovative companies</div>
-      <div class="sponsors-wrapper overflow-hidden">
-        <div class="sponsors-track">
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/airbnb.svg" alt="Airbnb" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/stripe.svg" alt="Stripe" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/spotify.svg" alt="Spotify" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/shopify.svg" alt="Shopify" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/microsoft.svg" alt="Microsoft" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/google.svg" alt="Google" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/amazon.svg" alt="Amazon" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/meta.svg" alt="Meta" class="invert"></div>
-          
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/airbnb.svg" alt="Airbnb" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/stripe.svg" alt="Stripe" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/spotify.svg" alt="Spotify" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/shopify.svg" alt="Shopify" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/microsoft.svg" alt="Microsoft" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/google.svg" alt="Google" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/amazon.svg" alt="Amazon" class="invert"></div>
-          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/meta.svg" alt="Meta" class="invert"></div>
-        </div>
-      </div>
+      <div class="_o overflow-hidden"><div class="_n"><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/airbnb.svg" alt="Airbnb" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/stripe.svg" alt="Stripe" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/spotify.svg" alt="Spotify" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/shopify.svg" alt="Shopify" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/microsoft.svg" alt="Microsoft" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/google.svg" alt="Google" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/amazon.svg" alt="Amazon" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/meta.svg" alt="Meta" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/airbnb.svg" alt="Airbnb" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/stripe.svg" alt="Stripe" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/spotify.svg" alt="Spotify" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/shopify.svg" alt="Shopify" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/microsoft.svg" alt="Microsoft" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/google.svg" alt="Google" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/amazon.svg" alt="Amazon" class="invert"></div><div class="_p"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/meta.svg" alt="Meta" class="invert"></div></div></div>
     </div>
   </div>
 
-  <div class="sticky-wrapper">
-    <div class="cards-container">
-      <div class="card-stack max-w-7xl mx-auto px-5 md:px-7">
-        
-        <div class="stack-card p-5 md:p-10 bg-[#f97316] text-black" data-index="0" data-link="hosting.html">
-          <div class="flex justify-between items-start">
-            <div class="flex items-center gap-3 md:gap-4">
-              <iconify-icon icon="mdi:web" class="text-3xl md:text-4xl"></iconify-icon>
-              <div>
-                <div class="flex items-center gap-3 md:gap-4 text-xs md:text-sm tracking-wide uppercase opacity-70">
-                  <span>2024</span>
-                  <span>Infrastructure</span>
-                </div>
-                <h2 class="text-3xl md:text-7xl font-bold tracking-tight mt-1 md:mt-2">Hosting</h2>
-              </div>
-            </div>
-            <span class="arrow-icon"><iconify-icon icon="mdi:arrow-right" class="text-4xl md:text-7xl"></iconify-icon></span>
-          </div>
-          <p class="text-black/80 text-sm md:text-lg mt-3 md:mt-4 max-w-2xl">Blazing fast, secure infrastructure with 99.9% uptime SLA.</p>
-          <div class="mt-5 md:mt-8 h-[200px] md:h-[450px] w-full overflow-hidden bg-[#f97316] flex items-center justify-center">
-            <img src="images/box1.png" alt="Hosting Infrastructure" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<iconify-icon icon=\'mdi:server\' class=\'text-6xl md:text-8xl opacity-30\'></iconify-icon>'">
-          </div>
-        </div>
-
-        <div class="stack-card p-5 md:p-10 bg-white text-[#2563eb]" data-index="1" data-link="domain.html">
-          <div class="flex justify-between items-start">
-            <div class="flex items-center gap-3 md:gap-4">
-              <iconify-icon icon="mdi:link-variant" class="text-3xl md:text-4xl"></iconify-icon>
-              <div>
-                <div class="flex items-center gap-3 md:gap-4 text-xs md:text-sm tracking-wide uppercase opacity-70">
-                  <span>2023</span>
-                  <span>Product Design</span>
-                </div>
-                <h2 class="text-3xl md:text-7xl font-bold tracking-tight mt-1 md:mt-2">Domain Provider</h2>
-              </div>
-            </div>
-            <span class="arrow-icon"><iconify-icon icon="mdi:arrow-right" class="text-4xl md:text-7xl text-[#2563eb]"></iconify-icon></span>
-          </div>
-          <p class="text-[#2563eb]/70 text-sm md:text-lg mt-3 md:mt-4 max-w-2xl">Premium TLDs, DNS management, and domain privacy included.</p>
-          <div class="mt-5 md:mt-8 h-[200px] md:h-[450px] w-full overflow-hidden bg-white flex items-center justify-center">
-            <img src="images/box2.png" alt="Domain Provider" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<iconify-icon icon=\'mdi:web\' class=\'text-6xl md:text-8xl text-[#2563eb] opacity-30\'></iconify-icon>'">
-          </div>
-        </div>
-
-        <div class="stack-card p-5 md:p-10 bg-[#1e1e1e] text-[#7dd3fc] border border-white/5" data-index="2" data-link="domain.html">
-          <div class="flex justify-between items-start">
-            <div class="flex items-center gap-3 md:gap-4">
-              <iconify-icon icon="mdi:email-outline" class="text-3xl md:text-4xl text-[#7dd3fc]"></iconify-icon>
-              <div>
-                <div class="flex items-center gap-3 md:gap-4 text-xs md:text-sm tracking-wide uppercase opacity-70 text-gray-400">
-                  <span>2023</span>
-                  <span>Web Development</span>
-                </div>
-                <h2 class="text-3xl md:text-7xl font-bold tracking-tight mt-1 md:mt-2 text-[#7dd3fc]">Business Email</h2>
-              </div>
-            </div>
-            <span class="arrow-icon"><iconify-icon icon="mdi:arrow-right" class="text-4xl md:text-7xl text-[#7dd3fc]"></iconify-icon></span>
-          </div>
-          <p class="text-gray-400 text-sm md:text-lg mt-3 md:mt-4 max-w-2xl"><span class="text-[#7dd3fc]">Professional</span> inbox with <span class="text-[#4ade80]">green</span>-grade encryption.</p>
-          <div class="mt-5 md:mt-8 h-[200px] md:h-[450px] w-full overflow-hidden bg-[#1e1e1e] flex items-center justify-center">
-            <img src="images/box3.png" alt="Business Email" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<iconify-icon icon=\'mdi:email\' class=\'text-6xl md:text-8xl text-[#7dd3fc] opacity-30\'></iconify-icon>'">
-          </div>
-        </div>
-
-        <div class="stack-card p-5 md:p-10 bg-[#eab308] text-black" data-index="3" data-link="cool.html">
-          <div class="flex justify-between items-start">
-            <div class="flex items-center gap-3 md:gap-4">
-              <iconify-icon icon="mdi:code-braces" class="text-3xl md:text-4xl"></iconify-icon>
-              <div>
-                <div class="flex items-center gap-3 md:gap-4 text-xs md:text-sm tracking-wide uppercase opacity-70">
-                  <span>2024</span>
-                  <span>UI/UX Design</span>
-                </div>
-                <h2 class="text-3xl md:text-7xl font-bold tracking-tight mt-1 md:mt-2">Code Snippets</h2>
-              </div>
-            </div>
-            <span class="arrow-icon"><iconify-icon icon="mdi:arrow-right" class="text-4xl md:text-7xl"></iconify-icon></span>
-          </div>
-          <p class="text-black/80 text-sm md:text-lg mt-3 md:mt-4 max-w-2xl">Production-ready components and utilities for developers.</p>
-          <div class="mt-5 md:mt-8 h-[200px] md:h-[450px] w-full overflow-hidden bg-[#eab308] flex items-center justify-center">
-            <img src="images/box4.png" alt="Code Snippets" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<iconify-icon icon=\'mdi:code-tags\' class=\'text-6xl md:text-8xl opacity-30\'></iconify-icon>'">
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
+  <div class="_f"><div class="_g"><div class="_h max-w-7xl mx-auto px-5 md:px-7">
+    <div class="_i p-5 md:p-10 bg-[#f97316] text-black" data-index="0" data-link="hosting.html"><div class="flex justify-between items-start"><div class="flex items-center gap-3 md:gap-4"><iconify-icon icon="mdi:web" class="text-3xl md:text-4xl"></iconify-icon><div><div class="flex items-center gap-3 md:gap-4 text-xs md:text-sm tracking-wide uppercase opacity-70"><span>2024</span><span>Infrastructure</span></div><h2 class="text-3xl md:text-7xl font-bold tracking-tight mt-1 md:mt-2">Hosting</h2></div></div><span class="_l"><iconify-icon icon="mdi:arrow-right" class="text-4xl md:text-7xl"></iconify-icon></span></div><p class="text-black/80 text-sm md:text-lg mt-3 md:mt-4 max-w-2xl">Blazing fast, secure infrastructure with 99.9% uptime SLA.</p><div class="mt-5 md:mt-8 h-[200px] md:h-[450px] w-full overflow-hidden bg-[#f97316] flex items-center justify-center"><img src="images/box1.png" alt="Hosting" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<iconify-icon icon=\'mdi:server\' class=\'text-6xl md:text-8xl opacity-30\'></iconify-icon>'"></div></div>
+    <div class="_i p-5 md:p-10 bg-white text-[#2563eb]" data-index="1" data-link="domain.html"><div class="flex justify-between items-start"><div class="flex items-center gap-3 md:gap-4"><iconify-icon icon="mdi:link-variant" class="text-3xl md:text-4xl"></iconify-icon><div><div class="flex items-center gap-3 md:gap-4 text-xs md:text-sm tracking-wide uppercase opacity-70"><span>2023</span><span>Product Design</span></div><h2 class="text-3xl md:text-7xl font-bold tracking-tight mt-1 md:mt-2">Domain Provider</h2></div></div><span class="_l"><iconify-icon icon="mdi:arrow-right" class="text-4xl md:text-7xl text-[#2563eb]"></iconify-icon></span></div><p class="text-[#2563eb]/70 text-sm md:text-lg mt-3 md:mt-4 max-w-2xl">Premium TLDs, DNS management, and domain privacy included.</p><div class="mt-5 md:mt-8 h-[200px] md:h-[450px] w-full overflow-hidden bg-white flex items-center justify-center"><img src="images/box2.png" alt="Domain" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<iconify-icon icon=\'mdi:web\' class=\'text-6xl md:text-8xl text-[#2563eb] opacity-30\'></iconify-icon>'"></div></div>
+    <div class="_i p-5 md:p-10 bg-[#1e1e1e] text-[#7dd3fc] border border-white/5" data-index="2" data-link="domain.html"><div class="flex justify-between items-start"><div class="flex items-center gap-3 md:gap-4"><iconify-icon icon="mdi:email-outline" class="text-3xl md:text-4xl text-[#7dd3fc]"></iconify-icon><div><div class="flex items-center gap-3 md:gap-4 text-xs md:text-sm tracking-wide uppercase opacity-70 text-gray-400"><span>2023</span><span>Web Development</span></div><h2 class="text-3xl md:text-7xl font-bold tracking-tight mt-1 md:mt-2 text-[#7dd3fc]">Business Email</h2></div></div><span class="_l"><iconify-icon icon="mdi:arrow-right" class="text-4xl md:text-7xl text-[#7dd3fc]"></iconify-icon></span></div><p class="text-gray-400 text-sm md:text-lg mt-3 md:mt-4 max-w-2xl"><span class="text-[#7dd3fc]">Professional</span> inbox with <span class="text-[#4ade80]">green</span>-grade encryption.</p><div class="mt-5 md:mt-8 h-[200px] md:h-[450px] w-full overflow-hidden bg-[#1e1e1e] flex items-center justify-center"><img src="images/box3.png" alt="Email" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<iconify-icon icon=\'mdi:email\' class=\'text-6xl md:text-8xl text-[#7dd3fc] opacity-30\'></iconify-icon>'"></div></div>
+    <div class="_i p-5 md:p-10 bg-[#eab308] text-black" data-index="3" data-link="cool.html"><div class="flex justify-between items-start"><div class="flex items-center gap-3 md:gap-4"><iconify-icon icon="mdi:code-braces" class="text-3xl md:text-4xl"></iconify-icon><div><div class="flex items-center gap-3 md:gap-4 text-xs md:text-sm tracking-wide uppercase opacity-70"><span>2024</span><span>UI/UX Design</span></div><h2 class="text-3xl md:text-7xl font-bold tracking-tight mt-1 md:mt-2">Code Snippets</h2></div></div><span class="_l"><iconify-icon icon="mdi:arrow-right" class="text-4xl md:text-7xl"></iconify-icon></span></div><p class="text-black/80 text-sm md:text-lg mt-3 md:mt-4 max-w-2xl">Production-ready components and utilities for developers.</p><div class="mt-5 md:mt-8 h-[200px] md:h-[450px] w-full overflow-hidden bg-[#eab308] flex items-center justify-center"><img src="images/box4.png" alt="Snippets" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<iconify-icon icon=\'mdi:code-tags\' class=\'text-6xl md:text-8xl opacity-30\'></iconify-icon>'"></div></div>
+  </div></div></div>
 
   <div class="relative z-20 max-w-7xl mx-auto px-5 md:px-7 pt-40 pb-12 md:pb-20">
-    
     <section class="mb-16 md:mb-24">
-      <div class="flex justify-between items-center mb-8 md:mb-12">
-        <h2 class="text-2xl md:text-5xl font-bold tracking-tight">FEATURED PROJECTS</h2>
-        <div class="flex gap-2">
-          <button id="prevBtn" class="carousel-btn w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition disabled:opacity-30" aria-label="Previous">
-            <iconify-icon icon="mdi:arrow-left" class="text-xl md:text-2xl"></iconify-icon>
-          </button>
-          <button id="nextBtn" class="carousel-btn w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition disabled:opacity-30" aria-label="Next">
-            <iconify-icon icon="mdi:arrow-right" class="text-xl md:text-2xl"></iconify-icon>
-          </button>
-        </div>
-      </div>
-      
-      <div class="featured-carousel">
-        <div id="featuredTrack" class="featured-track">
-          <div class="featured-slide">
-            <div class="project-card-item"><div class="project-card-image mb-2 md:mb-3"><img src="images/project1.jpg" alt="Nova Platform" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">Nova Platform</p></div>
-            <div class="project-card-item"><div class="project-card-image mb-2 md:mb-3"><img src="images/project2.jpg" alt="Aether Finance" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">Aether Finance</p></div>
-            <div class="project-card-item"><div class="project-card-image mb-2 md:mb-3"><img src="images/project3.jpg" alt="Lumina OS" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">Lumina OS</p></div>
-            <div class="project-card-item"><div class="project-card-image mb-2 md:mb-3"><img src="images/project4.jpg" alt="Cipher Wallet" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">Cipher Wallet</p></div>
-            <div class="project-card-item"><div class="project-card-image mb-2 md:mb-3"><img src="images/project5.jpg" alt="Neo Dashboard" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">Neo Dashboard</p></div>
-            <div class="project-card-item"><div class="project-card-image mb-2 md:mb-3"><img src="images/project6.jpg" alt="Quantum API" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">Quantum API</p></div>
-          </div>
-          <div class="featured-slide">
-            <div class="project-card-item"><div class="project-card-image mb-2 md:mb-3"><img src="images/project7.jpg" alt="Flux Mobile" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">Flux Mobile</p></div>
-            <div class="project-card-item"><div class="project-card-image mb-2 md:mb-3"><img src="images/project8.jpg" alt="Aether Edge" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">Aether Edge</p></div>
-            <div class="project-card-item"><div class="project-card-image mb-2 md:mb-3"><img src="images/project9.jpg" alt="Void Studio" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">Void Studio</p></div>
-            <div class="project-card-item"><div class="project-card-image mb-2 md:mb-3"><img src="images/project10.jpg" alt="Zenith Core" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">Zenith Core</p></div>
-            <div class="project-card-item"><div class="project-card-image mb-2 md:mb-3"><img src="images/project1.jpg" alt="Nova Platform" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">Nova Platform</p></div>
-            <div class="project-card-item"><div class="project-card-image mb-2 md:mb-3"><img src="images/project2.jpg" alt="Aether Finance" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">Aether Finance</p></div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="flex justify-center mt-6 md:hidden">
-        <span id="pageIndicator" class="text-sm text-gray-400">1 / 2</span>
-      </div>
+      <div class="flex justify-between items-center mb-8 md:mb-12"><h2 class="text-2xl md:text-5xl font-bold tracking-tight">FEATURED PROJECTS</h2><div class="flex gap-2"><button id="_ac" class="_v w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition disabled:opacity-30" aria-label="Previous"><iconify-icon icon="mdi:arrow-left" class="text-xl md:text-2xl"></iconify-icon></button><button id="_ad" class="_v w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition disabled:opacity-30" aria-label="Next"><iconify-icon icon="mdi:arrow-right" class="text-xl md:text-2xl"></iconify-icon></button></div></div>
+      <div class="_q"><div id="_ae" class="_r"></div></div>
+      <div class="flex justify-center mt-6 md:hidden"><span id="_af" class="text-sm text-gray-400"></span></div>
     </section>
 
     <section class="grid md:grid-cols-2 gap-8 md:gap-12 mb-16 md:mb-20">
-      <div>
-        <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-3 md:mb-4">Interested in Working With Us?</h2>
-        <p class="text-lg md:text-xl text-gray-400">We Have Your Back</p>
-        <p class="text-gray-400 mt-4 md:mt-6 max-w-md text-sm md:text-base">Tell us about your project and we'll get back to you within 24 hours.</p>
-      </div>
-      <form class="space-y-4 md:space-y-5" autocomplete="on">
-        <input type="text" name="name" placeholder="Full Name" aria-label="Full Name" autocomplete="name" class="w-full bg-transparent border-b border-gray-700 py-3 px-0 focus:outline-none focus:border-white transition placeholder-gray-500 text-sm md:text-base">
-        <input type="tel" name="phone" placeholder="Phone Number" aria-label="Phone Number" autocomplete="tel" class="w-full bg-transparent border-b border-gray-700 py-3 px-0 focus:outline-none focus:border-white transition placeholder-gray-500 text-sm md:text-base">
-        <input type="email" name="email" placeholder="Email Address" aria-label="Email Address" autocomplete="email" class="w-full bg-transparent border-b border-gray-700 py-3 px-0 focus:outline-none focus:border-white transition placeholder-gray-500 text-sm md:text-base">
-        <textarea name="message" placeholder="Your Message" aria-label="Your Message" rows="3" class="w-full bg-transparent border-b border-gray-700 py-3 px-0 focus:outline-none focus:border-white transition placeholder-gray-500 resize-none text-sm md:text-base"></textarea>
-        <button class="bg-white text-black px-6 md:px-8 py-3 rounded-full font-medium hover:bg-gray-200 transition text-sm md:text-base">Send Message →</button>
+      <div><h2 class="text-3xl md:text-5xl font-bold leading-tight mb-3 md:mb-4">Interested in Working With Us?</h2><p class="text-lg md:text-xl text-gray-400">We Have Your Back</p><p class="text-gray-400 mt-4 md:mt-6 max-w-md text-sm md:text-base">Tell us about your project and we'll get back to you within 24 hours.</p></div>
+      <form id="_ag" class="space-y-4 md:space-y-5" autocomplete="on">
+        <input type="text" name="_ah" id="_ai" placeholder="Full Name" aria-label="Full Name" autocomplete="name" class="w-full bg-transparent border-b border-gray-700 py-3 px-0 focus:outline-none focus:border-white transition placeholder-gray-500 text-sm md:text-base" required>
+        <input type="tel" name="_aj" id="_ak" placeholder="Phone Number" aria-label="Phone Number" autocomplete="tel" class="w-full bg-transparent border-b border-gray-700 py-3 px-0 focus:outline-none focus:border-white transition placeholder-gray-500 text-sm md:text-base">
+        <input type="email" name="_al" id="_am" placeholder="Email Address" aria-label="Email Address" autocomplete="email" class="w-full bg-transparent border-b border-gray-700 py-3 px-0 focus:outline-none focus:border-white transition placeholder-gray-500 text-sm md:text-base" required>
+        <textarea name="_an" id="_ao" placeholder="Your Message" aria-label="Your Message" rows="3" class="w-full bg-transparent border-b border-gray-700 py-3 px-0 focus:outline-none focus:border-white transition placeholder-gray-500 resize-none text-sm md:text-base" required></textarea>
+        <button type="submit" class="bg-white text-black px-6 md:px-8 py-3 rounded-full font-medium hover:bg-gray-200 transition text-sm md:text-base">Send Message →</button>
+        <p id="_ap" class="text-xs text-gray-500"></p>
       </form>
     </section>
 
     <footer class="border-t border-gray-800 pt-10 md:pt-12 pb-6 md:pb-8">
-      <div class="flex flex-col md:flex-row justify-between items-center gap-5 md:gap-6">
-        <div class="flex items-center gap-3">
-          <img src="images/logo.png" alt="PIReactive Tech co. Logo" class="h-8 md:h-10 w-auto invert" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-          <span class="hidden text-xl md:text-2xl font-bold">PIReactive</span>
-        </div>
-        <div class="flex gap-5 md:gap-6">
-          <a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:twitter"></iconify-icon></a>
-          <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:linkedin"></iconify-icon></a>
-          <a href="#" aria-label="GitHub" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:github"></iconify-icon></a>
-          <a href="#" aria-label="Dribbble" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:dribbble"></iconify-icon></a>
-          <a href="#" aria-label="Instagram" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:instagram"></iconify-icon></a>
-        </div>
-      </div>
-      <div class="flex flex-col md:flex-row justify-between items-center mt-6 md:mt-8 text-xs md:text-sm text-gray-500">
-        <span>© 2026 PIReactive Tech co. All rights reserved.</span>
-        <div class="flex gap-5 md:gap-6 mt-3 md:mt-0">
-          <a href="#" class="hover:text-white transition">Privacy</a>
-          <a href="#" class="hover:text-white transition">Terms</a>
-          <a href="#" class="hover:text-white transition">Accessibility</a>
-        </div>
-      </div>
+      <div class="flex flex-col md:flex-row justify-between items-center gap-5 md:gap-6"><div class="flex items-center gap-3"><img src="images/logo.png" alt="Logo" class="h-8 md:h-10 w-auto invert" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"><span class="hidden text-xl md:text-2xl font-bold">PIReactive</span></div><div class="flex gap-5 md:gap-6"><a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:twitter"></iconify-icon></a><a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:linkedin"></iconify-icon></a><a href="#" aria-label="GitHub" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:github"></iconify-icon></a><a href="#" aria-label="Dribbble" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:dribbble"></iconify-icon></a><a href="#" aria-label="Instagram" class="text-gray-400 hover:text-white transition text-xl md:text-2xl"><iconify-icon icon="mdi:instagram"></iconify-icon></a></div></div>
+      <div class="flex flex-col md:flex-row justify-between items-center mt-6 md:mt-8 text-xs md:text-sm text-gray-500"><span>© 2026 PIReactive Tech co. All rights reserved.</span><div class="flex gap-5 md:gap-6 mt-3 md:mt-0"><a href="#" class="hover:text-white transition">Privacy</a><a href="#" class="hover:text-white transition">Terms</a><a href="#" class="hover:text-white transition">Accessibility</a></div></div>
     </footer>
   </div>
 
   <script>
     (function() {
-      const cards = document.querySelectorAll('.stack-card');
-      const wrapper = document.querySelector('.sticky-wrapper');
-      let currentIndex = -1;
+      const _aq = document.querySelectorAll('._i'); const _ar = document.querySelector('._f'); let _as = -1;
+      _aq.forEach(_at => { _at.addEventListener('click', function() { const _au = this.dataset.link; if (_au) window.location.href = _au; }); });
+      function _av(_aw) { const _ax = _aq.length; const _ay = 1 / _ax; const _az = Math.min(Math.floor(_aw / _ay), _ax - 1); if (_az !== _as) { _aq.forEach((_aA, _aB) => { _aA.classList.remove('_j', '_k'); if (_aB === _az) _aA.classList.add('_j'); else if (_aB < _az) _aA.classList.add('_k'); }); _as = _az; } }
+      function _aC() { if (!_ar) return; const _aD = _ar.getBoundingClientRect(); const _aE = window.innerHeight; const _aF = _aE * 0.3; const _aG = -_aD.top + _aF; let _aH = _aG / (_aD.height - _aE); _aH = Math.max(0, Math.min(1, _aH)); _av(_aH); }
+      window.addEventListener('scroll', _aC, { passive: true }); setTimeout(() => { _aC(); if (_aq.length > 0 && !_aq[0].classList.contains('_j') && !_aq[0].classList.contains('_k')) _aq[0].classList.add('_j'); }, 100);
       
-      cards.forEach(card => {
-        card.addEventListener('click', function() {
-          const link = this.dataset.link;
-          if (link) window.location.href = link;
-        });
-      });
-
-      function updateCards(scrollProgress) {
-        const cardCount = cards.length;
-        const segmentSize = 1 / cardCount;
-        const newIndex = Math.min(Math.floor(scrollProgress / segmentSize), cardCount - 1);
-        
-        if (newIndex !== currentIndex) {
-          cards.forEach((card, i) => {
-            card.classList.remove('active', 'prev');
-            if (i === newIndex) {
-              card.classList.add('active');
-            } else if (i < newIndex) {
-              card.classList.add('prev');
-            }
-          });
-          currentIndex = newIndex;
-        }
-      }
-
-      function handleScroll() {
-        if (!wrapper) return;
-        const rect = wrapper.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        const startPoint = windowHeight * 0.3;
-        const scrollPosition = -rect.top + startPoint;
-        let progress = scrollPosition / (rect.height - windowHeight);
-        progress = Math.max(0, Math.min(1, progress));
-        
-        updateCards(progress);
-      }
-
-      window.addEventListener('scroll', handleScroll, { passive: true });
+      const _aI = document.getElementById('_aa'); const _aJ = document.getElementById('_w'); const _aK = document.getElementById('_ab');
+      if (_aI && _aJ) { _aI.addEventListener('click', () => { _aJ.classList.remove('_x'); document.body.style.overflow = 'hidden'; }); }
+      if (_aK && _aJ) { _aK.addEventListener('click', () => { _aJ.classList.add('_x'); document.body.style.overflow = ''; }); }
+      _aJ?.querySelectorAll('a').forEach(_aL => { _aL.addEventListener('click', () => { _aJ.classList.add('_x'); document.body.style.overflow = ''; }); });
       
-      setTimeout(() => {
-        handleScroll();
-        if (cards.length > 0 && !cards[0].classList.contains('active') && 
-            !cards[0].classList.contains('prev')) {
-          cards[0].classList.add('active');
-        }
-      }, 100);
+      const _aM = document.getElementById('_ae'); const _aN = document.getElementById('_ac'); const _aO = document.getElementById('_ad'); const _aP = document.getElementById('_af');
+      let _aQ = [], _aR = 0, _aS = 0;
       
-      const menuBtn = document.getElementById('mobileMenuBtn');
-      const mobileMenu = document.getElementById('mobileMenu');
-      const closeBtn = document.getElementById('mobileCloseBtn');
-      
-      if (menuBtn && mobileMenu) {
-        menuBtn.addEventListener('click', () => {
-          mobileMenu.classList.remove('hidden');
-          document.body.style.overflow = 'hidden';
-        });
+      async function _aT() {
+        try {
+          const _aU = await window._N._C(window._N._K); const _aV = await window._N._C(window._N._L);
+          _aQ = [..._aU.docs.map(_aW => ({ id: _aW.id, ..._aW.data(), type: 'website' })), ..._aV.docs.map(_aW => ({ id: _aW.id, ..._aW.data(), type: 'design' }))];
+          _aS = Math.ceil(_aQ.length / 6);
+          if (_aQ.length === 0) { _aM.innerHTML = '<div class="_s"><div class="_t"><div class="_u"><div class="w-full h-full bg-gray-800 flex items-center justify-center"><iconify-icon icon="mdi:image" class="text-3xl text-gray-600"></iconify-icon></div></div><p class="text-xs md:text-sm font-medium text-gray-300">No projects yet</p></div></div>'; _aN.disabled = true; _aO.disabled = true; return; }
+          _aM.innerHTML = ''; for (let _aX = 0; _aX < _aS; _aX++) { const _aY = document.createElement('div'); _aY.className = '_s'; const _aZ = _aQ.slice(_aX * 6, (_aX + 1) * 6); for (let _bA of _aZ) { const _bB = document.createElement('div'); _bB.className = '_t'; _bB.addEventListener('click', () => { if (_bA.link) window.open(_bA.link, '_blank'); }); const _bC = _bA.images?.[0] || ''; _bB.innerHTML = `<div class="_u mb-2 md:mb-3"><img src="${_bC}" alt="${_bA.name}" loading="lazy" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full bg-gray-800 flex items-center justify-center\'><iconify-icon icon=\'mdi:image\' class=\'text-2xl md:text-3xl text-gray-600\'></iconify-icon></div>'"></div><p class="text-xs md:text-sm font-medium text-gray-300">${_bA.name}</p>`; _aY.appendChild(_bB); } while (_aY.children.length < 6) { const _bD = document.createElement('div'); _bD.className = '_t'; _bD.style.opacity = '0'; _bD.style.pointerEvents = 'none'; _aY.appendChild(_bD); } _aM.appendChild(_aY); }
+          _aR = 0; _bE(); _aN.disabled = false; _aO.disabled = _aS <= 1;
+        } catch(_) { _aM.innerHTML = '<div class="_s"><div class="_t"><div class="_u"><div class="w-full h-full bg-gray-800 flex items-center justify-center"><iconify-icon icon="mdi:alert" class="text-3xl text-gray-600"></iconify-icon></div></div><p class="text-xs md:text-sm font-medium text-gray-300">Failed to load</p></div></div>'; }
       }
       
-      if (closeBtn && mobileMenu) {
-        closeBtn.addEventListener('click', () => {
-          mobileMenu.classList.add('hidden');
-          document.body.style.overflow = '';
-        });
-      }
+      function _bE() { _aM.style.transform = `translateX(-${_aR * 100}%)`; _aN.disabled = _aR === 0; _aO.disabled = _aR === _aS - 1; if (_aP) _aP.textContent = `${_aR + 1} / ${_aS}`; }
       
-      mobileMenu?.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          mobileMenu.classList.add('hidden');
-          document.body.style.overflow = '';
-        });
-      });
+      _aN.addEventListener('click', () => { if (_aR > 0) { _aR--; _bE(); } });
+      _aO.addEventListener('click', () => { if (_aR < _aS - 1) { _aR++; _bE(); } });
       
-      const track = document.getElementById('featuredTrack');
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      const indicator = document.getElementById('pageIndicator');
+      let _bF = 0; _aM.addEventListener('touchstart', (e) => { _bF = e.touches[0].clientX; }, { passive: true });
+      _aM.addEventListener('touchend', (e) => { const _bG = e.changedTouches[0].clientX; const _bH = _bF - _bG; if (Math.abs(_bH) > 50) { if (_bH > 0 && _aR < _aS - 1) _aR++; else if (_bH < 0 && _aR > 0) _aR--; _bE(); } });
       
-      if (track && prevBtn && nextBtn) {
-        const slides = track.children;
-        let currentSlide = 0;
-        const totalSlides = slides.length;
-        
-        function updateCarousel() {
-          track.style.transform = `translateX(-${currentSlide * 100}%)`;
-          prevBtn.disabled = currentSlide === 0;
-          nextBtn.disabled = currentSlide === totalSlides - 1;
-          if (indicator) {
-            indicator.textContent = `${currentSlide + 1} / ${totalSlides}`;
-          }
-        }
-        
-        prevBtn.addEventListener('click', () => {
-          if (currentSlide > 0) {
-            currentSlide--;
-            updateCarousel();
-          }
-        });
-        
-        nextBtn.addEventListener('click', () => {
-          if (currentSlide < totalSlides - 1) {
-            currentSlide++;
-            updateCarousel();
-          }
-        });
-        
-        updateCarousel();
-        
-        let touchStartX = 0;
-        track.addEventListener('touchstart', (e) => {
-          touchStartX = e.touches[0].clientX;
-        }, { passive: true });
-        
-        track.addEventListener('touchend', (e) => {
-          const touchEndX = e.changedTouches[0].clientX;
-          const diff = touchStartX - touchEndX;
-          
-          if (Math.abs(diff) > 50) {
-            if (diff > 0 && currentSlide < totalSlides - 1) {
-              currentSlide++;
-            } else if (diff < 0 && currentSlide > 0) {
-              currentSlide--;
-            }
-            updateCarousel();
-          }
-        });
-      }
+      _aT();
+      
+      const _bI = document.getElementById('_ag'); const _bJ = document.getElementById('_ap');
+      _bI.addEventListener('submit', async (e) => { e.preventDefault(); const _bK = document.getElementById('_ai').value; const _bL = document.getElementById('_am').value; const _bM = document.getElementById('_ao').value; const _bN = document.getElementById('_ak').value; if (!_bK || !_bL || !_bM) { _bJ.textContent = 'Name, email and message are required.'; return; } try { await window._N._D(window._N._M, { name: _bK, email: _bL, phone: _bN, message: _bM, createdAt: new Date().toISOString() }); _bJ.textContent = '✓ Message sent successfully!'; _bI.reset(); } catch(_) { _bJ.textContent = 'Failed to send. Please try again.'; } });
     })();
   </script>
 </body>
