@@ -7,381 +7,364 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: #000000;
-      min-height: 100vh;
-      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: #ffffff;
-      padding: 18px 28px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      width: 100%;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-
-    /* header */
-    .header {
-      padding-bottom: 16px;
-      border-bottom: 1px solid #ffffff;
-      position: relative;
-      z-index: 10;
-    }
-
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-
-    .left-section {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .company-name {
-      font-size: 26px;
-      font-weight: 600;
-      letter-spacing: -0.5px;
-      color: #ffffff;
-    }
-
-    .creator {
-      font-size: 14px;
-      font-weight: 400;
-      color: #999999;
-      cursor: pointer;
-      transition: color 0.2s ease;
-      text-decoration: none;
-      display: inline-block;
-      width: fit-content;
-    }
-
-    .creator:hover {
-      color: #ffffff;
-    }
-
-    .right-section {
-      display: flex;
-      gap: 44px;
-      padding-top: 6px;
-    }
-
-    .nav-link {
-      font-size: 15px;
-      font-weight: 400;
-      color: #ffffff;
-      text-decoration: none;
-      transition: opacity 0.2s ease;
-      letter-spacing: -0.3px;
-    }
-
-    .nav-link:hover {
-      opacity: 0.65;
-    }
-
-    /* availability indicator - below header, right side */
-    .availability-wrapper {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 10px;
-      position: relative;
-      z-index: 5;
-    }
-
-    .availability {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .green-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #22c55e;
-      animation: pulseGreen 2.2s ease-in-out infinite;
-      box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
-    }
-
-    @keyframes pulseGreen {
-      0%, 100% {
-        background: #22c55e;
-        box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
-      }
-      50% {
-        background: #0a2e1a;
-        box-shadow: 0 0 2px rgba(34, 197, 94, 0.1);
-      }
-    }
-
-    .availability-text {
-      font-size: 14px;
-      font-weight: 400;
-      color: #cccccc;
-      letter-spacing: -0.2px;
-    }
-
-    /* vertical lines container */
-    .vertical-lines-wrapper {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      pointer-events: none;
-      z-index: 1;
-      padding: 0 28px;
-      display: flex;
-      justify-content: space-evenly;
-    }
-
+    * { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000000; }
+    
     .vertical-line {
       width: 1px;
       height: 100%;
-      background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0) 12%,
-        rgba(255, 255, 255, 0.06) 20%,
-        rgba(255, 255, 255, 0.06) 90%,
-        rgba(255, 255, 255, 0) 100%
-      );
+      background: linear-gradient(to bottom, transparent 0%, transparent 12%, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.06) 90%, transparent 100%);
     }
 
-    /* hero section */
-    .hero {
+    @keyframes pulseGreen {
+      0%, 100% { background: #22c55e; box-shadow: 0 0 6px rgba(34, 197, 94, 0.4); }
+      50% { background: #0a2e1a; box-shadow: 0 0 2px rgba(34, 197, 94, 0.1); }
+    }
+    .green-dot-animation { animation: pulseGreen 2.2s ease-in-out infinite; }
+
+    @keyframes slide {
+      0%, 20% { transform: translateY(0); }
+      25%, 45% { transform: translateY(-65px); }
+      50%, 70% { transform: translateY(-130px); }
+      75%, 95% { transform: translateY(-195px); }
+      100% { transform: translateY(-260px); }
+    }
+    @media (min-width: 768px) {
+      @keyframes slide {
+        0%, 20% { transform: translateY(0); }
+        25%, 45% { transform: translateY(-90px); }
+        50%, 70% { transform: translateY(-180px); }
+        75%, 95% { transform: translateY(-270px); }
+        100% { transform: translateY(-360px); }
+      }
+    }
+    .animate-slide { animation: slide 8s cubic-bezier(0.45, 0.05, 0.2, 0.99) infinite; }
+
+    .sticky-wrapper {
       position: relative;
-      z-index: 5;
-      margin-top: 80px;
+      height: 400vh;
+      width: 100%;
     }
 
-    .hero-content {
+    .cards-container {
+      position: sticky;
+      top: 100px;
+      height: calc(100vh - 120px);
+      width: 100%;
       display: flex;
-      flex-direction: column;
-      gap: 12px;
+      align-items: flex-start;
+      justify-content: center;
     }
 
-    .static-text {
-      font-size: 72px;
-      font-weight: 700;
-      letter-spacing: -1.5px;
-      line-height: 1.1;
-      color: #ffffff;
+    .card-stack {
+      position: relative;
+      width: 100%;
+      height: 100%;
     }
 
-    .animated-wrapper {
-      display: flex;
-      align-items: baseline;
-      height: 90px;
-      overflow: hidden;
+    .stack-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), 
+                  transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                  box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(60px) scale(0.95);
+      pointer-events: none;
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.3);
     }
 
-    .static-prefix {
-      font-size: 72px;
-      font-weight: 700;
-      letter-spacing: -1.5px;
-      color: #ffffff;
-      margin-right: 20px;
+    .stack-card.active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+      z-index: 10;
     }
 
-    .slider-container {
-      height: 90px;
-      overflow: hidden;
+    .stack-card.prev {
+      opacity: 0;
+      transform: translateY(-60px) scale(0.95);
+      pointer-events: none;
+    }
+
+    .arrow-icon {
+      transition: transform 0.3s ease;
       display: inline-block;
     }
+    
+    .stack-card:hover .arrow-icon {
+      transform: translateX(8px) rotate(-10deg);
+    }
 
-    .slider {
+    /* Sponsors marquee */
+    @keyframes scrollSponsors {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .sponsors-track {
       display: flex;
-      flex-direction: column;
-      animation: slideVertical 8s cubic-bezier(0.45, 0.05, 0.2, 0.99) infinite;
+      gap: 4rem;
+      animation: scrollSponsors 25s linear infinite;
+      width: fit-content;
     }
 
-    .slider span {
-      font-size: 72px;
-      font-weight: 700;
-      letter-spacing: -1.5px;
-      line-height: 1.25;
-      height: 90px;
-      display: block;
-      color: #a0a0a0;
+    .sponsors-wrapper:hover .sponsors-track {
+      animation-play-state: paused;
     }
 
-    @keyframes slideVertical {
-      0%, 20% {
-        transform: translateY(0);
-      }
-      25%, 45% {
-        transform: translateY(-90px);
-      }
-      50%, 70% {
-        transform: translateY(-180px);
-      }
-      75%, 95% {
-        transform: translateY(-270px);
-      }
-      100% {
-        transform: translateY(-360px);
-      }
+    .sponsor-item {
+      flex-shrink: 0;
+      filter: grayscale(100%) brightness(0.8);
+      transition: filter 0.3s ease;
     }
 
-    /* responsive */
-    @media (max-width: 800px) {
-      body {
-        padding: 16px 20px;
-      }
-
-      .vertical-lines-wrapper {
-        padding: 0 20px;
-      }
-
-      .header-content {
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .right-section {
-        gap: 28px;
-        flex-wrap: wrap;
-      }
-
-      .company-name {
-        font-size: 22px;
-      }
-
-      .static-text,
-      .static-prefix,
-      .slider span {
-        font-size: 48px;
-      }
-
-      .animated-wrapper {
-        height: 65px;
-      }
-
-      .slider-container {
-        height: 65px;
-      }
-
-      .slider span {
-        height: 65px;
-      }
-
-      @keyframes slideVertical {
-        0%, 20% { transform: translateY(0); }
-        25%, 45% { transform: translateY(-65px); }
-        50%, 70% { transform: translateY(-130px); }
-        75%, 95% { transform: translateY(-195px); }
-        100% { transform: translateY(-260px); }
-      }
-
-      .hero {
-        margin-top: 60px;
-      }
+    .sponsor-item:hover {
+      filter: grayscale(0%) brightness(1);
     }
 
-    @media (max-width: 480px) {
-      .right-section {
-        gap: 20px;
-      }
-
-      .static-text,
-      .static-prefix,
-      .slider span {
-        font-size: 36px;
-      }
-
-      .animated-wrapper {
-        height: 50px;
-      }
-
-      .slider-container {
-        height: 50px;
-      }
-
-      .slider span {
-        height: 50px;
-      }
-
-      @keyframes slideVertical {
-        0%, 20% { transform: translateY(0); }
-        25%, 45% { transform: translateY(-50px); }
-        50%, 70% { transform: translateY(-100px); }
-        75%, 95% { transform: translateY(-150px); }
-        100% { transform: translateY(-200px); }
-      }
+    .sponsor-item img {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
     }
   </style>
 </head>
-<body>
-  <div class="vertical-lines-wrapper">
-    <div class="vertical-line"></div>
-    <div class="vertical-line"></div>
-    <div class="vertical-line"></div>
-    <div class="vertical-line"></div>
-    <div class="vertical-line"></div>
-    <div class="vertical-line"></div>
-    <div class="vertical-line"></div>
-    <div class="vertical-line"></div>
-    <div class="vertical-line"></div>
+<body class="text-white">
+
+  <div class="fixed inset-0 pointer-events-none z-10 px-7 flex justify-evenly">
+    <div class="vertical-line"></div><div class="vertical-line"></div><div class="vertical-line"></div>
+    <div class="vertical-line"></div><div class="vertical-line"></div><div class="vertical-line"></div>
+    <div class="vertical-line"></div><div class="vertical-line"></div><div class="vertical-line"></div>
   </div>
 
-  <div class="container">
-    <header class="header">
-      <div class="header-content">
-        <div class="left-section">
-          <div class="company-name">PIReactive Tech co.</div>
-          <a href="https://mkbertrand.vercel.app" target="_blank" rel="noopener noreferrer" class="creator">Hey am MKB! The creator</a>
+  <div class="relative z-20 max-w-7xl mx-auto px-5 md:px-7 py-5">
+    
+    <header class="pb-4 border-b border-white">
+      <div class="flex flex-col md:flex-row justify-between items-start gap-5">
+        <div class="flex flex-col gap-1">
+          <div class="text-2xl md:text-[26px] font-semibold tracking-tight">PIReactive Tech co.</div>
+          <a href="https://mkbertrand.vercel.app" target="_blank" rel="noopener noreferrer" class="text-sm font-normal text-gray-400 hover:text-white transition w-fit">Hey am MKB! The creator</a>
         </div>
-        <div class="right-section">
-          <a href="clients.html" class="nav-link">PROJECTS</a>
-          <a href="domain.html" class="nav-link">DOMAIN</a>
-          <a href="news.html" class="nav-link">NEWS</a>
-          <a href="cool.html" class="nav-link">SNIPPETS</a>
-          <a href="about.html" class="nav-link">ABOUT</a>
+        <div class="flex gap-7 md:gap-11 pt-1.5 flex-wrap">
+          <a href="clients.html" class="text-[15px] font-normal hover:opacity-65 transition">PROJECTS</a>
+          <a href="domain.html" class="text-[15px] font-normal hover:opacity-65 transition">DOMAIN</a>
+          <a href="news.html" class="text-[15px] font-normal hover:opacity-65 transition">NEWS</a>
+          <a href="cool.html" class="text-[15px] font-normal hover:opacity-65 transition">SNIPPETS</a>
+          <a href="about.html" class="text-[15px] font-normal hover:opacity-65 transition">ABOUT</a>
         </div>
       </div>
     </header>
 
-    <div class="availability-wrapper">
-      <div class="availability">
-        <span class="green-dot"></span>
-        <span class="availability-text">Available for a project.</span>
+    <div class="flex justify-end mt-3">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2 h-2 rounded-full green-dot-animation"></span>
+        <span class="text-sm text-gray-300 tracking-tight">Available for a project.</span>
       </div>
     </div>
 
-    <section class="hero">
-      <div class="hero-content">
-        <div class="static-text">[WE BUILD]</div>
-        <div class="animated-wrapper">
-          <span class="static-prefix"></span>
-          <div class="slider-container">
-            <div class="slider">
-              <span>Websites</span>
-              <span>Applications</span>
-              <span>Digital products</span>
-              <span>Experiences</span>
-              <span>Websites</span>
+    <section class="mt-16 md:mt-20">
+      <div class="flex flex-col gap-3">
+        <div class="text-5xl md:text-7xl font-bold tracking-tight">[WE BUILD]</div>
+        <div class="flex items-baseline h-[65px] md:h-[90px] overflow-hidden">
+          <div class="h-[65px] md:h-[90px] overflow-hidden inline-block">
+            <div class="flex flex-col animate-slide">
+              <span class="text-5xl md:text-7xl font-bold tracking-tight h-[65px] md:h-[90px] block text-gray-400">Websites</span>
+              <span class="text-5xl md:text-7xl font-bold tracking-tight h-[65px] md:h-[90px] block text-gray-400">Applications</span>
+              <span class="text-5xl md:text-7xl font-bold tracking-tight h-[65px] md:h-[90px] block text-gray-400">Digital products</span>
+              <span class="text-5xl md:text-7xl font-bold tracking-tight h-[65px] md:h-[90px] block text-gray-400">Experiences</span>
+              <span class="text-5xl md:text-7xl font-bold tracking-tight h-[65px] md:h-[90px] block text-gray-400">Websites</span>
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    <div class="mt-20 md:mt-28 max-w-3xl">
+      <p class="text-lg md:text-xl text-gray-300 leading-relaxed">
+        PIReactive is a Rwandan tech digital company introduced in early 2022. We design and develop premium websites, mobile applications, and digital products for forward-thinking businesses. Trusted by industry leaders and backed by strategic technology partners across East Africa and beyond.
+      </p>
+    </div>
+
+    <div class="mt-20 pb-8">
+      <div class="text-xs uppercase tracking-widest text-gray-500 mb-8">Trusted by innovative companies</div>
+      <div class="sponsors-wrapper overflow-hidden">
+        <div class="sponsors-track">
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/airbnb.svg" alt="Airbnb" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/stripe.svg" alt="Stripe" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/spotify.svg" alt="Spotify" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/shopify.svg" alt="Shopify" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/microsoft.svg" alt="Microsoft" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/google.svg" alt="Google" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/amazon.svg" alt="Amazon" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/meta.svg" alt="Meta" class="h-12 invert"></div>
+          
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/airbnb.svg" alt="Airbnb" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/stripe.svg" alt="Stripe" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/spotify.svg" alt="Spotify" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/shopify.svg" alt="Shopify" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/microsoft.svg" alt="Microsoft" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/google.svg" alt="Google" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/amazon.svg" alt="Amazon" class="h-12 invert"></div>
+          <div class="sponsor-item"><img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/meta.svg" alt="Meta" class="h-12 invert"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="h-16"></div>
   </div>
+
+  <div class="sticky-wrapper">
+    <div class="cards-container">
+      <div class="card-stack max-w-7xl mx-auto px-5 md:px-7">
+        
+        <div class="stack-card p-6 md:p-10 bg-[#f97316] text-black" data-index="0" data-link="hosting.html">
+          <div class="flex justify-between items-start">
+            <div class="flex items-center gap-4">
+              <iconify-icon icon="mdi:web" class="text-4xl"></iconify-icon>
+              <div>
+                <div class="flex items-center gap-4 text-sm tracking-wide uppercase opacity-70">
+                  <span>2024</span>
+                  <span>Infrastructure</span>
+                </div>
+                <h2 class="text-5xl md:text-7xl font-bold tracking-tight mt-2">Hosting</h2>
+              </div>
+            </div>
+            <span class="arrow-icon"><iconify-icon icon="mdi:arrow-right" class="text-5xl md:text-7xl"></iconify-icon></span>
+          </div>
+          <p class="text-black/80 text-lg mt-4 max-w-2xl">Blazing fast, secure infrastructure with 99.9% uptime SLA.</p>
+          <div class="mt-8 h-[300px] md:h-[450px] w-full rounded-2xl overflow-hidden bg-black/10">
+            <img src="images/box1.png" alt="Hosting" class="w-full h-full object-cover" onerror="this.style.background='#ea580c'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22%23f97316%22%2F%3E%3Ctext%20x%3D%2250%22%20y%3D%2255%22%20text-anchor%3D%22middle%22%20fill%3D%22black%22%20font-size%3D%2214%22%3Ebox1%3C%2Ftext%3E%3C%2Fsvg%3E'">
+          </div>
+        </div>
+
+        <div class="stack-card p-6 md:p-10 bg-white text-[#2563eb]" data-index="1" data-link="domain.html">
+          <div class="flex justify-between items-start">
+            <div class="flex items-center gap-4">
+              <iconify-icon icon="mdi:link-variant" class="text-4xl"></iconify-icon>
+              <div>
+                <div class="flex items-center gap-4 text-sm tracking-wide uppercase opacity-70">
+                  <span>2023</span>
+                  <span>Product Design</span>
+                </div>
+                <h2 class="text-5xl md:text-7xl font-bold tracking-tight mt-2">Domain Provider</h2>
+              </div>
+            </div>
+            <span class="arrow-icon"><iconify-icon icon="mdi:arrow-right" class="text-5xl md:text-7xl text-[#2563eb]"></iconify-icon></span>
+          </div>
+          <p class="text-[#2563eb]/70 text-lg mt-4 max-w-2xl">Premium TLDs, DNS management, and domain privacy included.</p>
+          <div class="mt-8 h-[300px] md:h-[450px] w-full rounded-2xl overflow-hidden bg-gray-100">
+            <img src="images/box2.png" alt="Domain Provider" class="w-full h-full object-cover" onerror="this.style.background='#e5e5e5'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22%23d4d4d4%22%2F%3E%3Ctext%20x%3D%2250%22%20y%3D%2255%22%20text-anchor%3D%22middle%22%20fill%3D%22%232563eb%22%20font-size%3D%2214%22%3Ebox2%3C%2Ftext%3E%3C%2Fsvg%3E'">
+          </div>
+        </div>
+
+        <div class="stack-card p-6 md:p-10 bg-[#1e1e1e] text-[#7dd3fc] border border-white/5" data-index="2" data-link="domain.html">
+          <div class="flex justify-between items-start">
+            <div class="flex items-center gap-4">
+              <iconify-icon icon="mdi:email-outline" class="text-4xl text-[#7dd3fc]"></iconify-icon>
+              <div>
+                <div class="flex items-center gap-4 text-sm tracking-wide uppercase opacity-70 text-gray-400">
+                  <span>2023</span>
+                  <span>Web Development</span>
+                </div>
+                <h2 class="text-5xl md:text-7xl font-bold tracking-tight mt-2 text-[#7dd3fc]">Business Email</h2>
+              </div>
+            </div>
+            <span class="arrow-icon"><iconify-icon icon="mdi:arrow-right" class="text-5xl md:text-7xl text-[#7dd3fc]"></iconify-icon></span>
+          </div>
+          <p class="text-gray-400 text-lg mt-4 max-w-2xl"><span class="text-[#7dd3fc]">Professional</span> inbox with <span class="text-[#4ade80]">green</span>-grade encryption.</p>
+          <div class="mt-8 h-[300px] md:h-[450px] w-full rounded-2xl overflow-hidden bg-[#2a2a2a]">
+            <img src="images/box3.png" alt="Business Email" class="w-full h-full object-cover" onerror="this.style.background='#333'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22%23222222%22%2F%3E%3Ctext%20x%3D%2250%22%20y%3D%2255%22%20text-anchor%3D%22middle%22%20fill%3D%22%237dd3fc%22%20font-size%3D%2214%22%3Ebox3%3C%2Ftext%3E%3C%2Fsvg%3E'">
+          </div>
+        </div>
+
+        <div class="stack-card p-6 md:p-10 bg-[#eab308] text-black" data-index="3" data-link="cool.html">
+          <div class="flex justify-between items-start">
+            <div class="flex items-center gap-4">
+              <iconify-icon icon="mdi:code-braces" class="text-4xl"></iconify-icon>
+              <div>
+                <div class="flex items-center gap-4 text-sm tracking-wide uppercase opacity-70">
+                  <span>2024</span>
+                  <span>UI/UX Design</span>
+                </div>
+                <h2 class="text-5xl md:text-7xl font-bold tracking-tight mt-2">Code Snippets</h2>
+              </div>
+            </div>
+            <span class="arrow-icon"><iconify-icon icon="mdi:arrow-right" class="text-5xl md:text-7xl"></iconify-icon></span>
+          </div>
+          <p class="text-black/80 text-lg mt-4 max-w-2xl">Production-ready components and utilities for developers.</p>
+          <div class="mt-8 h-[300px] md:h-[450px] w-full rounded-2xl overflow-hidden bg-black/10">
+            <img src="images/box4.png" alt="Code Snippets" class="w-full h-full object-cover" onerror="this.style.background='#ca8a04'; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22%23eab308%22%2F%3E%3Ctext%20x%3D%2250%22%20y%3D%2255%22%20text-anchor%3D%22middle%22%20fill%3D%22black%22%20font-size%3D%2214%22%3Ebox4%3C%2Ftext%3E%3C%2Fsvg%3E'">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="relative z-20 max-w-7xl mx-auto px-5 md:px-7 py-20">
+    <div class="h-20"></div>
+  </div>
+
+  <script>
+    (function() {
+      const cards = document.querySelectorAll('.stack-card');
+      const wrapper = document.querySelector('.sticky-wrapper');
+      let currentIndex = -1;
+      
+      cards.forEach(card => {
+        card.addEventListener('click', function() {
+          const link = this.dataset.link;
+          if (link) window.location.href = link;
+        });
+      });
+
+      function updateCards(scrollProgress) {
+        const cardCount = cards.length;
+        const segmentSize = 1 / cardCount;
+        const newIndex = Math.min(Math.floor(scrollProgress / segmentSize), cardCount - 1);
+        
+        if (newIndex !== currentIndex) {
+          cards.forEach((card, i) => {
+            card.classList.remove('active', 'prev');
+            if (i === newIndex) {
+              card.classList.add('active');
+            } else if (i < newIndex) {
+              card.classList.add('prev');
+            }
+          });
+          currentIndex = newIndex;
+        }
+      }
+
+      function handleScroll() {
+        const rect = wrapper.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const startPoint = windowHeight * 0.3;
+        const scrollPosition = -rect.top + startPoint;
+        let progress = scrollPosition / (rect.height - windowHeight);
+        progress = Math.max(0, Math.min(1, progress));
+        
+        updateCards(progress);
+      }
+
+      window.addEventListener('scroll', handleScroll);
+      
+      setTimeout(() => {
+        handleScroll();
+        if (!cards[0].classList.contains('active') && 
+            !cards[0].classList.contains('prev')) {
+          cards[0].classList.add('active');
+        }
+      }, 100);
+    })();
+  </script>
 </body>
 </html>
