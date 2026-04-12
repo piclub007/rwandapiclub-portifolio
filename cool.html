@@ -3,15 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-  <title>PIReactive | Code Snippets Library</title>
+  <title>PIReactive | Code Snippets</title>
   <meta name="description" content="Production-ready code snippets and utilities for developers. Free components crafted by PIReactive Tech co.">
-  <meta name="keywords" content="code snippets, html, css, javascript, web development, free code, components">
-  <meta name="author" content="PIReactive Tech co.">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="PIReactive | Code Snippets">
-  <meta property="og:description" content="Free production-ready code snippets for developers.">
-  <meta property="og:type" content="website">
-  <link rel="canonical" href="https://pireactive.com/snippets">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -31,18 +24,30 @@
     #m-m { transition: opacity 0.3s ease, visibility 0.3s ease; }
     #m-m.h { opacity: 0; visibility: hidden; }
     #m-m:not(.h) { opacity: 1; visibility: visible; }
-    .snippet-card { background: #0a0a0a; cursor: pointer; transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); }
-    .snippet-card:hover { transform: translateY(-4px); background: #111; }
-    .snippet-preview-mini { height: 160px; background: #fff; overflow: hidden; pointer-events: none; }
-    .snippet-preview-mini iframe { width: 100%; height: 100%; border: none; background: #fff; pointer-events: none; transform: scale(0.8); transform-origin: top left; width: 125%; height: 125%; }
+    .tab-u { text-decoration: underline; text-underline-offset: 8px; text-decoration-thickness: 2px; }
+    .snippet-card { background: transparent; cursor: pointer; transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); border: 2px solid transparent; }
+    .snippet-card:hover { transform: translateY(-4px); }
+    .snippet-card.border-white:hover { border-color: #ffffff; }
+    .snippet-card.border-green:hover { border-color: #22c55e; }
+    .snippet-card.border-orange:hover { border-color: #f97316; }
+    .snippet-card.border-sky:hover { border-color: #0ea5e9; }
+    .snippet-card.border-purple:hover { border-color: #a855f7; }
+    .snippet-preview-mini { aspect-ratio: 16/9; background: #fff; overflow: hidden; pointer-events: none; display: flex; align-items: center; justify-content: center; }
+    .snippet-preview-mini iframe { width: 100%; height: 100%; border: none; background: #fff; pointer-events: none; transform: scale(0.65); transform-origin: center; width: 154%; height: 154%; }
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(12px); z-index: 1000; display: flex; align-items: flex-end; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.2, 0.9, 0.1, 1); }
     .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal-content { background: #0d0d0d; width: 100%; max-width: 1400px; height: 95vh; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.1, 1); overflow: hidden; }
+    .modal-content { background: #0d0d0d; width: 100%; max-width: 1400px; height: 95vh; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.1, 1); overflow: hidden; border-radius: 24px 24px 0 0; }
     .active .modal-content { transform: translateY(0); }
-    .modal-preview { height: 40%; background: #fff; border-bottom: 1px solid #222; }
+    .modal-preview { flex: 1; background: #fff; min-height: 0; }
     .modal-preview iframe { width: 100%; height: 100%; border: none; background: #fff; }
     .CodeMirror { height: 100%; font-size: 14px; background: #0a0a0a; }
     .CodeMirror-gutters { background: #0a0a0a; border-right: 1px solid #222; }
+    .action-buttons { display: none; }
+    .action-buttons.visible { display: flex; }
+    @media (max-width: 640px) {
+      .modal-content { height: 100vh; border-radius: 0; }
+      .modal-preview { height: 35%; }
+    }
   </style>
 </head>
 <body class="text-white">
@@ -85,11 +90,11 @@
   <div class="mt-8 mb-8">
     <div class="relative max-w-md">
       <iconify-icon icon="mdi:search" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></iconify-icon>
-      <input type="text" id="searchInput" placeholder="Search snippets..." class="w-full bg-transparent border border-gray-700 py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-white transition">
+      <input type="text" id="searchInput" placeholder="Search snippets..." class="w-full bg-transparent border border-gray-700 rounded-full py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-white transition">
     </div>
   </div>
 
-  <div id="snippetsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 flex-1"></div>
+  <div id="sectionsContainer" class="flex-1"></div>
 
   <footer class="border-t border-gray-800 pt-10 md:pt-12 pb-6 md:pb-8 mt-12">
     <div class="flex flex-col md:flex-row justify-between items-center gap-5 md:gap-6"><div class="flex items-center gap-3"><img src="images/logo.png" alt="Logo" class="h-8 md:h-10 w-auto invert" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"><span class="hidden text-xl md:text-2xl font-bold">PIReactive</span></div><div class="flex gap-5 md:gap-6"><a href="#" class="text-gray-400 hover:text-white transition text-xl"><iconify-icon icon="mdi:twitter"></iconify-icon></a><a href="#" class="text-gray-400 hover:text-white transition text-xl"><iconify-icon icon="mdi:linkedin"></iconify-icon></a><a href="#" class="text-gray-400 hover:text-white transition text-xl"><iconify-icon icon="mdi:github"></iconify-icon></a></div></div>
@@ -103,13 +108,18 @@
       <h3 id="modalTitle" class="text-lg font-medium"></h3>
       <button id="modalClose" class="text-white text-2xl hover:text-gray-400 transition">&times;</button>
     </div>
-    <div class="modal-preview" id="modalPreviewContainer"><iframe id="modalPreviewFrame" sandbox="allow-scripts allow-same-origin"></iframe></div>
-    <div class="flex gap-3 p-4 border-t border-gray-800">
+    <div class="flex gap-8 px-5 border-b border-gray-800">
+      <button id="tab-preview" class="text-base font-medium pb-2 tab-u text-white transition">PREVIEW</button>
+      <button id="tab-code" class="text-base font-medium pb-2 text-gray-500 hover:text-gray-300 transition">CODE</button>
+    </div>
+    <div id="modalPreviewContainer" class="modal-preview"><iframe id="modalPreviewFrame" sandbox="allow-scripts allow-same-origin"></iframe></div>
+    <div id="modalEditorContainer" class="flex-1 overflow-hidden hidden"></div>
+    <div class="flex gap-3 p-4 border-t border-gray-800 action-buttons" id="actionButtons">
       <button id="copyCodeBtn" class="bg-white text-black px-5 py-2 text-sm font-medium hover:bg-gray-200 transition flex items-center gap-2"><iconify-icon icon="mdi:content-copy"></iconify-icon>Copy</button>
       <button id="editCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 transition flex items-center gap-2"><iconify-icon icon="mdi:pencil"></iconify-icon>Edit</button>
+      <button id="downloadCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 transition flex items-center gap-2"><iconify-icon icon="mdi:download"></iconify-icon>Download</button>
       <button id="resetCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 hidden items-center gap-2"><iconify-icon icon="mdi:undo"></iconify-icon>Reset</button>
     </div>
-    <div class="flex-1 overflow-hidden" id="modalEditorContainer"></div>
   </div>
 </div>
 
@@ -132,35 +142,64 @@
   
   let allSnippets = [], searchTimeout, currentEditor = null, originalCode = '', isEditing = false;
   
-  const modal = document.getElementById('snippetModal'), modalTitle = document.getElementById('modalTitle'), modalPreviewFrame = document.getElementById('modalPreviewFrame'), modalEditorContainer = document.getElementById('modalEditorContainer'), copyBtn = document.getElementById('copyCodeBtn'), editBtn = document.getElementById('editCodeBtn'), resetBtn = document.getElementById('resetCodeBtn'), modalClose = document.getElementById('modalClose');
+  const modal = document.getElementById('snippetModal'), modalTitle = document.getElementById('modalTitle'), modalPreviewFrame = document.getElementById('modalPreviewFrame'), modalPreviewContainer = document.getElementById('modalPreviewContainer'), modalEditorContainer = document.getElementById('modalEditorContainer'), copyBtn = document.getElementById('copyCodeBtn'), editBtn = document.getElementById('editCodeBtn'), downloadBtn = document.getElementById('downloadCodeBtn'), resetBtn = document.getElementById('resetCodeBtn'), modalClose = document.getElementById('modalClose'), tabPreview = document.getElementById('tab-preview'), tabCode = document.getElementById('tab-code'), actionButtons = document.getElementById('actionButtons');
   
   const mB = document.getElementById('m-b'), mM = document.getElementById('m-m'), cB = document.getElementById('c-b');
   if(mB&&mM){mB.addEventListener('click',()=>{mM.classList.remove('h');document.body.style.overflow='hidden';});}
   if(cB&&mM){cB.addEventListener('click',()=>{mM.classList.add('h');document.body.style.overflow='';});}
   mM?.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{mM.classList.add('h');document.body.style.overflow='';}));
   
+  const borderColors = ['border-white', 'border-green', 'border-orange', 'border-sky', 'border-purple'];
+  
   function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
   
-  function createCard(s){
-    const d=document.createElement('div');d.className='snippet-card group';
-    d.innerHTML=`<div class="snippet-preview-mini"><iframe sandbox="allow-scripts allow-same-origin" srcdoc="${s.code.replace(/"/g,'&quot;')}" loading="lazy"></iframe></div><div class="p-3"><p class="text-sm font-medium truncate text-gray-200">${s.name}</p><p class="text-gray-500 text-xs mt-0.5">${s.category||'component'}</p></div>`;
+  function createCard(s, idx){
+    const d=document.createElement('div');d.className=`snippet-card group ${borderColors[idx % borderColors.length]}`;
+    d.innerHTML=`<div class="snippet-preview-mini"><iframe sandbox="allow-scripts allow-same-origin" srcdoc="${s.code.replace(/"/g,'&quot;')}" loading="lazy"></iframe></div><div class="p-3 bg-transparent"><p class="text-sm font-medium text-gray-200">${s.name}</p></div>`;
     d.addEventListener('click',()=>openModal(s));return d;
   }
   
-  function renderGrid(snippets){
-    const g=document.getElementById('snippetsGrid');
-    if(!snippets.length){g.innerHTML='<div class="col-span-full text-center py-20 text-gray-400">No snippets found</div>';return;}
-    g.innerHTML='';const shuffled=shuffle([...snippets]);shuffled.forEach(s=>g.appendChild(createCard(s)));
+  function renderSections(snippets){
+    const c=document.getElementById('sectionsContainer');
+    if(!snippets.length){c.innerHTML='<div class="text-center py-20 text-gray-400">No snippets found</div>';return;}
+    const sh=shuffle([...snippets]);
+    const news=sh.slice(0,4), popular=shuffle([...sh]).slice(0,4), all=shuffle([...sh]);
+    c.innerHTML=`
+      <div class="mb-8"><div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="newsGrid"></div></div>
+      <div class="mb-8"><div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="popularGrid"></div></div>
+      <div class="mb-8"><div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="allGrid"></div></div>
+    `;
+    const nG=document.getElementById('newsGrid');news.forEach((s,i)=>nG.appendChild(createCard(s,i)));
+    const pG=document.getElementById('popularGrid');popular.forEach((s,i)=>pG.appendChild(createCard(s,i+4)));
+    const aG=document.getElementById('allGrid');all.forEach((s,i)=>aG.appendChild(createCard(s,i+8)));
   }
   
   async function loadSnippets(){
-    try{const q=query(snippetsCol,orderBy("createdAt","desc"));const snap=await getDocs(q);allSnippets=snap.docs.map(d=>({id:d.id,...d.data(),category:'component'}));renderGrid(allSnippets);}
-    catch(e){document.getElementById('snippetsGrid').innerHTML='<div class="col-span-full text-center py-20 text-red-400">Failed to load snippets</div>';}
+    try{const q=query(snippetsCol,orderBy("createdAt","desc"));const snap=await getDocs(q);allSnippets=snap.docs.map(d=>({id:d.id,...d.data()}));renderSections(allSnippets);}
+    catch(e){document.getElementById('sectionsContainer').innerHTML='<div class="text-center py-20 text-red-400">Failed to load snippets</div>';}
   }
   
   document.getElementById('searchInput').addEventListener('input',e=>{
-    clearTimeout(searchTimeout);searchTimeout=setTimeout(()=>{const t=e.target.value.toLowerCase();renderGrid(t?allSnippets.filter(s=>s.name.toLowerCase().includes(t)||(s.code||'').toLowerCase().includes(t)):allSnippets);},300);
+    clearTimeout(searchTimeout);searchTimeout=setTimeout(()=>{const t=e.target.value.toLowerCase();renderSections(t?allSnippets.filter(s=>s.name.toLowerCase().includes(t)||(s.code||'').toLowerCase().includes(t)):allSnippets);},300);
   });
+  
+  function switchTab(tab){
+    if(tab==='preview'){
+      tabPreview.classList.add('tab-u','text-white');tabPreview.classList.remove('text-gray-500');
+      tabCode.classList.remove('tab-u','text-white');tabCode.classList.add('text-gray-500');
+      modalPreviewContainer.classList.remove('hidden');modalEditorContainer.classList.add('hidden');
+      actionButtons.classList.remove('visible');
+    }else{
+      tabCode.classList.add('tab-u','text-white');tabCode.classList.remove('text-gray-500');
+      tabPreview.classList.remove('tab-u','text-white');tabPreview.classList.add('text-gray-500');
+      modalPreviewContainer.classList.add('hidden');modalEditorContainer.classList.remove('hidden');
+      actionButtons.classList.add('visible');
+      if(currentEditor)currentEditor.refresh();
+    }
+  }
+  
+  tabPreview.addEventListener('click',()=>switchTab('preview'));
+  tabCode.addEventListener('click',()=>switchTab('code'));
   
   function openModal(s){
     modalTitle.textContent=s.name;originalCode=s.code||'';modalPreviewFrame.srcdoc=originalCode;
@@ -169,7 +208,7 @@
     const ta=document.getElementById('modalCodeArea');ta.value=originalCode;ta.readOnly=true;
     currentEditor=CodeMirror.fromTextArea(ta,{mode:"htmlmixed",theme:"dracula",lineNumbers:true,readOnly:true,autoCloseBrackets:true,matchBrackets:true});
     isEditing=false;editBtn.innerHTML='<iconify-icon icon="mdi:pencil"></iconify-icon>Edit';resetBtn.style.display='none';
-    modal.classList.add('active');document.body.style.overflow='hidden';
+    switchTab('preview');modal.classList.add('active');document.body.style.overflow='hidden';
   }
   
   function closeModal(){modal.classList.remove('active');document.body.style.overflow='';if(currentEditor){currentEditor.toTextArea();currentEditor=null;}}
@@ -184,6 +223,7 @@
   
   resetBtn.addEventListener('click',()=>{if(currentEditor){currentEditor.setValue(originalCode);updatePreview();}});
   copyBtn.addEventListener('click',async()=>{const code=currentEditor?currentEditor.getValue():originalCode;try{await navigator.clipboard.writeText(code);copyBtn.innerHTML='<iconify-icon icon="mdi:check"></iconify-icon>Copied!';setTimeout(()=>copyBtn.innerHTML='<iconify-icon icon="mdi:content-copy"></iconify-icon>Copy',2000);}catch(e){}});
+  downloadBtn.addEventListener('click',()=>{const code=currentEditor?currentEditor.getValue():originalCode;const blob=new Blob([code],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='pireactive.html';a.click();URL.revokeObjectURL(url);});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('active'))closeModal();});
   
   loadSnippets();
