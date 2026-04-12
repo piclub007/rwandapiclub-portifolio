@@ -1,202 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PIReactive</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Poppins Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Iconify -->
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #000000;
-            min-height: 100vh;
-            margin: 0;
-            overflow-x: hidden;
-        }
-        
-        /* Time display */
-        .time-display {
-            color: white;
-            font-weight: 300;
-            letter-spacing: 3px;
-        }
-        
-        /* Liquid wave text */
-        .liquid-text {
-            font-size: clamp(40px, 12vw, 80px);
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: white;
-            filter: url(#liquidFilter);
-            text-align: center;
-            line-height: 1.2;
-        }
-        
-        /* 3D Triangle Loader */
-        .triangle-loader {
-            width: 40px;
-            height: 40px;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: rotate3d 3s infinite linear;
-        }
-        
-        .triangle-face {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-bottom: 35px solid rgba(255, 255, 255, 0.9);
-            transform-origin: 50% 100%;
-        }
-        
-        .face1 {
-            transform: rotateY(0deg) translateZ(11.5px);
-        }
-        
-        .face2 {
-            transform: rotateY(120deg) translateZ(11.5px);
-        }
-        
-        .face3 {
-            transform: rotateY(240deg) translateZ(11.5px);
-        }
-        
-        @keyframes rotate3d {
-            0% {
-                transform: rotateX(0deg) rotateY(0deg);
-            }
-            100% {
-                transform: rotateX(360deg) rotateY(360deg);
-            }
-        }
-        
-        /* Footer */
-        .footer-line {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #4a4a4a, transparent);
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .footer-text {
-            color: #888888;
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-        
-        .footer-link {
-            color: #aaaaaa;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-link:hover {
-            color: white;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes,viewport-fit=cover">
+<title>PIReactive | Rwandan Digital Innovation Agency</title>
+<meta name="description" content="PIReactive is a Rwandan tech company founded in 2022. Premium websites, applications, hosting, domains, and digital products for visionary businesses.">
+<meta name="keywords" content="Rwanda tech,digital agency Kigali,web development Rwanda,mobile apps Africa,hosting services,domain provider,business email,code snippets">
+<meta name="author" content="PIReactive Tech co.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:title" content="PIReactive | Rwandan Digital Innovation">
+<meta property="og:description" content="Premium websites,applications,and digital products crafted in Rwanda.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="images/og-image.png">
+<meta property="og:url" content="https://pireactive.com">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PIReactive Tech co.">
+<meta name="twitter:description" content="Rwandan tech company building next-gen digital experiences.">
+<link rel="canonical" href="https://pireactive.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Poppins',sans-serif;background:#000;min-height:100vh;overflow-x:hidden}.t-d{color:#fff;font-weight:300;letter-spacing:3px}.l-t{font-size:clamp(40px,12vw,80px);font-weight:700;letter-spacing:2px;color:#fff;filter:url(#lF);text-align:center;line-height:1.2}.t-l{width:40px;height:40px;position:relative;transform-style:preserve-3d;animation:r3d 3s infinite linear}.t-f{position:absolute;width:0;height:0;border-left:20px solid transparent;border-right:20px solid transparent;border-bottom:35px solid rgba(255,255,255,0.9);transform-origin:50% 100%}.f1{transform:rotateY(0deg) translateZ(11.5px)}.f2{transform:rotateY(120deg) translateZ(11.5px)}.f3{transform:rotateY(240deg) translateZ(11.5px)}@keyframes r3d{0%{transform:rotateX(0deg) rotateY(0deg)}100%{transform:rotateX(360deg) rotateY(360deg)}}.f-l{height:1px;background:linear-gradient(90deg,transparent,#4a4a4a,transparent);width:100%;max-width:600px;margin:0 auto}.f-t{color:#888;font-weight:300;letter-spacing:1px}.f-lk{color:#aaa;text-decoration:none;transition:color 0.3s}.f-lk:hover{color:#fff}
+</style>
 </head>
 <body class="flex flex-col min-h-screen">
-    <!-- SVG Filter for liquid wave effect -->
-    <svg width="0" height="0" style="position: absolute;">
-        <filter id="liquidFilter">
-            <feTurbulence
-                type="fractalNoise"
-                baseFrequency="0.015 0.025"
-                numOctaves="3"
-                seed="3"
-                result="noise">
-            </feTurbulence>
-            <feDisplacementMap
-                in="SourceGraphic"
-                in2="noise"
-                scale="20"
-                xChannelSelector="R"
-                yChannelSelector="G">
-            </feDisplacementMap>
-        </filter>
-    </svg>
-
-    <!-- Main content -->
-    <div class="flex-1 flex flex-col">
-        <!-- Time display - top middle -->
-        <div class="w-full pt-6 md:pt-8 flex justify-center">
-            <div id="timeDisplay" class="time-display text-xl md:text-2xl"></div>
-        </div>
-        
-        <!-- Center content -->
-        <div class="flex-1 flex flex-col items-center justify-center px-4">
-            <!-- Liquid wave text message -->
-            <div id="greetingMessage" class="liquid-text mb-6 md:mb-8"></div>
-            
-            <!-- 3D Triangle Loader -->
-            <div class="triangle-loader mt-6 md:mt-8">
-                <div class="triangle-face face1"></div>
-                <div class="triangle-face face2"></div>
-                <div class="triangle-face face3"></div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Footer -->
-    <footer class="w-full py-6 px-4">
-        <div class="footer-line mb-4"></div>
-        <div class="text-center footer-text text-xs md:text-sm">
-            <span>© 2026 PIReactive</span>
-            <span class="mx-2 opacity-50">•</span>
-            <span>by</span>
-            <a href="https://mkbertrand.vercel.app" class="footer-link ml-1 hover:opacity-100 transition-opacity" target="_blank" rel="noopener noreferrer">MWIZERWA KAREKEZI Bertrand</a>
-        </div>
-    </footer>
-    
-    <script>
-        // Time display update
-        function updateTime() {
-            const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            
-            document.getElementById('timeDisplay').textContent = `${hours}:${minutes}:${seconds}`;
-            
-            updateGreeting(hours);
-        }
-        
-        // Update greeting based on time
-        function updateGreeting(hours) {
-            const hour = parseInt(hours);
-            let message;
-            
-            if (hour >= 5 && hour < 12) {
-                message = "Holla! Morning";
-            } else if (hour >= 12 && hour < 17) {
-                message = "Good Afternoon";
-            } else if (hour >= 17 && hour < 21) {
-                message = "Good Evening";
-            } else {
-                message = "Good Night";
-            }
-            
-            document.getElementById('greetingMessage').textContent = message;
-        }
-        
-        // Initial update
-        updateTime();
-        
-        // Update every second
-        setInterval(updateTime, 1000);
-        
-        // Redirect after 3 seconds
-        setTimeout(() => {
-            window.location.href = 'home.html';
-        }, 3000);
-    </script>
+<svg width="0" height="0" style="position:absolute"><filter id="lF"><feTurbulence type="fractalNoise" baseFrequency="0.015 0.025" numOctaves="3" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="20" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+<div class="flex-1 flex flex-col">
+<div class="w-full pt-6 md:pt-8 flex justify-center"><div id="tD" class="t-d text-xl md:text-2xl"></div></div>
+<div class="flex-1 flex flex-col items-center justify-center px-4"><div id="gM" class="l-t mb-6 md:mb-8"></div><div class="t-l mt-6 md:mt-8"><div class="t-f f1"></div><div class="t-f f2"></div><div class="t-f f3"></div></div></div>
+</div>
+<footer class="w-full py-6 px-4"><div class="f-l mb-4"></div><div class="text-center f-t text-xs md:text-sm"><span>© 2026 PIReactive</span><span class="mx-2 opacity-50">•</span><span>by</span><a href="https://mkbertrand.vercel.app" class="f-lk ml-1 hover:opacity-100 transition-opacity" target="_blank" rel="noopener noreferrer">MWIZERWA KAREKEZI Bertrand</a></div></footer>
+<script>
+(function(){var _0=function(){var _1=new Date();var _2=_1.getHours().toString().padStart(2,'0');var _3=_1.getMinutes().toString().padStart(2,'0');var _4=_1.getSeconds().toString().padStart(2,'0');document.getElementById('tD').textContent=_2+':'+_3+':'+_4;var _5=parseInt(_2);var _6='';if(_5>=5&&_5<12)_6="Holla! Morning";else if(_5>=12&&_5<17)_6="Good Afternoon";else if(_5>=17&&_5<21)_6="Good Evening";else _6="Good Night";document.getElementById('gM').textContent=_6;};_0();setInterval(_0,1000);setTimeout(function(){window.location.href='home.html';},3000);})();
+</script>
 </body>
 </html>
