@@ -1,19 +1,387 @@
-<div class="min-h-screen bg-white">
-<nav class="flex justify-between items-center px-8 py-5 border-b border-gray-200">
-<h1 class="text-2xl font-bold">Pireactive</h1>
-<div class="flex gap-6">
-<a href="#" onclick="navigateTo('home');return false;" class="text-gray-600 hover:text-black">Home</a>
-<a href="#" onclick="navigateTo('domain');return false;" class="text-gray-600 hover:text-black">Domain</a>
-<a href="#" onclick="navigateTo('hosting');return false;" class="text-gray-600 hover:text-black">Hosting</a>
-<a href="#" onclick="navigateTo('clients');return false;" class="text-gray-600 hover:text-black">Clients</a>
-<a href="#" onclick="navigateTo('news');return false;" class="text-gray-600 hover:text-black">News</a>
-<a href="#" onclick="navigateTo('about');return false;" class="text-gray-600 hover:text-black">About</a>
-<a href="#" onclick="navigateTo('admin');return false;" class="bg-black text-white px-5 py-2">Admin</a>
-</div>
-</nav>
-<section class="text-center py-24 px-6">
-<h2 class="text-5xl md:text-7xl font-bold">Build. Design. Innovate.</h2>
-<p class="mt-6 text-gray-500 max-w-xl mx-auto">Modern digital solutions for forward-thinking brands</p>
-<div class="mt-8"><button class="bg-black text-white px-8 py-3">Get Started</button></div>
-</section>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PIReactive Tech co.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000000;
+      min-height: 100vh;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #ffffff;
+      padding: 18px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* header */
+    .header {
+      padding-bottom: 16px;
+      border-bottom: 1px solid #ffffff;
+      position: relative;
+      z-index: 10;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .left-section {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .company-name {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+    }
+
+    .creator {
+      font-size: 14px;
+      font-weight: 400;
+      color: #999999;
+      cursor: pointer;
+      transition: color 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    .creator:hover {
+      color: #ffffff;
+    }
+
+    .right-section {
+      display: flex;
+      gap: 44px;
+      padding-top: 6px;
+    }
+
+    .nav-link {
+      font-size: 15px;
+      font-weight: 400;
+      color: #ffffff;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-link:hover {
+      opacity: 0.65;
+    }
+
+    /* availability indicator - below header, right side */
+    .availability-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .availability {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .green-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulseGreen 2.2s ease-in-out infinite;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+    }
+
+    @keyframes pulseGreen {
+      0%, 100% {
+        background: #22c55e;
+        box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+      }
+      50% {
+        background: #0a2e1a;
+        box-shadow: 0 0 2px rgba(34, 197, 94, 0.1);
+      }
+    }
+
+    .availability-text {
+      font-size: 14px;
+      font-weight: 400;
+      color: #cccccc;
+      letter-spacing: -0.2px;
+    }
+
+    /* vertical lines container */
+    .vertical-lines-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 1;
+      padding: 0 28px;
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    .vertical-line {
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 12%,
+        rgba(255, 255, 255, 0.06) 20%,
+        rgba(255, 255, 255, 0.06) 90%,
+        rgba(255, 255, 255, 0) 100%
+      );
+    }
+
+    /* hero section */
+    .hero {
+      position: relative;
+      z-index: 5;
+      margin-top: 80px;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .static-text {
+      font-size: 72px;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      color: #ffffff;
+    }
+
+    .animated-wrapper {
+      display: flex;
+      align-items: baseline;
+      height: 90px;
+      overflow: hidden;
+    }
+
+    .static-prefix {
+      font-size: 72px;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      color: #ffffff;
+      margin-right: 20px;
+    }
+
+    .slider-container {
+      height: 90px;
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    .slider {
+      display: flex;
+      flex-direction: column;
+      animation: slideVertical 8s cubic-bezier(0.45, 0.05, 0.2, 0.99) infinite;
+    }
+
+    .slider span {
+      font-size: 72px;
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.25;
+      height: 90px;
+      display: block;
+      color: #a0a0a0;
+    }
+
+    @keyframes slideVertical {
+      0%, 20% {
+        transform: translateY(0);
+      }
+      25%, 45% {
+        transform: translateY(-90px);
+      }
+      50%, 70% {
+        transform: translateY(-180px);
+      }
+      75%, 95% {
+        transform: translateY(-270px);
+      }
+      100% {
+        transform: translateY(-360px);
+      }
+    }
+
+    /* responsive */
+    @media (max-width: 800px) {
+      body {
+        padding: 16px 20px;
+      }
+
+      .vertical-lines-wrapper {
+        padding: 0 20px;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .right-section {
+        gap: 28px;
+        flex-wrap: wrap;
+      }
+
+      .company-name {
+        font-size: 22px;
+      }
+
+      .static-text,
+      .static-prefix,
+      .slider span {
+        font-size: 48px;
+      }
+
+      .animated-wrapper {
+        height: 65px;
+      }
+
+      .slider-container {
+        height: 65px;
+      }
+
+      .slider span {
+        height: 65px;
+      }
+
+      @keyframes slideVertical {
+        0%, 20% { transform: translateY(0); }
+        25%, 45% { transform: translateY(-65px); }
+        50%, 70% { transform: translateY(-130px); }
+        75%, 95% { transform: translateY(-195px); }
+        100% { transform: translateY(-260px); }
+      }
+
+      .hero {
+        margin-top: 60px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .right-section {
+        gap: 20px;
+      }
+
+      .static-text,
+      .static-prefix,
+      .slider span {
+        font-size: 36px;
+      }
+
+      .animated-wrapper {
+        height: 50px;
+      }
+
+      .slider-container {
+        height: 50px;
+      }
+
+      .slider span {
+        height: 50px;
+      }
+
+      @keyframes slideVertical {
+        0%, 20% { transform: translateY(0); }
+        25%, 45% { transform: translateY(-50px); }
+        50%, 70% { transform: translateY(-100px); }
+        75%, 95% { transform: translateY(-150px); }
+        100% { transform: translateY(-200px); }
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="vertical-lines-wrapper">
+    <div class="vertical-line"></div>
+    <div class="vertical-line"></div>
+    <div class="vertical-line"></div>
+    <div class="vertical-line"></div>
+    <div class="vertical-line"></div>
+    <div class="vertical-line"></div>
+    <div class="vertical-line"></div>
+    <div class="vertical-line"></div>
+    <div class="vertical-line"></div>
+  </div>
+
+  <div class="container">
+    <header class="header">
+      <div class="header-content">
+        <div class="left-section">
+          <div class="company-name">PIReactive Tech co.</div>
+          <a href="https://mkbertrand.vercel.app" target="_blank" rel="noopener noreferrer" class="creator">Hey am MKB! The creator</a>
+        </div>
+        <div class="right-section">
+          <a href="clients.html" class="nav-link">PROJECTS</a>
+          <a href="domain.html" class="nav-link">DOMAIN</a>
+          <a href="news.html" class="nav-link">NEWS</a>
+          <a href="cool.html" class="nav-link">SNIPPETS</a>
+          <a href="about.html" class="nav-link">ABOUT</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="availability-wrapper">
+      <div class="availability">
+        <span class="green-dot"></span>
+        <span class="availability-text">Available for a project.</span>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="static-text">[WE BUILD]</div>
+        <div class="animated-wrapper">
+          <span class="static-prefix"></span>
+          <div class="slider-container">
+            <div class="slider">
+              <span>Websites</span>
+              <span>Applications</span>
+              <span>Digital products</span>
+              <span>Experiences</span>
+              <span>Websites</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
