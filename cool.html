@@ -1,12 +1,192 @@
-<div class="relative z-20 py-20 px-6">
-<div class="max-w-6xl mx-auto">
-<h2 class="text-5xl md:text-6xl font-bold text-center mb-6 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-pulse">✨ COOL STUFF ✨</h2>
-<p class="text-center text-white/70 text-lg mb-12">Experience the next level of digital innovation</p>
-<div class="grid md:grid-cols-3 gap-6">
-<div class="backdrop-blur-lg bg-white/5 border border-white/10 p-6 text-center hover:scale-105 transition-all duration-300"><span class="iconify text-5xl text-purple-400 mb-4" data-icon="mdi:robot-outline"></span><h3 class="text-xl font-semibold text-white mb-2">AI Integration</h3><p class="text-white/50 text-sm">Smart algorithms powering next-gen solutions</p></div>
-<div class="backdrop-blur-lg bg-white/5 border border-white/10 p-6 text-center hover:scale-105 transition-all duration-300"><span class="iconify text-5xl text-cyan-400 mb-4" data-icon="mdi:lightning-bolt"></span><h3 class="text-xl font-semibold text-white mb-2">Lightning Fast</h3><p class="text-white/50 text-sm">Blazing performance with edge computing</p></div>
-<div class="backdrop-blur-lg bg-white/5 border border-white/10 p-6 text-center hover:scale-105 transition-all duration-300"><span class="iconify text-5xl text-pink-400 mb-4" data-icon="mdi:shield-check"></span><h3 class="text-xl font-semibold text-white mb-2">Secure by Default</h3><p class="text-white/50 text-sm">Enterprise-grade security protocols</p></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <title>PIReactive | Code Snippets Library</title>
+  <meta name="description" content="Production-ready code snippets and utilities for developers. Free components crafted by PIReactive Tech co.">
+  <meta name="keywords" content="code snippets, html, css, javascript, web development, free code, components">
+  <meta name="author" content="PIReactive Tech co.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="PIReactive | Code Snippets">
+  <meta property="og:description" content="Free production-ready code snippets for developers.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://pireactive.com/snippets">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+  <style>
+    * { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000000; }
+    .v-l { width: 1px; height: 100%; background: linear-gradient(to bottom, transparent 0%, transparent 12%, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.06) 90%, transparent 100%); }
+    #m-m { transition: opacity 0.3s ease, visibility 0.3s ease; }
+    #m-m.h { opacity: 0; visibility: hidden; }
+    #m-m:not(.h) { opacity: 1; visibility: visible; }
+    .snippet-card { background: #0a0a0a; cursor: pointer; transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); }
+    .snippet-card:hover { transform: translateY(-4px); background: #111; }
+    .snippet-preview-mini { height: 160px; background: #fff; overflow: hidden; pointer-events: none; }
+    .snippet-preview-mini iframe { width: 100%; height: 100%; border: none; background: #fff; pointer-events: none; transform: scale(0.8); transform-origin: top left; width: 125%; height: 125%; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(12px); z-index: 1000; display: flex; align-items: flex-end; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.2, 0.9, 0.1, 1); }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-content { background: #0d0d0d; width: 100%; max-width: 1400px; height: 95vh; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.1, 1); overflow: hidden; }
+    .active .modal-content { transform: translateY(0); }
+    .modal-preview { height: 40%; background: #fff; border-bottom: 1px solid #222; }
+    .modal-preview iframe { width: 100%; height: 100%; border: none; background: #fff; }
+    .CodeMirror { height: 100%; font-size: 14px; background: #0a0a0a; }
+    .CodeMirror-gutters { background: #0a0a0a; border-right: 1px solid #222; }
+  </style>
+</head>
+<body class="text-white">
+
+<div class="fixed inset-0 pointer-events-none z-10 px-5 md:px-7 flex justify-evenly">
+  <div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div>
 </div>
-<div class="mt-12 text-center"><button onclick="navigateTo('home')" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 font-medium hover:scale-105 transition-all">Back to Home</button></div>
+
+<div class="relative z-20 max-w-7xl mx-auto px-5 md:px-7 py-4 md:py-5 min-h-screen flex flex-col">
+  
+  <header class="pb-4 border-b border-white">
+    <div class="flex flex-row justify-between items-center gap-4">
+      <div class="flex flex-col gap-0.5">
+        <div class="text-xl md:text-[26px] font-semibold tracking-tight">PIReactive Tech co.</div>
+        <a href="https://mkbertrand.vercel.app" target="_blank" rel="noopener noreferrer" class="text-xs md:text-sm font-normal text-gray-400 hover:text-white transition w-fit">Hey am MKB! The creator</a>
+      </div>
+      <button id="m-b" class="block md:hidden p-2" aria-label="Menu"><iconify-icon icon="mdi:menu" class="text-2xl"></iconify-icon></button>
+      <nav class="hidden md:flex gap-7 md:gap-11 pt-1.5 flex-wrap">
+        <a href="home.html" class="text-[15px] font-normal hover:opacity-65 transition">HOME</a>
+        <a href="works.html" class="text-[15px] font-normal hover:opacity-65 transition">WORKS</a>
+        <a href="hosting.html" class="text-[15px] font-normal hover:opacity-65 transition">HOSTING</a>
+        <a href="domain.html" class="text-[15px] font-normal hover:opacity-65 transition">DOMAIN</a>
+        <a href="news.html" class="text-[15px] font-normal hover:opacity-65 transition">NEWS</a>
+        <a href="about.html" class="text-[15px] font-normal hover:opacity-65 transition">ABOUT</a>
+      </nav>
+    </div>
+    <div id="m-m" class="h md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg z-50 pt-20 px-6">
+      <button id="c-b" class="absolute top-5 right-5 p-2" aria-label="Close"><iconify-icon icon="mdi:close" class="text-2xl"></iconify-icon></button>
+      <nav class="flex flex-col gap-6 text-2xl font-light">
+        <a href="home.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">HOME</a>
+        <a href="works.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">WORKS</a>
+        <a href="hosting.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">HOSTING</a>
+        <a href="domain.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">DOMAIN</a>
+        <a href="news.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">NEWS</a>
+        <a href="about.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">ABOUT</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="mt-8 mb-8">
+    <div class="relative max-w-md">
+      <iconify-icon icon="mdi:search" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></iconify-icon>
+      <input type="text" id="searchInput" placeholder="Search snippets..." class="w-full bg-transparent border border-gray-700 py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-white transition">
+    </div>
+  </div>
+
+  <div id="snippetsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 flex-1"></div>
+
+  <footer class="border-t border-gray-800 pt-10 md:pt-12 pb-6 md:pb-8 mt-12">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-5 md:gap-6"><div class="flex items-center gap-3"><img src="images/logo.png" alt="Logo" class="h-8 md:h-10 w-auto invert" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"><span class="hidden text-xl md:text-2xl font-bold">PIReactive</span></div><div class="flex gap-5 md:gap-6"><a href="#" class="text-gray-400 hover:text-white transition text-xl"><iconify-icon icon="mdi:twitter"></iconify-icon></a><a href="#" class="text-gray-400 hover:text-white transition text-xl"><iconify-icon icon="mdi:linkedin"></iconify-icon></a><a href="#" class="text-gray-400 hover:text-white transition text-xl"><iconify-icon icon="mdi:github"></iconify-icon></a></div></div>
+    <div class="text-center text-xs text-gray-500 mt-6">© 2026 PIReactive Tech co. All rights reserved.</div>
+  </footer>
 </div>
+
+<div class="modal-overlay" id="snippetModal">
+  <div class="modal-content">
+    <div class="flex justify-between items-center p-5">
+      <h3 id="modalTitle" class="text-lg font-medium"></h3>
+      <button id="modalClose" class="text-white text-2xl hover:text-gray-400 transition">&times;</button>
+    </div>
+    <div class="modal-preview" id="modalPreviewContainer"><iframe id="modalPreviewFrame" sandbox="allow-scripts allow-same-origin"></iframe></div>
+    <div class="flex gap-3 p-4 border-t border-gray-800">
+      <button id="copyCodeBtn" class="bg-white text-black px-5 py-2 text-sm font-medium hover:bg-gray-200 transition flex items-center gap-2"><iconify-icon icon="mdi:content-copy"></iconify-icon>Copy</button>
+      <button id="editCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 transition flex items-center gap-2"><iconify-icon icon="mdi:pencil"></iconify-icon>Edit</button>
+      <button id="resetCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 hidden items-center gap-2"><iconify-icon icon="mdi:undo"></iconify-icon>Reset</button>
+    </div>
+    <div class="flex-1 overflow-hidden" id="modalEditorContainer"></div>
+  </div>
 </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyAtHa9wAryji3EdWwhxT7tUwZquRD-LJvI",
+    authDomain: "project-k-dbaef.firebaseapp.com",
+    projectId: "project-k-dbaef",
+    storageBucket: "project-k-dbaef.firebasestorage.app",
+    messagingSenderId: "356936578912",
+    appId: "1:356936578912:web:056bdbf8625b33d79e1005"
+  };
+  
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const snippetsCol = collection(db, "snippets");
+  
+  let allSnippets = [], searchTimeout, currentEditor = null, originalCode = '', isEditing = false;
+  
+  const modal = document.getElementById('snippetModal'), modalTitle = document.getElementById('modalTitle'), modalPreviewFrame = document.getElementById('modalPreviewFrame'), modalEditorContainer = document.getElementById('modalEditorContainer'), copyBtn = document.getElementById('copyCodeBtn'), editBtn = document.getElementById('editCodeBtn'), resetBtn = document.getElementById('resetCodeBtn'), modalClose = document.getElementById('modalClose');
+  
+  const mB = document.getElementById('m-b'), mM = document.getElementById('m-m'), cB = document.getElementById('c-b');
+  if(mB&&mM){mB.addEventListener('click',()=>{mM.classList.remove('h');document.body.style.overflow='hidden';});}
+  if(cB&&mM){cB.addEventListener('click',()=>{mM.classList.add('h');document.body.style.overflow='';});}
+  mM?.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{mM.classList.add('h');document.body.style.overflow='';}));
+  
+  function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+  
+  function createCard(s){
+    const d=document.createElement('div');d.className='snippet-card group';
+    d.innerHTML=`<div class="snippet-preview-mini"><iframe sandbox="allow-scripts allow-same-origin" srcdoc="${s.code.replace(/"/g,'&quot;')}" loading="lazy"></iframe></div><div class="p-3"><p class="text-sm font-medium truncate text-gray-200">${s.name}</p><p class="text-gray-500 text-xs mt-0.5">${s.category||'component'}</p></div>`;
+    d.addEventListener('click',()=>openModal(s));return d;
+  }
+  
+  function renderGrid(snippets){
+    const g=document.getElementById('snippetsGrid');
+    if(!snippets.length){g.innerHTML='<div class="col-span-full text-center py-20 text-gray-400">No snippets found</div>';return;}
+    g.innerHTML='';const shuffled=shuffle([...snippets]);shuffled.forEach(s=>g.appendChild(createCard(s)));
+  }
+  
+  async function loadSnippets(){
+    try{const q=query(snippetsCol,orderBy("createdAt","desc"));const snap=await getDocs(q);allSnippets=snap.docs.map(d=>({id:d.id,...d.data(),category:'component'}));renderGrid(allSnippets);}
+    catch(e){document.getElementById('snippetsGrid').innerHTML='<div class="col-span-full text-center py-20 text-red-400">Failed to load snippets</div>';}
+  }
+  
+  document.getElementById('searchInput').addEventListener('input',e=>{
+    clearTimeout(searchTimeout);searchTimeout=setTimeout(()=>{const t=e.target.value.toLowerCase();renderGrid(t?allSnippets.filter(s=>s.name.toLowerCase().includes(t)||(s.code||'').toLowerCase().includes(t)):allSnippets);},300);
+  });
+  
+  function openModal(s){
+    modalTitle.textContent=s.name;originalCode=s.code||'';modalPreviewFrame.srcdoc=originalCode;
+    if(currentEditor){currentEditor.toTextArea();currentEditor=null;}
+    modalEditorContainer.innerHTML='<textarea id="modalCodeArea"></textarea>';
+    const ta=document.getElementById('modalCodeArea');ta.value=originalCode;ta.readOnly=true;
+    currentEditor=CodeMirror.fromTextArea(ta,{mode:"htmlmixed",theme:"dracula",lineNumbers:true,readOnly:true,autoCloseBrackets:true,matchBrackets:true});
+    isEditing=false;editBtn.innerHTML='<iconify-icon icon="mdi:pencil"></iconify-icon>Edit';resetBtn.style.display='none';
+    modal.classList.add('active');document.body.style.overflow='hidden';
+  }
+  
+  function closeModal(){modal.classList.remove('active');document.body.style.overflow='';if(currentEditor){currentEditor.toTextArea();currentEditor=null;}}
+  function updatePreview(){if(currentEditor)modalPreviewFrame.srcdoc=currentEditor.getValue();}
+  
+  modalClose.addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
+  
+  editBtn.addEventListener('click',()=>{if(!currentEditor)return;
+    if(!isEditing){currentEditor.setOption('readOnly',false);editBtn.innerHTML='<iconify-icon icon="mdi:check"></iconify-icon>Done';resetBtn.style.display='flex';isEditing=true;currentEditor.on('change',updatePreview);}
+    else{currentEditor.setOption('readOnly',true);editBtn.innerHTML='<iconify-icon icon="mdi:pencil"></iconify-icon>Edit';resetBtn.style.display='none';isEditing=false;currentEditor.off('change',updatePreview);}
+  });
+  
+  resetBtn.addEventListener('click',()=>{if(currentEditor){currentEditor.setValue(originalCode);updatePreview();}});
+  copyBtn.addEventListener('click',async()=>{const code=currentEditor?currentEditor.getValue():originalCode;try{await navigator.clipboard.writeText(code);copyBtn.innerHTML='<iconify-icon icon="mdi:check"></iconify-icon>Copied!';setTimeout(()=>copyBtn.innerHTML='<iconify-icon icon="mdi:content-copy"></iconify-icon>Copy',2000);}catch(e){}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('active'))closeModal();});
+  
+  loadSnippets();
+</script>
+</body>
+</html>
