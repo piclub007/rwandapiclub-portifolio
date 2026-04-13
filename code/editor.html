@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>NovaCore | Resizable Compiler + 3-Column Snippet Grid</title> 
+  <title>PIReactive | Modern Code Editor</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" />
@@ -24,7 +24,7 @@
     }
 
     body {
-      background: #0a0a0f;
+      background: #000000;
       height: 100vh;
       overflow: hidden;
     }
@@ -33,15 +33,14 @@
       display: flex;
       flex-direction: column;
       height: 100vh;
-      background: radial-gradient(circle at 20% 30%, #0f0f1a, #030308);
+      background: #000000;
     }
 
-    /* Top bar */
+    /* Top bar - minimalist */
     .top-bar {
-      background: rgba(18, 18, 26, 0.9);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(59, 130, 246, 0.3);
-      padding: 12px 28px;
+      background: #050505;
+      border-bottom: 1px solid #141414;
+      padding: 14px 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -50,41 +49,38 @@
       z-index: 10;
     }
 
-    .name-section {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 4px 20px 4px 18px;
-      border-radius: 60px;
-      border: 1px solid rgba(59, 130, 246, 0.4);
-    }
-
-    .name-label {
-      color: #94a3b8;
-      font-weight: 500;
-      font-size: 13px;
+    .name-input-wrapper {
+      flex: 1;
+      max-width: 400px;
     }
 
     #snippetNameInput {
-      background: transparent;
-      border: none;
-      padding: 9px 0;
-      color: white;
+      width: 100%;
+      background: #0a0a0a;
+      border: 1px solid #1f1f1f;
+      border-radius: 12px;
+      padding: 10px 16px;
+      color: #e2e8f0;
       font-size: 14px;
-      width: 240px;
+      font-weight: 500;
       outline: none;
+      transition: all 0.2s;
+    }
+
+    #snippetNameInput:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.1);
     }
 
     .action-buttons {
       display: flex;
-      gap: 12px;
+      gap: 10px;
     }
 
     .btn {
-      padding: 8px 22px;
-      border-radius: 40px;
-      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 10px;
+      font-weight: 500;
       font-size: 13px;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -92,30 +88,41 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      background: #0a0a0a;
+      color: #cbd5e1;
+      border: 1px solid #1f1f1f;
     }
 
     .btn-primary {
-      background: linear-gradient(105deg, #3b82f6, #2563eb);
+      background: #3b82f6;
       color: white;
-      box-shadow: 0 2px 8px rgba(59,130,246,0.3);
+      border: none;
     }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(59,130,246,0.4); }
+    .btn-primary:hover { background: #2563eb; transform: translateY(-1px); }
 
-    .btn-outline {
-      background: rgba(30, 41, 59, 0.8);
-      backdrop-filter: blur(4px);
-      border: 1px solid #3b82f6;
-      color: #90cdf4;
+    .btn-danger {
+      border-color: #ef4444;
+      color: #ef4444;
     }
-    .btn-outline:hover { background: #1e2a3a; }
+    .btn-danger:hover { background: #ef4444; color: white; }
 
-    #allSnippetsBtn {
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid #60a5fa;
-      color: #60a5fa;
+    .btn:hover:not(.btn-primary) { background: #141414; transform: translateY(-1px); }
+
+    .btn:active { transform: translateY(0); }
+
+    /* Loading spinner */
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
     }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* RESIZABLE CONTAINER - FIXED STACKING ISSUE */
+    /* Resizable container */
     .resizable-container {
       display: flex;
       flex: 1;
@@ -128,7 +135,7 @@
       width: 50%;
       display: flex;
       flex-direction: column;
-      background: #0c0c12;
+      background: #000000;
       overflow: hidden;
       min-width: 200px;
     }
@@ -142,10 +149,9 @@
       min-width: 200px;
     }
 
-    /* Resizer handle - no stacking bugs */
     .resize-handle {
-      width: 6px;
-      background: #2a2a35;
+      width: 4px;
+      background: #1a1a1a;
       cursor: col-resize;
       transition: background 0.15s;
       position: relative;
@@ -159,26 +165,31 @@
       content: '';
       position: absolute;
       top: 0;
-      left: -4px;
-      right: -4px;
+      left: -6px;
+      right: -6px;
       bottom: 0;
     }
 
     .panel-header {
-      background: rgba(12, 12, 18, 0.95);
-      padding: 12px 24px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #a0aec0;
-      border-bottom: 1px solid #1f2937;
-      backdrop-filter: blur(8px);
+      background: #050505;
+      padding: 10px 20px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #6b7280;
+      border-bottom: 1px solid #141414;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
     .CodeMirror {
       height: 100%;
-      font-size: 14px;
+      font-size: 13px;
       font-family: 'JetBrains Mono', 'Fira Code', monospace;
-      background: #0c0c12;
+      background: #000000;
+    }
+    .CodeMirror-gutters {
+      background: #000000;
+      border-right: 1px solid #141414;
     }
 
     .preview-frame {
@@ -188,22 +199,20 @@
       background: white;
     }
 
-    /* MODAL - 3 COLUMN GRID, INFINITE ROWS, SCROLLABLE */
+    /* FULLSCREEN MODAL - minimalist, 3 columns */
     .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.97);
-      backdrop-filter: blur(16px);
+      background: #000000;
       z-index: 1000;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
       visibility: hidden;
       opacity: 0;
-      transition: visibility 0.25s, opacity 0.25s;
+      transition: visibility 0.2s, opacity 0.2s;
     }
 
     .modal-overlay.active {
@@ -211,103 +220,80 @@
       opacity: 1;
     }
 
-    .modal-container {
-      background: #0e0e16;
-      width: 94%;
-      max-width: 1500px;
-      height: 90%;
-      border-radius: 32px;
-      border: 1px solid rgba(59, 130, 246, 0.45);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.9);
-    }
-
     .modal-header {
       padding: 20px 32px;
-      border-bottom: 1px solid #22222e;
+      border-bottom: 1px solid #141414;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 16px;
+      background: #000000;
     }
 
     .modal-header h2 {
-      color: white;
-      font-size: 22px;
-      font-weight: 600;
-      background: linear-gradient(135deg, #fff, #90cdf4);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: #e2e8f0;
+      font-size: 18px;
+      font-weight: 500;
     }
 
     .modal-search {
-      background: #1a1a24;
-      border: 1px solid #334155;
-      padding: 12px 24px;
-      border-radius: 60px;
-      width: 320px;
+      background: #0a0a0a;
+      border: 1px solid #1f1f1f;
+      padding: 10px 20px;
+      border-radius: 10px;
+      width: 300px;
       color: white;
       outline: none;
       font-size: 14px;
     }
-    .modal-search:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
+    .modal-search:focus { border-color: #3b82f6; }
 
     .close-modal {
-      background: #1f2937;
-      border: none;
+      background: #0a0a0a;
+      border: 1px solid #1f1f1f;
       color: white;
-      width: 44px;
-      height: 44px;
-      border-radius: 44px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
       cursor: pointer;
-      font-size: 24px;
+      font-size: 20px;
       transition: 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
-    .close-modal:hover { background: #3b82f6; transform: rotate(90deg); }
+    .close-modal:hover { background: #1a1a1a; }
 
-    /* GRID: EXACTLY 3 COLUMNS, INFINITE ROWS, SCROLL */
     .snippets-grid {
       flex: 1;
       overflow-y: auto;
       padding: 28px;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 26px;
+      gap: 20px;
       align-content: start;
     }
 
-    /* Card styling with preview iframe on top + name */
-    .snippet-card-modal {
-      background: #0b0b12;
-      border-radius: 24px;
-      border: 1px solid #262630;
+    .snippet-card {
+      background: #0a0a0a;
+      border-radius: 16px;
+      border: 1px solid #141414;
       overflow: hidden;
-      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      transition: all 0.25s ease;
       cursor: pointer;
     }
 
-    .snippet-card-modal:hover {
-      transform: translateY(-5px);
+    .snippet-card:hover {
+      transform: translateY(-3px);
       border-color: #3b82f6;
-      box-shadow: 0 18px 30px -12px rgba(59,130,246,0.4);
     }
 
-    .card-preview-live {
+    .card-preview {
       background: #ffffff;
       aspect-ratio: 16 / 9;
       overflow: hidden;
       position: relative;
-      border-bottom: 2px solid #1e293b;
     }
 
-    .card-preview-live iframe {
+    .card-preview iframe {
       width: 100%;
       height: 100%;
       border: none;
@@ -319,126 +305,112 @@
       height: 143%;
     }
 
-    .snippet-meta-modern {
-      padding: 14px 16px;
+    .card-footer {
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #0b0b12;
       gap: 10px;
     }
 
-    .snippet-title {
+    .snippet-name {
       color: #e2e8f0;
-      font-weight: 600;
+      font-weight: 500;
       font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       flex: 1;
     }
 
-    .edit-snippet-btn {
-      background: linear-gradient(95deg, #1e293b, #0f172a);
-      border: 1px solid #3b82f6;
-      padding: 5px 14px;
-      border-radius: 40px;
+    .edit-btn {
+      background: #141414;
+      border: none;
+      padding: 4px 12px;
+      border-radius: 8px;
       color: #90caf9;
       font-size: 11px;
-      font-weight: 500;
       cursor: pointer;
-      transition: 0.2s;
-      white-space: nowrap;
     }
-    .edit-snippet-btn:hover { background: #2563eb; color: white; }
+    .edit-btn:hover { background: #2563eb; color: white; }
 
     .empty-grid {
       color: #6b7280;
       text-align: center;
       padding: 60px;
-      font-size: 16px;
+      font-size: 14px;
       grid-column: 1 / -1;
-    }
-
-    /* Responsive: on smaller screens keep 3 columns but shrink gap */
-    @media (max-width: 1000px) {
-      .snippets-grid { gap: 18px; padding: 20px; }
-    }
-    @media (max-width: 750px) {
-      .snippets-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 500px) {
-      .snippets-grid { grid-template-columns: 1fr; }
     }
 
     .toast {
       position: fixed;
-      bottom: 28px;
-      right: 28px;
-      background: #1e293b;
-      backdrop-filter: blur(12px);
-      color: #b9e6ff;
-      padding: 12px 28px;
-      border-radius: 48px;
+      bottom: 24px;
+      right: 24px;
+      background: #0a0a0a;
+      border: 1px solid #1f1f1f;
+      color: #a5f3fc;
+      padding: 10px 20px;
+      border-radius: 10px;
       font-size: 13px;
       z-index: 1200;
-      border-left: 4px solid #3b82f6;
-      animation: slideIn 0.25s ease;
+      border-left: 3px solid #3b82f6;
+      animation: slideIn 0.2s ease;
     }
 
     @keyframes slideIn {
-      from { opacity: 0; transform: translateX(40px);}
+      from { opacity: 0; transform: translateX(30px);}
       to { opacity: 1; transform: translateX(0);}
     }
 
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #0f0f17; }
-    ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 8px; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #050505; }
+    ::-webkit-scrollbar-thumb { background: #1f1f1f; border-radius: 10px; }
+
+    @media (max-width: 900px) {
+      .snippets-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 550px) {
+      .snippets-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 <div class="app">
   <div class="top-bar">
-    <div class="name-section">
-      <span class="name-label"><span class="iconify" data-icon="mdi:label-outline"></span> SNIPPET NAME</span>
-      <input type="text" id="snippetNameInput" placeholder="e.g., Glassmorphic Hero, 3D Card...">
+    <div class="name-input-wrapper">
+      <input type="text" id="snippetNameInput" placeholder="Snippet name... (e.g., Glassmorphic Hero)">
     </div>
     <div class="action-buttons">
-      <button id="runBtn" class="btn btn-primary"><span class="iconify" data-icon="mdi:play"></span> RUN</button>
-      <button id="saveSnippetBtn" class="btn btn-outline"><span class="iconify" data-icon="mdi:content-save"></span> SAVE</button>
-      <button id="allSnippetsBtn" class="btn"><span class="iconify" data-icon="mdi:code-braces-box"></span> ALL SNIPPETS</button>
+      <button id="runBtn" class="btn btn-primary"><span class="iconify" data-icon="mdi:play"></span> Run</button>
+      <button id="saveBtn" class="btn"><span class="iconify" data-icon="mdi:content-save"></span> Save</button>
+      <button id="resetBtn" class="btn btn-danger"><span class="iconify" data-icon="mdi:refresh"></span> Reset</button>
+      <button id="allSnippetsBtn" class="btn"><span class="iconify" data-icon="mdi:grid"></span> Library</button>
     </div>
   </div>
 
-  <!-- Resizable two-columns with fixed separator -->
   <div class="resizable-container" id="resizableContainer">
     <div class="editor-panel" id="editorPanel">
-      <div class="panel-header"><span class="iconify" data-icon="mdi:code-tags"></span> CODE EDITOR (HTML/CSS/JS)</div>
+      <div class="panel-header"><span class="iconify" data-icon="mdi:code-tags"></span> Editor</div>
       <textarea id="codeEditor" style="display: none;"></textarea>
       <div id="codeMirrorContainer" style="height: 100%;"></div>
     </div>
     <div class="resize-handle" id="resizeHandle"></div>
     <div class="preview-panel" id="previewPanel">
-      <div class="panel-header"><span class="iconify" data-icon="mdi:monitor-shimmer"></span> LIVE PREVIEW • INSTANT</div>
-      <iframe id="previewFrame" class="preview-frame" title="live output" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe>
+      <div class="panel-header"><span class="iconify" data-icon="mdi:monitor-eye"></span> Preview</div>
+      <iframe id="previewFrame" class="preview-frame" title="preview" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe>
     </div>
   </div>
 </div>
 
-<!-- MODAL: 3 COLUMN GRID INFINITE SCROLL -->
+<!-- Fullscreen Modal -->
 <div id="snippetsModal" class="modal-overlay">
-  <div class="modal-container">
-    <div class="modal-header">
-      <h2><span class="iconify" data-icon="mdi:database-outline"></span> SNIPPET VAULT • 3 COLUMN GRID</h2>
-      <input type="text" id="modalSearchInput" class="modal-search" placeholder="🔍 Search by name... (300ms)" autocomplete="off">
-      <button id="closeModalBtn" class="close-modal">✕</button>
-    </div>
-    <div id="snippetsGridContainer" class="snippets-grid">
-      <div class="empty-grid">✨ Loading snippets from Firebase...</div>
-    </div>
+  <div class="modal-header">
+    <h2><span class="iconify" data-icon="mdi:database"></span> Snippet Library</h2>
+    <input type="text" id="modalSearchInput" class="modal-search" placeholder="Search snippets..." autocomplete="off">
+    <button id="closeModalBtn" class="close-modal">✕</button>
+  </div>
+  <div id="snippetsGridContainer" class="snippets-grid">
+    <div class="empty-grid">Loading snippets...</div>
   </div>
 </div>
 
@@ -459,10 +431,12 @@
   const db = getFirestore(app);
   const snippetsCollection = collection(db, "snippets");
   
+  // DOM elements
   let codeMirror = null;
   const previewFrame = document.getElementById("previewFrame");
   const runBtn = document.getElementById("runBtn");
-  const saveBtn = document.getElementById("saveSnippetBtn");
+  const saveBtn = document.getElementById("saveBtn");
+  const resetBtn = document.getElementById("resetBtn");
   const allSnippetsBtn = document.getElementById("allSnippetsBtn");
   const snippetNameInput = document.getElementById("snippetNameInput");
   const modal = document.getElementById("snippetsModal");
@@ -473,8 +447,54 @@
   let currentEditId = null;
   let allSnippetsArray = [];
   let searchTimeout = null;
+  let isLoading = false;
   
-  // ---------- RESIZER LOGIC (no stacking bugs) ----------
+  // Default template
+  const DEFAULT_CODE = `<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #0a0a1a, #12121f);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Inter', system-ui;
+    }
+    .card {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 2rem;
+      border: 1px solid rgba(59,130,246,0.3);
+      text-align: center;
+    }
+    h1 { background: linear-gradient(135deg, #fff, #60a5fa); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    button {
+      background: #3b82f6;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 40px;
+      color: white;
+      font-weight: 500;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover { background: #2563eb; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>PIReactive Editor</h1>
+    <p>Write HTML/CSS/JS • Save to cloud</p>
+    <button onclick="alert('Hello from PIReactive!')">Click me</button>
+  </div>
+</body>
+</html>`;
+  
+  // Resizer logic
   const editorPanel = document.getElementById("editorPanel");
   const previewPanel = document.getElementById("previewPanel");
   const resizeHandle = document.getElementById("resizeHandle");
@@ -492,8 +512,8 @@
       if (!isResizing) return;
       const rect = container.getBoundingClientRect();
       let newWidth = e.clientX - rect.left;
-      const minWidth = 260;
-      const maxWidth = rect.width - 260;
+      const minWidth = 280;
+      const maxWidth = rect.width - 280;
       newWidth = Math.min(maxWidth, Math.max(minWidth, newWidth));
       const percent = (newWidth / rect.width) * 100;
       editorPanel.style.width = `${percent}%`;
@@ -507,43 +527,11 @@
     });
   }
   
-  // ---------- EDITOR ----------
+  // Editor init
   function initEditor() {
     const textarea = document.getElementById("codeEditor");
     codeMirror = CodeMirror(document.getElementById("codeMirrorContainer"), {
-      value: `<!DOCTYPE html>
-<html>
-<head>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: linear-gradient(145deg, #0a0a1a, #12121f);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      font-family: 'Inter', system-ui;
-    }
-    .glass-card {
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(12px);
-      border-radius: 2rem;
-      padding: 2rem;
-      border: 1px solid rgba(59,130,246,0.4);
-      text-align: center;
-    }
-    h1 { background: linear-gradient(135deg, #fff, #60a5fa); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    button { background: #3b82f6; border: none; padding: 12px 28px; border-radius: 40px; color: white; font-weight: bold; margin-top: 20px; cursor: pointer; }
-  </style>
-</head>
-<body>
-  <div class="glass-card">
-    <h1>⚡ NovaCore Studio</h1>
-    <p>Resizable panels • 3‑column snippet grid</p>
-    <button onclick="alert('Interactive preview!')">Explore</button>
-  </div>
-</body>
-</html>`,
+      value: DEFAULT_CODE,
       mode: "htmlmixed",
       theme: "material-darker",
       lineNumbers: true,
@@ -559,13 +547,34 @@
     if (codeMirror) previewFrame.srcdoc = codeMirror.getValue();
   }
   
+  function resetEditor() {
+    if (confirm("Reset editor to default template?")) {
+      codeMirror.setValue(DEFAULT_CODE);
+      snippetNameInput.value = "";
+      currentEditId = null;
+      runPreview();
+      showToast("Reset to default template", false);
+    }
+  }
+  
   function showToast(msg, isError = false) {
     const toast = document.createElement("div");
     toast.className = "toast";
-    toast.innerHTML = `<span class="iconify" data-icon="mdi:${isError ? 'alert-circle' : 'check-circle'}"></span> ${msg}`;
+    toast.innerHTML = msg;
     if (isError) toast.style.borderLeftColor = "#ef4444";
     document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2600);
+    setTimeout(() => toast.remove(), 2500);
+  }
+  
+  async function setButtonLoading(button, loading) {
+    if (loading) {
+      button._originalText = button.innerHTML;
+      button.innerHTML = '<span class="loading-spinner"></span> Saving...';
+      button.disabled = true;
+    } else {
+      button.innerHTML = button._originalText || '<span class="iconify" data-icon="mdi:content-save"></span> Save';
+      button.disabled = false;
+    }
   }
   
   async function saveCurrentSnippet() {
@@ -573,18 +582,21 @@
     if (!code.trim()) { showToast("Cannot save empty code", true); return; }
     let name = snippetNameInput.value.trim();
     if (!name) name = `Snippet_${new Date().toLocaleTimeString()}`;
+    
     try {
+      await setButtonLoading(saveBtn, true);
       if (currentEditId) {
         await updateDoc(doc(db, "snippets", currentEditId), { name, code, updatedAt: new Date().toISOString() });
         showToast(`✅ Updated "${name}"`);
         currentEditId = null;
       } else {
         await addDoc(snippetsCollection, { name, code, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() });
-        showToast(`💾 Saved "${name}" to cloud`);
+        showToast(`💾 Saved "${name}"`);
       }
       if (modal.classList.contains("active")) await loadAllSnippetsIntoGrid();
       await refreshCache();
     } catch (err) { showToast("Firebase error: " + err.message, true); }
+    finally { await setButtonLoading(saveBtn, false); }
   }
   
   async function refreshCache() {
@@ -593,8 +605,8 @@
     allSnippetsArray = snap.docs.map(d => ({ id: d.id, ...d.data() }));
   }
   
-  // Render 3-column grid (infinite rows, scrollable)
   async function loadAllSnippetsIntoGrid(filterText = "") {
+    snippetsGrid.innerHTML = '<div class="empty-grid"><span class="loading-spinner" style="border-color:#3b82f6; border-top-color:white;"></span> Loading...</div>';
     if (!allSnippetsArray.length) await refreshCache();
     let filtered = [...allSnippetsArray];
     if (filterText.trim()) {
@@ -602,25 +614,25 @@
       filtered = allSnippetsArray.filter(s => s.name && s.name.toLowerCase().includes(lower));
     }
     if (filtered.length === 0) {
-      snippetsGrid.innerHTML = `<div class="empty-grid"><span class="iconify" data-icon="mdi:code-braces-off"></span> No snippets found. Create one in the editor!</div>`;
+      snippetsGrid.innerHTML = `<div class="empty-grid">✨ No snippets. Create one in the editor!</div>`;
       return;
     }
     snippetsGrid.innerHTML = filtered.map(snippet => {
       const safeCode = (snippet.code || "").replace(/`/g, '&#96;').replace(/"/g, '&quot;');
       return `
-        <div class="snippet-card-modal" data-id="${snippet.id}">
-          <div class="card-preview-live">
-            <iframe sandbox="allow-scripts allow-same-origin allow-popups" srcdoc="${safeCode}" loading="lazy"></iframe>
+        <div class="snippet-card" data-id="${snippet.id}">
+          <div class="card-preview">
+            <iframe sandbox="allow-scripts allow-same-origin" srcdoc="${safeCode}" loading="lazy"></iframe>
           </div>
-          <div class="snippet-meta-modern">
-            <span class="snippet-title"><span class="iconify" data-icon="mdi:code-json"></span> ${escapeHtml(snippet.name || "Unnamed")}</span>
-            <button class="edit-snippet-btn" data-id="${snippet.id}">✏️ Edit</button>
+          <div class="card-footer">
+            <span class="snippet-name">📄 ${escapeHtml(snippet.name || "Unnamed")}</span>
+            <button class="edit-btn" data-id="${snippet.id}">Edit</button>
           </div>
         </div>
       `;
     }).join("");
     
-    document.querySelectorAll(".edit-snippet-btn").forEach(btn => {
+    document.querySelectorAll(".edit-btn").forEach(btn => {
       btn.addEventListener("click", async (e) => {
         e.stopPropagation();
         const id = btn.getAttribute("data-id");
@@ -628,9 +640,9 @@
         closeModal();
       });
     });
-    document.querySelectorAll(".snippet-card-modal").forEach(card => {
+    document.querySelectorAll(".snippet-card").forEach(card => {
       card.addEventListener("click", async (e) => {
-        if (e.target.classList.contains("edit-snippet-btn")) return;
+        if (e.target.classList.contains("edit-btn")) return;
         const id = card.getAttribute("data-id");
         await loadIntelligentEditor(id);
         closeModal();
@@ -650,7 +662,7 @@
         currentEditId = target.id;
         runPreview();
         showToast(`📂 Loaded: ${target.name || "snippet"}`);
-      } else { showToast("Snippet missing", true); }
+      } else { showToast("Snippet not found", true); }
     } catch (err) { showToast("Failed to load", true); }
   }
   
@@ -659,16 +671,15 @@
     return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : (m === '<' ? '&lt;' : '&gt;'));
   }
   
-  // Modal control with BACK button text
   function openModal() {
     modal.classList.add("active");
-    allSnippetsBtn.innerHTML = '<span class="iconify" data-icon="mdi:arrow-left"></span> BACK';
+    allSnippetsBtn.innerHTML = '<span class="iconify" data-icon="mdi:arrow-left"></span> Back';
     loadAllSnippetsIntoGrid("");
     modalSearch.value = "";
   }
   function closeModal() {
     modal.classList.remove("active");
-    allSnippetsBtn.innerHTML = '<span class="iconify" data-icon="mdi:code-braces-box"></span> ALL SNIPPETS';
+    allSnippetsBtn.innerHTML = '<span class="iconify" data-icon="mdi:grid"></span> Library';
   }
   
   allSnippetsBtn.addEventListener("click", () => { modal.classList.contains("active") ? closeModal() : openModal(); });
@@ -682,6 +693,8 @@
   
   runBtn.addEventListener("click", runPreview);
   saveBtn.addEventListener("click", saveCurrentSnippet);
+  resetBtn.addEventListener("click", resetEditor);
+  
   document.addEventListener("keydown", (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === "s") { e.preventDefault(); saveCurrentSnippet(); }
     if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); runPreview(); }
