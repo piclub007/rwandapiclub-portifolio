@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>PIReactive | Modern Code Editor</title>
+  <title>PIReactive | Smart Code Editor</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" />
@@ -36,7 +36,6 @@
       background: #000000;
     }
 
-    /* Top bar - minimalist */
     .top-bar {
       background: #050505;
       border-bottom: 1px solid #141414;
@@ -100,29 +99,21 @@
     }
     .btn-primary:hover { background: #2563eb; transform: translateY(-1px); }
 
+    .btn-success {
+      background: #10b981;
+      color: white;
+      border: none;
+    }
+    .btn-success:hover { background: #059669; transform: translateY(-1px); }
+
     .btn-danger {
       border-color: #ef4444;
       color: #ef4444;
     }
     .btn-danger:hover { background: #ef4444; color: white; }
 
-    .btn:hover:not(.btn-primary) { background: #141414; transform: translateY(-1px); }
+    .btn:hover:not(.btn-primary):not(.btn-success) { background: #141414; transform: translateY(-1px); }
 
-    .btn:active { transform: translateY(0); }
-
-    /* Loading spinner */
-    .loading-spinner {
-      display: inline-block;
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.6s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* Resizable container */
     .resizable-container {
       display: flex;
       flex: 1;
@@ -199,7 +190,6 @@
       background: white;
     }
 
-    /* FULLSCREEN MODAL - minimalist, 3 columns */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -378,11 +368,12 @@
 <div class="app">
   <div class="top-bar">
     <div class="name-input-wrapper">
-      <input type="text" id="snippetNameInput" placeholder="Snippet name... (e.g., Glassmorphic Hero)">
+      <input type="text" id="snippetNameInput" placeholder="Snippet name...">
     </div>
     <div class="action-buttons">
       <button id="runBtn" class="btn btn-primary"><span class="iconify" data-icon="mdi:play"></span> Run</button>
       <button id="saveBtn" class="btn"><span class="iconify" data-icon="mdi:content-save"></span> Save</button>
+      <button id="addMarkBtn" class="btn btn-success"><span class="iconify" data-icon="mdi:plus-circle"></span> ADD MARK</button>
       <button id="resetBtn" class="btn btn-danger"><span class="iconify" data-icon="mdi:refresh"></span> Reset</button>
       <button id="allSnippetsBtn" class="btn"><span class="iconify" data-icon="mdi:grid"></span> Library</button>
     </div>
@@ -402,7 +393,6 @@
   </div>
 </div>
 
-<!-- Fullscreen Modal -->
 <div id="snippetsModal" class="modal-overlay">
   <div class="modal-header">
     <h2><span class="iconify" data-icon="mdi:database"></span> Snippet Library</h2>
@@ -431,11 +421,11 @@
   const db = getFirestore(app);
   const snippetsCollection = collection(db, "snippets");
   
-  // DOM elements
   let codeMirror = null;
   const previewFrame = document.getElementById("previewFrame");
   const runBtn = document.getElementById("runBtn");
   const saveBtn = document.getElementById("saveBtn");
+  const addMarkBtn = document.getElementById("addMarkBtn");
   const resetBtn = document.getElementById("resetBtn");
   const allSnippetsBtn = document.getElementById("allSnippetsBtn");
   const snippetNameInput = document.getElementById("snippetNameInput");
@@ -447,9 +437,83 @@
   let currentEditId = null;
   let allSnippetsArray = [];
   let searchTimeout = null;
-  let isLoading = false;
   
-  // Default template
+  // UNIQUE RANDOM CLASS NAMES (no conflicts)
+  const UNIQUE_CONTAINER = "pireactive_xk9f2j";
+  const UNIQUE_LINK = "pireactive_7h3m8v";
+  const UNIQUE_ARROW = "pireactive_qw4r6t";
+  
+  // Badge HTML with unique classes - NO BODY STYLES, ONLY THE BUTTON
+  const BADGE_HTML = `
+<div class="${UNIQUE_CONTAINER}">
+  <style>
+    .${UNIQUE_CONTAINER} {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      z-index: 9999;
+    }
+    .${UNIQUE_LINK} {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      background: #1e1a18f0;
+      color: #f0e4db;
+      padding: 0.4rem 1rem 0.4rem 1.2rem;
+      border: 1px solid #5e4b3e;
+      box-shadow: 0 6px 12px -4px #00000033;
+      transition: all 0.25s;
+      backdrop-filter: blur(4px);
+      font-size: 0.9rem;
+      white-space: nowrap;
+      border-radius: 60px;
+      font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+    }
+    .${UNIQUE_LINK}:hover {
+      background: #2d231e;
+      border-color: #9c8170;
+      transform: translateY(-2px);
+    }
+    .${UNIQUE_ARROW} {
+      margin-left: 0.5rem;
+      font-size: 1.3rem;
+      transition: transform 0.25s;
+      color: #d6bcab;
+    }
+    .${UNIQUE_LINK}:hover .${UNIQUE_ARROW} {
+      transform: translate(2px, -7px) rotate(-20deg);
+      color: #f0d5c3;
+    }
+  </style>
+  <a href="https://pireactive.vercel.app/cool" target="_blank" rel="noopener noreferrer" class="${UNIQUE_LINK}">
+    <span>Made by PIReactive</span>
+    <span class="${UNIQUE_ARROW}">→</span>
+  </a>
+</div>`;
+  
+  // INTELLIGENT INJECTION - ONLY ADDS BADGE, PRESERVES EVERYTHING ELSE
+  function injectPIReactiveMarkOnly(htmlCode) {
+    if (!htmlCode || htmlCode.trim() === '') return htmlCode;
+    
+    // Check if badge already exists using unique class
+    if (htmlCode.includes(UNIQUE_CONTAINER) && htmlCode.includes('Made by PIReactive')) {
+      return htmlCode;
+    }
+    
+    // Inject into </body> if exists (preserves all original content)
+    if (htmlCode.includes('</body>')) {
+      return htmlCode.replace('</body>', `${BADGE_HTML}\n</body>`);
+    }
+    // Inject into </html> if exists
+    else if (htmlCode.includes('</html>')) {
+      return htmlCode.replace('</html>', `${BADGE_HTML}\n</html>`);
+    }
+    // For fragments, append at the end
+    else {
+      return htmlCode + `\n${BADGE_HTML}`;
+    }
+  }
+  
   const DEFAULT_CODE = `<!DOCTYPE html>
 <html>
 <head>
@@ -527,7 +591,6 @@
     });
   }
   
-  // Editor init
   function initEditor() {
     const textarea = document.getElementById("codeEditor");
     codeMirror = CodeMirror(document.getElementById("codeMirrorContainer"), {
@@ -557,13 +620,44 @@
     }
   }
   
+  // ADD MARK - ANALYZES FIRST, THEN INJECTS WITHOUT CHANGING ANYTHING ELSE
+  function addPIReactiveMark() {
+    const currentCode = codeMirror.getValue();
+    if (!currentCode.trim()) {
+      showToast("No code to mark", true);
+      return;
+    }
+    
+    // AI-like analysis: check if badge already exists
+    if (currentCode.includes(UNIQUE_CONTAINER) && currentCode.includes('Made by PIReactive')) {
+      showToast("✓ PIReactive mark already present in this code!", false);
+      return;
+    }
+    
+    // Also check for old badge patterns
+    if (currentCode.includes('badge-fixed') && currentCode.includes('Made by PIReactive')) {
+      showToast("⚠️ Legacy badge found. Use Reset to get clean version.", true);
+      return;
+    }
+    
+    try {
+      const newCode = injectPIReactiveMarkOnly(currentCode);
+      codeMirror.setValue(newCode);
+      runPreview();
+      showToast("✨ PIReactive badge added! Fixed at bottom-right corner. Original code unchanged.", false);
+    } catch (err) {
+      console.error(err);
+      showToast("Failed to inject mark: " + err.message, true);
+    }
+  }
+  
   function showToast(msg, isError = false) {
     const toast = document.createElement("div");
     toast.className = "toast";
     toast.innerHTML = msg;
     if (isError) toast.style.borderLeftColor = "#ef4444";
     document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2500);
+    setTimeout(() => toast.remove(), 3000);
   }
   
   async function setButtonLoading(button, loading) {
@@ -693,11 +787,13 @@
   
   runBtn.addEventListener("click", runPreview);
   saveBtn.addEventListener("click", saveCurrentSnippet);
+  addMarkBtn.addEventListener("click", addPIReactiveMark);
   resetBtn.addEventListener("click", resetEditor);
   
   document.addEventListener("keydown", (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === "s") { e.preventDefault(); saveCurrentSnippet(); }
     if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); runPreview(); }
+    if ((e.ctrlKey || e.metaKey) && e.key === "m") { e.preventDefault(); addPIReactiveMark(); }
   });
   
   async function bootstrap() {
