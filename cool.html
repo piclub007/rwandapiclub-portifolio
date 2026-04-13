@@ -3,8 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-  <title>PIReactive | Code Snippets</title>
-  <meta name="description" content="Production-ready code snippets and utilities for developers. Free components crafted by PIReactive Tech co.">
+  
+  <!-- Primary Meta Tags -->
+  <title>PIReactive | Free Production-Ready Code Snippets</title>
+  <meta name="title" content="PIReactive | Free Production-Ready Code Snippets">
+  <meta name="description" content="Discover free, production-ready HTML, CSS, and JavaScript code snippets. Copy, edit, and download components crafted by PIReactive Tech co.">
+  <meta name="keywords" content="code snippets, HTML snippets, CSS snippets, JavaScript snippets, web development, free code, UI components, PIReactive">
+  <meta name="author" content="PIReactive Tech co.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
+  <meta name="bingbot" content="index, follow">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://pireactive.vercel.app">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pireactive.vercel.app">
+  <meta property="og:title" content="PIReactive | Free Production-Ready Code Snippets">
+  <meta property="og:description" content="Discover free, production-ready HTML, CSS, and JavaScript code snippets. Copy, edit, and download components crafted by PIReactive Tech co.">
+  <meta property="og:image" content="https://pireactive.vercel.app/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PIReactive Code Snippets Platform">
+  <meta property="og:site_name" content="PIReactive Tech co.">
+  <meta property="og:locale" content="en_US">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://pireactive.vercel.app">
+  <meta name="twitter:title" content="PIReactive | Free Production-Ready Code Snippets">
+  <meta name="twitter:description" content="Discover free, production-ready HTML, CSS, and JavaScript code snippets. Copy, edit, and download components crafted by PIReactive Tech co.">
+  <meta name="twitter:image" content="https://pireactive.vercel.app/og-image.jpg">
+  <meta name="twitter:creator" content="@pireactive">
+  <meta name="twitter:site" content="@pireactive">
+  
+  <!-- Schema.org markup for Google -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "PIReactive Code Snippets",
+    "url": "https://pireactive.vercel.app",
+    "description": "Free production-ready code snippets and utilities for developers",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "creator": {
+      "@type": "Organization",
+      "name": "PIReactive Tech co.",
+      "url": "https://mkbertrand.vercel.app"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,6 +73,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+  
+  <!-- html2canvas for screenshot generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
   <style>
     * { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #000000; }
@@ -85,6 +145,12 @@
       font-size: 14px;
       padding: 0 16px;
     }
+    #screenshotCanvas {
+      position: fixed;
+      top: -9999px;
+      left: -9999px;
+      z-index: -1;
+    }
     @media (max-width: 640px) {
       .modal-content { height: 100vh; border-radius: 0; }
       .modal-preview { height: 35%; }
@@ -95,6 +161,8 @@
 </head>
 <body class="text-white">
 
+<canvas id="screenshotCanvas" style="display: none;"></canvas>
+
 <div class="fixed inset-0 pointer-events-none z-10 px-5 md:px-7 flex justify-evenly">
   <div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div><div class="v-l"></div>
 </div>
@@ -104,11 +172,11 @@
   <header class="pb-4 border-b border-white">
     <div class="flex flex-row justify-between items-center gap-4">
       <div class="flex flex-col gap-0.5">
-        <div class="text-xl md:text-[26px] font-semibold tracking-tight">PIReactive Tech co.</div>
+        <h1 class="text-xl md:text-[26px] font-semibold tracking-tight">PIReactive Tech co.</h1>
         <a href="https://mkbertrand.vercel.app" target="_blank" rel="noopener noreferrer" class="text-xs md:text-sm font-normal text-gray-400 hover:text-white transition w-fit">Hey am MKB! The creator</a>
       </div>
       <button id="m-b" class="block md:hidden p-2" aria-label="Menu"><iconify-icon icon="mdi:menu" class="text-2xl"></iconify-icon></button>
-      <nav class="hidden md:flex gap-7 md:gap-11 pt-1.5 flex-wrap">
+      <nav class="hidden md:flex gap-7 md:gap-11 pt-1.5 flex-wrap" aria-label="Main navigation">
         <a href="home.html" class="text-[15px] font-normal hover:opacity-65 transition">HOME</a>
         <a href="clients.html" class="text-[15px] font-normal hover:opacity-65 transition">WORKS</a>
         <a href="hosting.html" class="text-[15px] font-normal hover:opacity-65 transition">HOSTING</a>
@@ -119,7 +187,7 @@
     </div>
     <div id="m-m" class="h md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg z-50 pt-20 px-6">
       <button id="c-b" class="absolute top-5 right-5 p-2" aria-label="Close"><iconify-icon icon="mdi:close" class="text-2xl"></iconify-icon></button>
-      <nav class="flex flex-col gap-6 text-2xl font-light">
+      <nav class="flex flex-col gap-6 text-2xl font-light" aria-label="Mobile navigation">
         <a href="home.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">HOME</a>
         <a href="clients.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">WORKS</a>
         <a href="hosting.html" class="hover:text-gray-300 transition py-2 border-b border-white/10">HOSTING</a>
@@ -132,37 +200,49 @@
 
   <div class="mt-8 mb-8">
     <div class="relative max-w-md">
-      <iconify-icon icon="mdi:search" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></iconify-icon>
-      <input type="text" id="searchInput" placeholder="Search snippets..." class="w-full bg-transparent border border-gray-700 rounded-full py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-white transition">
+      <iconify-icon icon="mdi:search" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl" aria-hidden="true"></iconify-icon>
+      <input type="text" id="searchInput" placeholder="Search snippets..." aria-label="Search code snippets" class="w-full bg-transparent border border-gray-700 rounded-full py-3 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-white transition">
     </div>
   </div>
 
-  <div id="sectionsContainer" class="flex-1"></div>
+  <main id="sectionsContainer" class="flex-1"></main>
 
   <footer class="border-t border-gray-800 pt-10 md:pt-12 pb-6 md:pb-8 mt-12">
-    <div class="flex flex-col md:flex-row justify-between items-center gap-5 md:gap-6"><div class="flex items-center gap-3"><img src="images/logo.png" alt="Logo" class="h-8 md:h-10 w-auto invert" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'"><span class="hidden text-xl md:text-2xl font-bold">PIReactive</span></div><div class="flex gap-5 md:gap-6"><a href="#" class="text-gray-400 hover:text-white transition text-xl"><iconify-icon icon="mdi:twitter"></iconify-icon></a><a href="#" class="text-gray-400 hover:text-white transition text-xl"><iconify-icon icon="mdi:linkedin"></iconify-icon></a><a href="#" class="text-gray-400 hover:text-white transition text-xl"><iconify-icon icon="mdi:github"></iconify-icon></a></div></div>
+    <div class="flex flex-col md:flex-row justify-between items-center gap-5 md:gap-6">
+      <div class="flex items-center gap-3">
+        <img src="images/logo.png" alt="PIReactive Logo" class="h-8 md:h-10 w-auto invert" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+        <span class="hidden text-xl md:text-2xl font-bold">PIReactive</span>
+      </div>
+      <div class="flex gap-5 md:gap-6">
+        <a href="#" class="text-gray-400 hover:text-white transition text-xl" aria-label="Twitter"><iconify-icon icon="mdi:twitter"></iconify-icon></a>
+        <a href="#" class="text-gray-400 hover:text-white transition text-xl" aria-label="LinkedIn"><iconify-icon icon="mdi:linkedin"></iconify-icon></a>
+        <a href="#" class="text-gray-400 hover:text-white transition text-xl" aria-label="GitHub"><iconify-icon icon="mdi:github"></iconify-icon></a>
+      </div>
+    </div>
     <div class="text-center text-xs text-gray-500 mt-6">© 2026 PIReactive Tech co. All rights reserved.</div>
   </footer>
 </div>
 
-<div class="modal-overlay" id="snippetModal">
+<div class="modal-overlay" id="snippetModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
   <div class="modal-content">
     <div class="flex justify-between items-center p-5">
       <h3 id="modalTitle" class="text-lg font-medium"></h3>
-      <button id="modalClose" class="text-white text-2xl hover:text-gray-400 transition">&times;</button>
+      <button id="modalClose" class="text-white text-2xl hover:text-gray-400 transition" aria-label="Close modal">&times;</button>
     </div>
-    <div class="flex gap-8 px-5 border-b border-gray-800">
-      <button id="tab-preview" class="text-base font-medium pb-2 tab-u text-white transition">PREVIEW</button>
-      <button id="tab-code" class="text-base font-medium pb-2 text-gray-500 hover:text-gray-300 transition">CODE</button>
+    <div class="flex gap-8 px-5 border-b border-gray-800" role="tablist">
+      <button id="tab-preview" class="text-base font-medium pb-2 tab-u text-white transition" role="tab" aria-selected="true" aria-controls="modalPreviewContainer">PREVIEW</button>
+      <button id="tab-code" class="text-base font-medium pb-2 text-gray-500 hover:text-gray-300 transition" role="tab" aria-selected="false" aria-controls="modalEditorContainer">CODE</button>
     </div>
-    <div id="modalPreviewContainer" class="modal-preview"><iframe id="modalPreviewFrame" sandbox="allow-scripts allow-same-origin"></iframe></div>
-    <div id="modalEditorContainer" class="flex-1 overflow-hidden hidden"></div>
+    <div id="modalPreviewContainer" class="modal-preview" role="tabpanel" aria-labelledby="tab-preview">
+      <iframe id="modalPreviewFrame" sandbox="allow-scripts allow-same-origin" title="Code preview"></iframe>
+    </div>
+    <div id="modalEditorContainer" class="flex-1 overflow-hidden hidden" role="tabpanel" aria-labelledby="tab-code"></div>
     <div class="flex gap-3 p-4 border-t border-gray-800 action-buttons" id="actionButtons">
-      <button id="copyCodeBtn" class="bg-white text-black px-5 py-2 text-sm font-medium hover:bg-gray-200 transition flex items-center gap-2"><iconify-icon icon="mdi:content-copy"></iconify-icon>Copy</button>
-      <button id="shareCodeBtn" class="bg-white text-black px-5 py-2 text-sm font-medium hover:bg-gray-200 transition flex items-center gap-2"><iconify-icon icon="mdi:share-variant"></iconify-icon>Share</button>
-      <button id="editCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 transition flex items-center gap-2"><iconify-icon icon="mdi:pencil"></iconify-icon>Edit</button>
-      <button id="downloadCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 transition flex items-center gap-2"><iconify-icon icon="mdi:download"></iconify-icon>Download</button>
-      <button id="resetCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 hidden items-center gap-2"><iconify-icon icon="mdi:undo"></iconify-icon>Reset</button>
+      <button id="copyCodeBtn" class="bg-white text-black px-5 py-2 text-sm font-medium hover:bg-gray-200 transition flex items-center gap-2"><iconify-icon icon="mdi:content-copy" aria-hidden="true"></iconify-icon>Copy</button>
+      <button id="shareCodeBtn" class="bg-white text-black px-5 py-2 text-sm font-medium hover:bg-gray-200 transition flex items-center gap-2"><iconify-icon icon="mdi:share-variant" aria-hidden="true"></iconify-icon>Share</button>
+      <button id="editCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 transition flex items-center gap-2"><iconify-icon icon="mdi:pencil" aria-hidden="true"></iconify-icon>Edit</button>
+      <button id="downloadCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 transition flex items-center gap-2"><iconify-icon icon="mdi:download" aria-hidden="true"></iconify-icon>Download</button>
+      <button id="resetCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 hidden items-center gap-2"><iconify-icon icon="mdi:undo" aria-hidden="true"></iconify-icon>Reset</button>
     </div>
   </div>
 </div>
@@ -184,7 +264,7 @@
   const db = getFirestore(app);
   const snippetsCol = collection(db, "snippets");
   
-  let allSnippets = [], searchTimeout, currentEditor = null, originalCode = '', isEditing = false, currentSnippetId = null;
+  let allSnippets = [], searchTimeout, currentEditor = null, originalCode = '', isEditing = false, currentSnippetId = null, currentSnippet = null;
   let currentAllPage = 1;
   const ITEMS_PER_PAGE = 18;
   
@@ -201,7 +281,7 @@
   
   function createCard(s, idx){
     const d=document.createElement('div');d.className=`snippet-card group ${borderColors[idx % borderColors.length]}`;
-    d.innerHTML=`<div class="snippet-preview-mini"><iframe sandbox="allow-scripts allow-same-origin" srcdoc="${s.code.replace(/"/g,'&quot;')}" loading="lazy"></iframe></div><div class="p-3 bg-transparent"><p class="text-sm font-medium text-gray-200">${s.name}</p></div>`;
+    d.innerHTML=`<div class="snippet-preview-mini"><iframe sandbox="allow-scripts allow-same-origin" srcdoc="${s.code.replace(/"/g,'&quot;')}" loading="lazy" title="${s.name} preview"></iframe></div><div class="p-3 bg-transparent"><p class="text-sm font-medium text-gray-200">${s.name}</p></div>`;
     d.addEventListener('click',()=>openModal(s));return d;
   }
   
@@ -212,6 +292,145 @@
     } catch(e) {
       console.error("Error updating view count:", e);
     }
+  }
+  
+  function generateScreenshot(snippet) {
+    return new Promise((resolve) => {
+      const canvas = document.getElementById('screenshotCanvas');
+      const ctx = canvas.getContext('2d');
+      
+      canvas.width = 1200;
+      canvas.height = 630;
+      
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, 1200, 630);
+      
+      ctx.fillStyle = '#0d0d0d';
+      ctx.fillRect(40, 40, 1120, 550);
+      
+      ctx.font = 'bold 32px Poppins, sans-serif';
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.fillText(snippet.name, 600, 120);
+      
+      ctx.font = '24px Poppins, sans-serif';
+      ctx.fillStyle = '#22c55e';
+      ctx.fillText('PIReactive Tech co.', 600, 180);
+      
+      ctx.font = '18px Poppins, sans-serif';
+      ctx.fillStyle = '#999999';
+      ctx.fillText('Free Production-Ready Code Snippet', 600, 240);
+      
+      ctx.strokeStyle = '#333333';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(100, 300);
+      ctx.lineTo(1100, 300);
+      ctx.stroke();
+      
+      ctx.font = '16px monospace';
+      ctx.fillStyle = '#666666';
+      ctx.textAlign = 'left';
+      
+      const lines = (snippet.code || '').split('\n').slice(0, 8);
+      lines.forEach((line, i) => {
+        if (i < 7) {
+          ctx.fillText(line.substring(0, 60) + (line.length > 60 ? '...' : ''), 100, 350 + i * 30);
+        }
+      });
+      
+      ctx.font = '14px Poppins, sans-serif';
+      ctx.fillStyle = '#666666';
+      ctx.textAlign = 'center';
+      ctx.fillText('pireactive.vercel.app', 600, 580);
+      
+      resolve(canvas.toDataURL('image/png'));
+    });
+  }
+  
+  async function updateMetaTags(snippet) {
+    const title = `${snippet.name} | PIReactive Code Snippets`;
+    const description = `Free production-ready ${snippet.name} code snippet. Copy, edit, and download this component crafted by PIReactive Tech co.`;
+    const url = `${window.location.origin}${window.location.pathname}?snippet=${snippet.id}`;
+    
+    document.title = title;
+    
+    const screenshotDataUrl = await generateScreenshot(snippet);
+    
+    const metaTags = {
+      'title': title,
+      'description': description,
+      'og:title': title,
+      'og:description': description,
+      'og:url': url,
+      'og:image': screenshotDataUrl,
+      'twitter:title': title,
+      'twitter:description': description,
+      'twitter:url': url,
+      'twitter:image': screenshotDataUrl
+    };
+    
+    Object.entries(metaTags).forEach(([name, content]) => {
+      let meta;
+      if (name === 'title') {
+        meta = document.querySelector('meta[name="title"]');
+      } else if (name === 'description') {
+        meta = document.querySelector('meta[name="description"]');
+      } else if (name.startsWith('og:')) {
+        meta = document.querySelector(`meta[property="${name}"]`);
+      } else if (name.startsWith('twitter:')) {
+        meta = document.querySelector(`meta[name="${name}"]`);
+      }
+      
+      if (meta) {
+        meta.setAttribute('content', content);
+      }
+    });
+    
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', url);
+  }
+  
+  function resetMetaTags() {
+    const defaultTitle = 'PIReactive | Free Production-Ready Code Snippets';
+    const defaultDescription = 'Discover free, production-ready HTML, CSS, and JavaScript code snippets. Copy, edit, and download components crafted by PIReactive Tech co.';
+    const defaultUrl = `${window.location.origin}${window.location.pathname}`;
+    const defaultImage = 'https://pireactive.vercel.app/og-image.jpg';
+    
+    document.title = defaultTitle;
+    
+    const metaTags = {
+      'title': defaultTitle,
+      'description': defaultDescription,
+      'og:title': defaultTitle,
+      'og:description': defaultDescription,
+      'og:url': defaultUrl,
+      'og:image': defaultImage,
+      'twitter:title': defaultTitle,
+      'twitter:description': defaultDescription,
+      'twitter:url': defaultUrl,
+      'twitter:image': defaultImage
+    };
+    
+    Object.entries(metaTags).forEach(([name, content]) => {
+      let meta;
+      if (name === 'title') {
+        meta = document.querySelector('meta[name="title"]');
+      } else if (name === 'description') {
+        meta = document.querySelector('meta[name="description"]');
+      } else if (name.startsWith('og:')) {
+        meta = document.querySelector(`meta[property="${name}"]`);
+      } else if (name.startsWith('twitter:')) {
+        meta = document.querySelector(`meta[name="${name}"]`);
+      }
+      
+      if (meta) {
+        meta.setAttribute('content', content);
+      }
+    });
+    
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', defaultUrl);
   }
   
   function updateAllGrid(snippets, page) {
@@ -259,29 +478,29 @@
     currentAllPage = 1;
     
     c.innerHTML=`
-      <div class="mb-8">
-        <h2 class="text-xl font-semibold mb-4">Newest Snippets</h2>
+      <section class="mb-8" aria-labelledby="newest-heading">
+        <h2 id="newest-heading" class="text-xl font-semibold mb-4">Newest Snippets</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="newsGrid"></div>
-      </div>
-      <div class="mb-8">
-        <h2 class="text-xl font-semibold mb-4">Popular Snippets</h2>
+      </section>
+      <section class="mb-8" aria-labelledby="popular-heading">
+        <h2 id="popular-heading" class="text-xl font-semibold mb-4">Popular Snippets</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="popularGrid"></div>
-      </div>
-      <div class="mb-8">
+      </section>
+      <section class="mb-8" aria-labelledby="all-heading">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-semibold">All Snippets</h2>
-          <div class="flex items-center gap-2">
-            <button id="prevPageBtn" class="pagination-btn" disabled>
-              <iconify-icon icon="mdi:chevron-left"></iconify-icon> Prev
+          <h2 id="all-heading" class="text-xl font-semibold">All Snippets</h2>
+          <nav class="flex items-center gap-2" aria-label="Pagination">
+            <button id="prevPageBtn" class="pagination-btn" disabled aria-label="Previous page">
+              <iconify-icon icon="mdi:chevron-left" aria-hidden="true"></iconify-icon> Prev
             </button>
-            <span id="pageIndicator" class="page-indicator">Page 1 of ${totalPages}</span>
-            <button id="nextPageBtn" class="pagination-btn" ${totalPages <= 1 ? 'disabled' : ''}>
-              Next <iconify-icon icon="mdi:chevron-right"></iconify-icon>
+            <span id="pageIndicator" class="page-indicator" aria-live="polite">Page 1 of ${totalPages}</span>
+            <button id="nextPageBtn" class="pagination-btn" ${totalPages <= 1 ? 'disabled' : ''} aria-label="Next page">
+              Next <iconify-icon icon="mdi:chevron-right" aria-hidden="true"></iconify-icon>
             </button>
-          </div>
+          </nav>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="allGrid"></div>
-      </div>
+      </section>
     `;
     
     const nG=document.getElementById('newsGrid');newest.forEach((s,i)=>nG.appendChild(createCard(s,i)));
@@ -314,7 +533,16 @@
   }
   
   async function loadSnippets(){
-    try{const q=query(snippetsCol,orderBy("createdAt","desc"));const snap=await getDocs(q);allSnippets=snap.docs.map(d=>({id:d.id,...d.data()}));renderSections(allSnippets);}
+    try{const q=query(snippetsCol,orderBy("createdAt","desc"));const snap=await getDocs(q);allSnippets=snap.docs.map(d=>({id:d.id,...d.data()}));renderSections(allSnippets);
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const snippetId = urlParams.get('snippet');
+    if (snippetId) {
+      const snippet = allSnippets.find(s => s.id === snippetId);
+      if (snippet) {
+        setTimeout(() => openModal(snippet), 500);
+      }
+    }}
     catch(e){document.getElementById('sectionsContainer').innerHTML='<div class="text-center py-20 text-red-400">Failed to load snippets</div>';}
   }
   
@@ -326,11 +554,15 @@
     if(tab==='preview'){
       tabPreview.classList.add('tab-u','text-white');tabPreview.classList.remove('text-gray-500');
       tabCode.classList.remove('tab-u','text-white');tabCode.classList.add('text-gray-500');
+      tabPreview.setAttribute('aria-selected', 'true');
+      tabCode.setAttribute('aria-selected', 'false');
       modalPreviewContainer.classList.remove('hidden');modalEditorContainer.classList.add('hidden');
       actionButtons.classList.remove('visible');
     }else{
       tabCode.classList.add('tab-u','text-white');tabCode.classList.remove('text-gray-500');
       tabPreview.classList.remove('tab-u','text-white');tabPreview.classList.add('text-gray-500');
+      tabCode.setAttribute('aria-selected', 'true');
+      tabPreview.setAttribute('aria-selected', 'false');
       modalPreviewContainer.classList.add('hidden');modalEditorContainer.classList.remove('hidden');
       actionButtons.classList.add('visible');
       if(currentEditor)currentEditor.refresh();
@@ -341,27 +573,40 @@
   tabCode.addEventListener('click',()=>switchTab('code'));
   
   async function openModal(s){
+    currentSnippet = s;
     modalTitle.textContent=s.name;originalCode=s.code||'';currentSnippetId=s.id;modalPreviewFrame.srcdoc=originalCode;
     
     await incrementViewCount(s.id);
+    await updateMetaTags(s);
     
     if(currentEditor){currentEditor.toTextArea();currentEditor=null;}
-    modalEditorContainer.innerHTML='<textarea id="modalCodeArea"></textarea>';
+    modalEditorContainer.innerHTML='<textarea id="modalCodeArea" aria-label="Code editor"></textarea>';
     const ta=document.getElementById('modalCodeArea');ta.value=originalCode;ta.readOnly=true;
     currentEditor=CodeMirror.fromTextArea(ta,{mode:"htmlmixed",theme:"dracula",lineNumbers:true,readOnly:true,autoCloseBrackets:true,matchBrackets:true});
-    isEditing=false;editBtn.innerHTML='<iconify-icon icon="mdi:pencil"></iconify-icon>Edit';resetBtn.style.display='none';
+    isEditing=false;editBtn.innerHTML='<iconify-icon icon="mdi:pencil" aria-hidden="true"></iconify-icon>Edit';resetBtn.style.display='none';
     switchTab('preview');modal.classList.add('active');document.body.style.overflow='hidden';
+    
+    const url = `${window.location.origin}${window.location.pathname}?snippet=${s.id}`;
+    window.history.pushState({snippetId: s.id}, '', url);
   }
   
-  function closeModal(){modal.classList.remove('active');document.body.style.overflow='';if(currentEditor){currentEditor.toTextArea();currentEditor=null;}}
+  function closeModal(){
+    modal.classList.remove('active');document.body.style.overflow='';
+    if(currentEditor){currentEditor.toTextArea();currentEditor=null;}
+    resetMetaTags();
+    const url = `${window.location.origin}${window.location.pathname}`;
+    window.history.pushState({}, '', url);
+  }
+  
   function updatePreview(){if(currentEditor)modalPreviewFrame.srcdoc=currentEditor.getValue();}
   
-  modalClose.addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
+  modalClose.addEventListener('click',closeModal);
+  modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
   
   editBtn.addEventListener('click',()=>{if(!currentEditor)return;
     if(!isEditing){
       currentEditor.setOption('readOnly',false);
-      editBtn.innerHTML='<iconify-icon icon="mdi:check"></iconify-icon>Done';
+      editBtn.innerHTML='<iconify-icon icon="mdi:check" aria-hidden="true"></iconify-icon>Done';
       resetBtn.style.display='flex';
       isEditing=true;
       currentEditor.on('change',updatePreview);
@@ -369,7 +614,7 @@
     }
     else{
       currentEditor.setOption('readOnly',true);
-      editBtn.innerHTML='<iconify-icon icon="mdi:pencil"></iconify-icon>Edit';
+      editBtn.innerHTML='<iconify-icon icon="mdi:pencil" aria-hidden="true"></iconify-icon>Edit';
       resetBtn.style.display='none';
       isEditing=false;
       currentEditor.off('change',updatePreview);
@@ -378,13 +623,53 @@
   
   resetBtn.addEventListener('click',()=>{if(currentEditor){currentEditor.setValue(originalCode);updatePreview();}});
   
-  copyBtn.addEventListener('click',async()=>{const code=currentEditor?currentEditor.getValue():originalCode;try{await navigator.clipboard.writeText(code);copyBtn.innerHTML='<iconify-icon icon="mdi:check"></iconify-icon>Copied!';setTimeout(()=>copyBtn.innerHTML='<iconify-icon icon="mdi:content-copy"></iconify-icon>Copy',2000);}catch(e){}});
+  copyBtn.addEventListener('click',async()=>{const code=currentEditor?currentEditor.getValue():originalCode;try{await navigator.clipboard.writeText(code);copyBtn.innerHTML='<iconify-icon icon="mdi:check" aria-hidden="true"></iconify-icon>Copied!';setTimeout(()=>copyBtn.innerHTML='<iconify-icon icon="mdi:content-copy" aria-hidden="true"></iconify-icon>Copy',2000);}catch(e){}});
   
-  shareBtn.addEventListener('click',async()=>{const url=`${window.location.origin}${window.location.pathname}?snippet=${currentSnippetId}`;try{await navigator.clipboard.writeText(url);shareBtn.innerHTML='<iconify-icon icon="mdi:check"></iconify-icon>Copied!';setTimeout(()=>shareBtn.innerHTML='<iconify-icon icon="mdi:share-variant"></iconify-icon>Share',2000);}catch(e){}});
+  shareBtn.addEventListener('click',async()=>{
+    const url=`${window.location.origin}${window.location.pathname}?snippet=${currentSnippetId}`;
+    const shareData = {
+      title: `${currentSnippet.name} | PIReactive Code Snippets`,
+      text: `Check out this free ${currentSnippet.name} code snippet from PIReactive Tech co.`,
+      url: url
+    };
+    
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(url);
+        shareBtn.innerHTML='<iconify-icon icon="mdi:check" aria-hidden="true"></iconify-icon>Copied!';
+        setTimeout(()=>shareBtn.innerHTML='<iconify-icon icon="mdi:share-variant" aria-hidden="true"></iconify-icon>Share',2000);
+      }
+    } catch(e) {
+      try {
+        await navigator.clipboard.writeText(url);
+        shareBtn.innerHTML='<iconify-icon icon="mdi:check" aria-hidden="true"></iconify-icon>Copied!';
+        setTimeout(()=>shareBtn.innerHTML='<iconify-icon icon="mdi:share-variant" aria-hidden="true"></iconify-icon>Share',2000);
+      } catch(err) {
+        console.error('Share failed:', err);
+      }
+    }
+  });
   
-  downloadBtn.addEventListener('click',()=>{const code=currentEditor?currentEditor.getValue():originalCode;const blob=new Blob([code],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='pireactive.html';a.click();URL.revokeObjectURL(url);});
+  downloadBtn.addEventListener('click',()=>{const code=currentEditor?currentEditor.getValue():originalCode;const blob=new Blob([code],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`${currentSnippet.name.toLowerCase().replace(/\s+/g, '-')}.html`;a.click();URL.revokeObjectURL(url);});
   
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('active'))closeModal();});
+  
+  window.addEventListener('popstate', (e) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const snippetId = urlParams.get('snippet');
+    if (snippetId) {
+      const snippet = allSnippets.find(s => s.id === snippetId);
+      if (snippet && !modal.classList.contains('active')) {
+        openModal(snippet);
+      }
+    } else {
+      if (modal.classList.contains('active')) {
+        closeModal();
+      }
+    }
+  });
   
   loadSnippets();
 </script>
