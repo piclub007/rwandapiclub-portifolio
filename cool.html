@@ -32,8 +32,25 @@
     .snippet-card.border-orange:hover { border-color: #f97316; }
     .snippet-card.border-sky:hover { border-color: #0ea5e9; }
     .snippet-card.border-purple:hover { border-color: #a855f7; }
-    .snippet-preview-mini { aspect-ratio: 16/9; background: #fff; overflow: hidden; pointer-events: none; display: flex; align-items: center; justify-content: center; }
-    .snippet-preview-mini iframe { width: 100%; height: 100%; border: none; background: #fff; pointer-events: none; transform: scale(0.65); transform-origin: center; width: 154%; height: 154%; }
+    .snippet-preview-mini { 
+      aspect-ratio: 16/9; 
+      background: #fff; 
+      overflow: hidden; 
+      pointer-events: none; 
+      position: relative;
+    }
+    .snippet-preview-mini iframe { 
+      width: 200%; 
+      height: 200%; 
+      border: none; 
+      background: #fff; 
+      pointer-events: none; 
+      transform: scale(0.5);
+      transform-origin: 0 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); backdrop-filter: blur(12px); z-index: 1000; display: flex; align-items: flex-end; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.2, 0.9, 0.1, 1); }
     .modal-overlay.active { opacity: 1; visibility: visible; }
     .modal-content { background: #0d0d0d; width: 100%; max-width: 1400px; height: 95vh; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.1, 1); overflow: hidden; border-radius: 24px 24px 0 0; }
@@ -44,9 +61,35 @@
     .CodeMirror-gutters { background: #0a0a0a; border-right: 1px solid #222; }
     .action-buttons { display: none; }
     .action-buttons.visible { display: flex; }
+    .pagination-btn {
+      background: transparent;
+      border: 1px solid #333;
+      color: #999;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .pagination-btn:hover:not(:disabled) {
+      background: #1a1a1a;
+      color: white;
+      border-color: #666;
+    }
+    .pagination-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .page-indicator {
+      color: #999;
+      font-size: 14px;
+      padding: 0 16px;
+    }
     @media (max-width: 640px) {
       .modal-content { height: 100vh; border-radius: 0; }
       .modal-preview { height: 35%; }
+      .action-buttons { flex-wrap: wrap; }
+      .action-buttons button { flex: 1; min-width: 100px; }
     }
   </style>
 </head>
@@ -116,6 +159,7 @@
     <div id="modalEditorContainer" class="flex-1 overflow-hidden hidden"></div>
     <div class="flex gap-3 p-4 border-t border-gray-800 action-buttons" id="actionButtons">
       <button id="copyCodeBtn" class="bg-white text-black px-5 py-2 text-sm font-medium hover:bg-gray-200 transition flex items-center gap-2"><iconify-icon icon="mdi:content-copy"></iconify-icon>Copy</button>
+      <button id="shareCodeBtn" class="bg-white text-black px-5 py-2 text-sm font-medium hover:bg-gray-200 transition flex items-center gap-2"><iconify-icon icon="mdi:share-variant"></iconify-icon>Share</button>
       <button id="editCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 transition flex items-center gap-2"><iconify-icon icon="mdi:pencil"></iconify-icon>Edit</button>
       <button id="downloadCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 transition flex items-center gap-2"><iconify-icon icon="mdi:download"></iconify-icon>Download</button>
       <button id="resetCodeBtn" class="bg-transparent border border-gray-700 text-white px-5 py-2 text-sm font-medium hover:bg-white/10 hidden items-center gap-2"><iconify-icon icon="mdi:undo"></iconify-icon>Reset</button>
@@ -125,7 +169,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+  import { getFirestore, collection, getDocs, query, orderBy, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
   
   const firebaseConfig = {
     apiKey: "AIzaSyAtHa9wAryji3EdWwhxT7tUwZquRD-LJvI",
@@ -140,9 +184,11 @@
   const db = getFirestore(app);
   const snippetsCol = collection(db, "snippets");
   
-  let allSnippets = [], searchTimeout, currentEditor = null, originalCode = '', isEditing = false;
+  let allSnippets = [], searchTimeout, currentEditor = null, originalCode = '', isEditing = false, currentSnippetId = null;
+  let currentAllPage = 1;
+  const ITEMS_PER_PAGE = 18;
   
-  const modal = document.getElementById('snippetModal'), modalTitle = document.getElementById('modalTitle'), modalPreviewFrame = document.getElementById('modalPreviewFrame'), modalPreviewContainer = document.getElementById('modalPreviewContainer'), modalEditorContainer = document.getElementById('modalEditorContainer'), copyBtn = document.getElementById('copyCodeBtn'), editBtn = document.getElementById('editCodeBtn'), downloadBtn = document.getElementById('downloadCodeBtn'), resetBtn = document.getElementById('resetCodeBtn'), modalClose = document.getElementById('modalClose'), tabPreview = document.getElementById('tab-preview'), tabCode = document.getElementById('tab-code'), actionButtons = document.getElementById('actionButtons');
+  const modal = document.getElementById('snippetModal'), modalTitle = document.getElementById('modalTitle'), modalPreviewFrame = document.getElementById('modalPreviewFrame'), modalPreviewContainer = document.getElementById('modalPreviewContainer'), modalEditorContainer = document.getElementById('modalEditorContainer'), copyBtn = document.getElementById('copyCodeBtn'), shareBtn = document.getElementById('shareCodeBtn'), editBtn = document.getElementById('editCodeBtn'), downloadBtn = document.getElementById('downloadCodeBtn'), resetBtn = document.getElementById('resetCodeBtn'), modalClose = document.getElementById('modalClose'), tabPreview = document.getElementById('tab-preview'), tabCode = document.getElementById('tab-code'), actionButtons = document.getElementById('actionButtons');
   
   const mB = document.getElementById('m-b'), mM = document.getElementById('m-m'), cB = document.getElementById('c-b');
   if(mB&&mM){mB.addEventListener('click',()=>{mM.classList.remove('h');document.body.style.overflow='hidden';});}
@@ -159,19 +205,112 @@
     d.addEventListener('click',()=>openModal(s));return d;
   }
   
+  async function incrementViewCount(snippetId) {
+    try {
+      const snippetRef = doc(db, "snippets", snippetId);
+      await updateDoc(snippetRef, { views: increment(1) });
+    } catch(e) {
+      console.error("Error updating view count:", e);
+    }
+  }
+  
+  function updateAllGrid(snippets, page) {
+    const allGrid = document.getElementById('allGrid');
+    if (!allGrid) return;
+    
+    const startIndex = (page - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const pageSnippets = snippets.slice(startIndex, endIndex);
+    
+    allGrid.innerHTML = '';
+    pageSnippets.forEach((s, i) => allGrid.appendChild(createCard(s, startIndex + i)));
+    
+    const totalPages = Math.ceil(snippets.length / ITEMS_PER_PAGE);
+    const pageIndicator = document.getElementById('pageIndicator');
+    const prevBtn = document.getElementById('prevPageBtn');
+    const nextBtn = document.getElementById('nextPageBtn');
+    
+    if (pageIndicator) {
+      pageIndicator.textContent = `Page ${page} of ${totalPages}`;
+    }
+    if (prevBtn) {
+      prevBtn.disabled = page === 1;
+    }
+    if (nextBtn) {
+      nextBtn.disabled = page === totalPages;
+    }
+  }
+  
   function renderSections(snippets){
     const c=document.getElementById('sectionsContainer');
     if(!snippets.length){c.innerHTML='<div class="text-center py-20 text-gray-400">No snippets found</div>';return;}
-    const sh=shuffle([...snippets]);
-    const news=sh.slice(0,4), popular=shuffle([...sh]).slice(0,4), all=shuffle([...sh]);
+    
+    const newest = snippets.slice(0, 6);
+    
+    const popular = [...snippets].sort((a, b) => {
+      const viewsA = a.views || 0;
+      const viewsB = b.views || 0;
+      if (viewsA === viewsB) return 0;
+      return viewsB - viewsA;
+    }).slice(0, 9);
+    
+    const allShuffled = shuffle([...snippets]);
+    const totalPages = Math.ceil(allShuffled.length / ITEMS_PER_PAGE);
+    currentAllPage = 1;
+    
     c.innerHTML=`
-      <div class="mb-8"><div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="newsGrid"></div></div>
-      <div class="mb-8"><div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="popularGrid"></div></div>
-      <div class="mb-8"><div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="allGrid"></div></div>
+      <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4">Newest Snippets</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="newsGrid"></div>
+      </div>
+      <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4">Popular Snippets</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="popularGrid"></div>
+      </div>
+      <div class="mb-8">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold">All Snippets</h2>
+          <div class="flex items-center gap-2">
+            <button id="prevPageBtn" class="pagination-btn" disabled>
+              <iconify-icon icon="mdi:chevron-left"></iconify-icon> Prev
+            </button>
+            <span id="pageIndicator" class="page-indicator">Page 1 of ${totalPages}</span>
+            <button id="nextPageBtn" class="pagination-btn" ${totalPages <= 1 ? 'disabled' : ''}>
+              Next <iconify-icon icon="mdi:chevron-right"></iconify-icon>
+            </button>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="allGrid"></div>
+      </div>
     `;
-    const nG=document.getElementById('newsGrid');news.forEach((s,i)=>nG.appendChild(createCard(s,i)));
-    const pG=document.getElementById('popularGrid');popular.forEach((s,i)=>pG.appendChild(createCard(s,i+4)));
-    const aG=document.getElementById('allGrid');all.forEach((s,i)=>aG.appendChild(createCard(s,i+8)));
+    
+    const nG=document.getElementById('newsGrid');newest.forEach((s,i)=>nG.appendChild(createCard(s,i)));
+    const pG=document.getElementById('popularGrid');popular.forEach((s,i)=>pG.appendChild(createCard(s,i+6)));
+    
+    updateAllGrid(allShuffled, 1);
+    
+    const prevBtn = document.getElementById('prevPageBtn');
+    const nextBtn = document.getElementById('nextPageBtn');
+    
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        if (currentAllPage > 1) {
+          currentAllPage--;
+          updateAllGrid(allShuffled, currentAllPage);
+          window.scrollTo({ top: document.getElementById('allGrid').offsetTop - 100, behavior: 'smooth' });
+        }
+      });
+    }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        if (currentAllPage < totalPages) {
+          currentAllPage++;
+          updateAllGrid(allShuffled, currentAllPage);
+          window.scrollTo({ top: document.getElementById('allGrid').offsetTop - 100, behavior: 'smooth' });
+        }
+      });
+    }
   }
   
   async function loadSnippets(){
@@ -201,8 +340,11 @@
   tabPreview.addEventListener('click',()=>switchTab('preview'));
   tabCode.addEventListener('click',()=>switchTab('code'));
   
-  function openModal(s){
-    modalTitle.textContent=s.name;originalCode=s.code||'';modalPreviewFrame.srcdoc=originalCode;
+  async function openModal(s){
+    modalTitle.textContent=s.name;originalCode=s.code||'';currentSnippetId=s.id;modalPreviewFrame.srcdoc=originalCode;
+    
+    await incrementViewCount(s.id);
+    
     if(currentEditor){currentEditor.toTextArea();currentEditor=null;}
     modalEditorContainer.innerHTML='<textarea id="modalCodeArea"></textarea>';
     const ta=document.getElementById('modalCodeArea');ta.value=originalCode;ta.readOnly=true;
@@ -217,13 +359,31 @@
   modalClose.addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
   
   editBtn.addEventListener('click',()=>{if(!currentEditor)return;
-    if(!isEditing){currentEditor.setOption('readOnly',false);editBtn.innerHTML='<iconify-icon icon="mdi:check"></iconify-icon>Done';resetBtn.style.display='flex';isEditing=true;currentEditor.on('change',updatePreview);}
-    else{currentEditor.setOption('readOnly',true);editBtn.innerHTML='<iconify-icon icon="mdi:pencil"></iconify-icon>Edit';resetBtn.style.display='none';isEditing=false;currentEditor.off('change',updatePreview);}
+    if(!isEditing){
+      currentEditor.setOption('readOnly',false);
+      editBtn.innerHTML='<iconify-icon icon="mdi:check"></iconify-icon>Done';
+      resetBtn.style.display='flex';
+      isEditing=true;
+      currentEditor.on('change',updatePreview);
+      switchTab('code');
+    }
+    else{
+      currentEditor.setOption('readOnly',true);
+      editBtn.innerHTML='<iconify-icon icon="mdi:pencil"></iconify-icon>Edit';
+      resetBtn.style.display='none';
+      isEditing=false;
+      currentEditor.off('change',updatePreview);
+    }
   });
   
   resetBtn.addEventListener('click',()=>{if(currentEditor){currentEditor.setValue(originalCode);updatePreview();}});
+  
   copyBtn.addEventListener('click',async()=>{const code=currentEditor?currentEditor.getValue():originalCode;try{await navigator.clipboard.writeText(code);copyBtn.innerHTML='<iconify-icon icon="mdi:check"></iconify-icon>Copied!';setTimeout(()=>copyBtn.innerHTML='<iconify-icon icon="mdi:content-copy"></iconify-icon>Copy',2000);}catch(e){}});
+  
+  shareBtn.addEventListener('click',async()=>{const url=`${window.location.origin}${window.location.pathname}?snippet=${currentSnippetId}`;try{await navigator.clipboard.writeText(url);shareBtn.innerHTML='<iconify-icon icon="mdi:check"></iconify-icon>Copied!';setTimeout(()=>shareBtn.innerHTML='<iconify-icon icon="mdi:share-variant"></iconify-icon>Share',2000);}catch(e){}});
+  
   downloadBtn.addEventListener('click',()=>{const code=currentEditor?currentEditor.getValue():originalCode;const blob=new Blob([code],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='pireactive.html';a.click();URL.revokeObjectURL(url);});
+  
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('active'))closeModal();});
   
   loadSnippets();
